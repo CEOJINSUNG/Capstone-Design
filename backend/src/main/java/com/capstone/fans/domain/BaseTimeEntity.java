@@ -1,4 +1,4 @@
-package com.capstone.fans;
+package com.capstone.fans.domain;
 
 
 import lombok.Getter;

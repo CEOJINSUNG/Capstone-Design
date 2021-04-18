@@ -1,2 +1,27 @@
-package com.capstone.fans.domain.user.fans;public class FanS {
+package com.capstone.fans.domain.user.fans;
+
+
+import com.capstone.fans.domain.user.User;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.*;
+
+
+@Getter
+@Entity
+@NoArgsConstructor
+@DiscriminatorValue(value = "F")
+public class FanS extends User {
+    private String profile_description;
+
+    @Builder
+
+    public FanS(String email, String password, String name, String blockchain_address, String address, String phone_number, byte[] profile_image, String profile_description) {
+        super(email, password, name, blockchain_address, address, phone_number, profile_image);
+        this.profile_description = profile_description;
+    }
 }

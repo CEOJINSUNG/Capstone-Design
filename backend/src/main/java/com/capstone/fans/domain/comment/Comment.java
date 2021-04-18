@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Commnet extends BaseTimeEntity {
+public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +32,7 @@ public class Commnet extends BaseTimeEntity {
 
     @Builder
 
-    public Commnet(User user, Post post, String comment) {
+    public Comment(User user, Post post, String comment) {
         this.user = user;
         this.post = post;
         this.comment = comment;
