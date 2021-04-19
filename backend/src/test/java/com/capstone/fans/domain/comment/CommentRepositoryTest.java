@@ -3,6 +3,7 @@ package com.capstone.fans.domain.comment;
 
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
+import com.capstone.fans.domain.user.UserRepository;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
@@ -32,6 +33,9 @@ public class CommentRepositoryTest {
     @Autowired
     ClubRepository clubRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @AfterEach
     public void cleanup(){
@@ -53,6 +57,7 @@ public class CommentRepositoryTest {
         String phone_number = "123-123-123";
         String name = "hell0";
 
+        userRepository.findAll();
 
         Club club = Club.builder()
                 .address(adress)

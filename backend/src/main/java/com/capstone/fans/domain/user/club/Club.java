@@ -23,11 +23,9 @@ public class Club extends User {
 
     private String club_name;
 
-
     @Builder
-
-    public Club(String email, String password, String name, String blockchain_address, String address, String phone_number, byte[] profile_image, String club_description, byte[] club_picture, String club_name) {
-        super(email, password, name, blockchain_address, address, phone_number, profile_image);
+    public Club(String email, String password, String name, String blockchain_address, String nickname, String address, String phone_number, byte[] profile_image, String auth, String club_description, byte[] club_picture, String club_name) {
+        super(email, password, name, blockchain_address, nickname, address, phone_number, profile_image, auth);
         this.club_description = club_description;
         this.club_picture = club_picture;
         this.club_name = club_name;
