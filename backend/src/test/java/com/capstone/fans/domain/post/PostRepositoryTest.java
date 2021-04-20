@@ -87,7 +87,7 @@ public class PostRepositoryTest {
                 .postType(postType)
                 .title(title)
                 .content(content)
-                .fanS(fanS)
+                .user(fanS)
                 .club(club)
                 .image(new ArrayList<>())
                 .build()
@@ -106,6 +106,6 @@ public class PostRepositoryTest {
         assertThat(post.getContent()).isEqualTo(content);
         assertThat(post.getImage().size()).isEqualTo(0);
         assertThat(post.getTitle()).isEqualTo(title);
-        assertThat(post.getFanS().getProfile_description()).isEqualTo(fanS.getProfile_description());
+        assertThat(((FanS)post.getUser()).getProfile_description()).isEqualTo(fanS.getProfile_description());
     }
 }

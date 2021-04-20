@@ -17,7 +17,6 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "F")
 public class FanS extends User {
     private String profile_description;
-
     @Builder
 
     public FanS(String email, String password, String name, String blockchain_address, String nickname, String address, String phone_number, byte[] profile_image, String auth, String profile_description) {

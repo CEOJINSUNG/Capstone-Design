@@ -3,6 +3,7 @@ package com.capstone.fans.domain.comment;
 import com.capstone.fans.domain.BaseTimeEntity;
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.user.User;
+import com.capstone.fans.web.dto.comment.PostCommentDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +32,15 @@ public class Comment extends BaseTimeEntity {
 
 
     @Builder
-
     public Comment(User user, Post post, String comment) {
         this.user = user;
         this.post = post;
         this.comment = comment;
     }
+
+
+    public void update(PostCommentDto postCommentDto){
+        this.comment = postCommentDto.getComment();
+    }
+
 }

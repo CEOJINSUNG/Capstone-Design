@@ -2,8 +2,10 @@ package com.capstone.fans.domain.post;
 
 
 import com.capstone.fans.domain.BaseTimeEntity;
+import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.fans.FanS;
+import com.capstone.fans.web.dto.post.PostPostDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ public class Post extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn
-    private FanS fanS;
+    private User user;
 
     @ManyToOne
     @JoinColumn
@@ -40,12 +42,22 @@ public class Post extends BaseTimeEntity {
 
 
     @Builder
-    public Post(FanS fanS, Club club, String postType, String title, String content, List<byte[]> image) {
-        this.fanS = fanS;
+    public Post(User user, Club club, String postType, String title, String content, List<byte[]> image) {
+        this.user = user;
         this.club = club;
         this.postType = postType;
         this.title = title;
         this.content = content;
         this.image = image;
     }
+
+
+
+    public void update(PostPostDto postPostDto){
+        this.postType = postPostDto.getCategory();
+        this.title = postPostDto.getTitle();
+        this.content = postPostDto.getContents();
+        this.image = postPostDto.getImages();
+    }
+
 }

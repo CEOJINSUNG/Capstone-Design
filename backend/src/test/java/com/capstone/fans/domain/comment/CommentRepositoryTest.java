@@ -97,7 +97,7 @@ public class CommentRepositoryTest {
                 .postType(postType)
                 .title(title)
                 .content(content)
-                .fanS(fanS)
+                .user(fanS)
                 .club(club)
                 .image(new ArrayList<>())
                 .build()
