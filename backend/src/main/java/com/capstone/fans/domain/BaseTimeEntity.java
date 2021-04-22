@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTimeEntity {
 
+    // commit test
     @CreatedDate
     private LocalDateTime createdDate;
 
