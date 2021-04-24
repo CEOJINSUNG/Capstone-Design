@@ -10,7 +10,7 @@ npm install expo-cli
 
 ### 사용한 패키지
 ```
-1. React Navigation
-2. react-native-vector-icons
-3. react-native-swiper
+1. react navigation : https://reactnavigation.org/
+2. react-native-vector-icons : https://github.com/oblador/react-native-vector-icons
+3. react-native-swiper : https://github.com/leecade/react-native-swiper
 ```
