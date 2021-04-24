@@ -7,3 +7,10 @@
 cd frontend
 npm install expo-cli
 ```
+
+### 사용한 패키지
+```
+1. React Navigation
+2. react-native-vector-icons
+3. react-native-swiper
+```
