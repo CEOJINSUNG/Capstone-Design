@@ -2,7 +2,6 @@ package com.capstone.fans.domain.user;
 
 
 import com.capstone.fans.domain.BaseTimeEntity;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

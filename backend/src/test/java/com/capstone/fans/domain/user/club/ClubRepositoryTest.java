@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.*;
 
 @SpringBootTest
 public class ClubRepositoryTest {
@@ -64,12 +63,6 @@ public class ClubRepositoryTest {
         assertThat(club.getPassword()).isEqualTo(password);
         assertThat(club.getPhone_number()).isEqualTo(phone_number);
         assertThat(club.getName()).isEqualTo(name);
-
-
-
-
-
-
 
     }
 }

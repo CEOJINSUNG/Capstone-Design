@@ -13,10 +13,8 @@ import com.capstone.fans.web.dto.post.PostPostDto;
 import com.capstone.fans.web.dto.user.SimpleUserInfoDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +71,4 @@ public class PostService {
                 .category(post.getPostType())
                 .build();
     }
-
-
-
-
-
-
-
 }
