@@ -30,6 +30,7 @@ public class PostService {
 
     @Transactional
     public Long save(Long id, PostSaveRequestDto postSaveRequestDto, User user) {
+        /*
         return postRepository.save(
                 Post.builder()
                         .user(user)
@@ -40,6 +41,8 @@ public class PostService {
                         .image(postSaveRequestDto.getImages())
                         .build()
         ).getId();
+         */
+        return postRepository.save(postSaveRequestDto.toEntity()).getId();
     }
 
     @Transactional

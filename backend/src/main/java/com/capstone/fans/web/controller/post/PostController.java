@@ -8,11 +8,10 @@ import com.capstone.fans.web.dto.post.PostSaveRequestDto;
 import com.capstone.fans.web.dto.post.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class PostController {
     private final PostService postService;
 
