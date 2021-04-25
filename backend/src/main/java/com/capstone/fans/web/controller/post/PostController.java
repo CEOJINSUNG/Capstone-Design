@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping("/api/post/posts/{id}")
+    @PostMapping("/post/{id}")
     public Long postPost(@PathVariable Long id, @RequestBody PostPostDto postPostDto, @AuthenticationPrincipal User user) {
         return postService.save(id, postPostDto, user);
     }
 
-    @PutMapping("/api/post/update/{id}")
+    @PutMapping("/post/{id}")
     public Long updatePost(@PathVariable Long id, @RequestBody PostPostDto postPostDto, @AuthenticationPrincipal User user) {
         return postService.update(id, postPostDto, user);
     }
 
-    @GetMapping("/api/post/find/{id}")
+    @GetMapping("/post/{id}")
     public PostDto postLookUp(@PathVariable Long id){
         return postService.findById(id);
     }

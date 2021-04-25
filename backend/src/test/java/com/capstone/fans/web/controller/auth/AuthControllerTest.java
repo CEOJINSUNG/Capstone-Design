@@ -13,7 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -30,16 +33,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AuthControllerTest {
     @LocalServerPort
-    private int port;
+    int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    TestRestTemplate restTemplate;
 
     @Autowired
-    private FansRepository fansRepository;
+    FansRepository fansRepository;
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
+    WebApplicationContext webApplicationContext;
 
 
     private MockMvc mockMvc;
@@ -56,12 +59,12 @@ public class AuthControllerTest {
 
     @Test
     @WithMockUser(roles="USER")
-    public void FansSignUpTest() throws Exception{
+    public void fansSignUpTest() throws Exception{
 
         SignUpDto signUpDto = SignUpDto.builder()
                 .email("email")
                 .password("password")
-                .nickname("FansUser")
+                .nickname("한글")
                 .name("name")
                 .address("address")
                 .phone_number("1111")
@@ -72,9 +75,14 @@ public class AuthControllerTest {
         String url = "http://localhost:" + port + "/auth/signup";
 
         //when
+        String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
+        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
+        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
 
         mockMvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .sessionAttr(TOKEN_ATTR_NAME, csrfToken)
+                .param(csrfToken.getParameterName(), csrfToken.getToken())
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(signUpDto)))
                 .andExpect(status().isOk());
 
@@ -85,10 +93,9 @@ public class AuthControllerTest {
         // assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<FanS> all = fansRepository.findAll();
-
         assertThat(all.get(0).getEmail()).isEqualTo("email");
         assertThat(all.get(0).getName()).isEqualTo("name");
-        assertThat(all.get(0).getNickname()).isEqualTo("FansUser");
+        assertThat(all.get(0).getNickname()).isEqualTo("한글");
         assertThat(all.get(0).getAddress()).isEqualTo("address");
         assertThat(all.get(0).getPhone_number()).isEqualTo("1111");
         assertThat(all.get(0).getBlockchain_address()).isEqualTo("2222");
