@@ -99,8 +99,6 @@ public class PostRepositoryTest {
         );
 
 
-
-
         List<Post> postList = postRepository.findAll();
 
         Post post = postList.get(0);

@@ -1,7 +1,10 @@
 package com.capstone.fans.web.controller.post;
 
 
+import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
+import com.capstone.fans.web.dto.post.PostSaveRequestDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,13 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -51,11 +64,38 @@ public class PostControllerTest {
 
     @Test
     @WithMockUser(roles="USER")
-    public void Posts_post() throws Exception{
+    public void PostSaveTest() throws Exception{
+
+        String title = "title";
+        String content = "content";
+        List<byte[]> images = new ArrayList<>();
+        //byte[] temp = 1;
+        String category = "category";
+        PostSaveRequestDto postSaveRequestDto = PostSaveRequestDto.builder()
+                .title(title)
+                .contents(content)
+                .images(images)
+                .build();
+        Long updateId = postRepository.save(postSaveRequestDto.toEntity()).getId();
+
+        String url = "http://localhost:" + port + "/post/" + updateId;
+
+        // when
+        String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
+        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
+        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
+
+        mvc.perform(post(url)
+                .sessionAttr(TOKEN_ATTR_NAME,csrfToken)
+                .param(csrfToken.getParameterName(), csrfToken.getToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(postSaveRequestDto)))
+                .andExpect(status().isOk());
 
 
-
-
+        List<Post> all = postRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(title);
+        assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
 }

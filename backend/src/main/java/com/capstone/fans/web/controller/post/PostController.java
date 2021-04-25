@@ -17,8 +17,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/post/{id}")
-    public Long postPost(@PathVariable Long id, @RequestBody PostSaveRequestDto postPostDto, @AuthenticationPrincipal User user) {
-        return postService.save(id, postPostDto, user);
+    public Long postSave(@PathVariable Long id, @RequestBody PostSaveRequestDto postSaveRequestDto, @AuthenticationPrincipal User user) {
+        return postService.save(id, postSaveRequestDto, user);
     }
 
     @PutMapping("/post/{id}")
