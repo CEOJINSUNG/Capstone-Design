@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.*;
 
 
 
@@ -50,10 +49,10 @@ public class FanSRepositoryTest {
                 .build()
         );
 
-        List<FanS> clubList = fanSRepository.findAll();
+        List<FanS> fansList = fanSRepository.findAll();
 
 
-        FanS fanS = clubList.get(0);
+        FanS fanS = fansList.get(0);
 
 
         assertThat(fanS.getAddress()).isEqualTo(adress);
