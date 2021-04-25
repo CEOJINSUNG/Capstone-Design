@@ -4,6 +4,7 @@ package com.capstone.fans.web.controller.post;
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
 import com.capstone.fans.web.dto.post.PostSaveRequestDto;
+import com.capstone.fans.web.dto.post.PostUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -78,7 +79,7 @@ public class PostControllerTest {
                 .build();
         Long updateId = postRepository.save(postSaveRequestDto.toEntity()).getId();
 
-        String url = "http://localhost:" + port + "/post/" + updateId;
+        String url = "http://localhost:" + port + "/post/save/" + updateId;
 
         // when
         String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
@@ -96,6 +97,45 @@ public class PostControllerTest {
         List<Post> all = postRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    public void PostUpdateTest() throws Exception {
+
+        List<byte[]> images = new ArrayList<>();
+        String PostType = "postType";
+
+        Post savedPost = postRepository.save(
+                Post.builder().postType("postType").title("title").content("content").image(images).build());
+
+        Long updatedId = savedPost.getId();
+        String updated_title = "title2";
+        String updated_content = "content2";
+
+        PostUpdateRequestDto postUpdateRequestDto = PostUpdateRequestDto.builder()
+                .title(updated_title)
+                .content(updated_content)
+                .postType(PostType)
+                .images(images)
+                .build();
+
+        String url = "http://localhost:" + port + "/post/update/" + updatedId;
+
+        String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
+        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
+        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
+
+        mvc.perform(post(url)
+                .sessionAttr(TOKEN_ATTR_NAME,csrfToken)
+                .param(csrfToken.getParameterName(), csrfToken.getToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(postUpdateRequestDto)))
+                .andExpect(status().isOk());
+
+        List<Post> all = postRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(updated_title);
+        assertThat(all.get(0).getContent()).isEqualTo(updated_content);
     }
 
 }

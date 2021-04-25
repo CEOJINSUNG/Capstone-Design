@@ -48,10 +48,12 @@ public class PostService {
     @Transactional
     public Long update(Long id, PostUpdateRequestDto postUpdateRequestDto, User user) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
+        /*
         if(post == null)
             return -1L;
         else if(user.getId() != post.getId())
             return -2L;
+         */
         post.update(postUpdateRequestDto.getPostType(), postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent(), postUpdateRequestDto.getImages());
         return id;
     }
