@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthController{
     private final UserService userService;
 
+    // Create
     @PostMapping("/auth/signup")
     public Long signup(@RequestBody SignUpDto signUpDto){
         return userService.save(signUpDto);
@@ -34,10 +35,14 @@ public class AuthController{
         return 1L;
     }
 
+    // Read
     @GetMapping("/auth/userInfo")
     public UserInfoDto userInfo(@AuthenticationPrincipal User user) {
         return UserInfoDto.createDto(user);
     }
+
+    //Update
+
 
 
 }

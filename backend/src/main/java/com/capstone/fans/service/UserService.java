@@ -2,7 +2,6 @@ package com.capstone.fans.service;
 
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.UserRepository;
-import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.web.dto.auth.SignUpDto;
@@ -48,4 +47,5 @@ public class UserService implements UserDetailsService {
             return clubRepository.save(signUpDto.toClubEntity()).getId();
         }
     }
+
 }
