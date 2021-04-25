@@ -14,7 +14,7 @@ public class PostUpdateRequestDto {
     private String postType;
     private List<byte[]> images;
 
-    // commit test
+    //test commit
     @Builder
     public PostUpdateRequestDto(String title, String content, String postType, List<byte[]> images){
         this.title = title;
