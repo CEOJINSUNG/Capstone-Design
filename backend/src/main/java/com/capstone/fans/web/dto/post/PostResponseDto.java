@@ -1,7 +1,6 @@
 package com.capstone.fans.web.dto.post;
 
 
-import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.web.dto.comment.CommentDto;
 import com.capstone.fans.web.dto.user.SimpleUserInfoDto;
 import lombok.Builder;
@@ -15,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostDto {
+public class PostResponseDto {
     private String title;
     private List<byte[]> images;
     private String contents;
@@ -27,7 +26,7 @@ public class PostDto {
 
 
     @Builder
-    public PostDto(String title, List<byte[]> images, String contents, LocalDateTime createdDate, LocalDateTime modifiedDate, SimpleUserInfoDto user, List<CommentDto> commentDtoList, String category) {
+    public PostResponseDto(String title, List<byte[]> images, String contents, LocalDateTime createdDate, LocalDateTime modifiedDate, SimpleUserInfoDto user, List<CommentDto> commentDtoList, String category) {
         this.title = title;
         this.images = images;
         this.contents = contents;

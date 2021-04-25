@@ -4,8 +4,6 @@ package com.capstone.fans.domain.post;
 import com.capstone.fans.domain.BaseTimeEntity;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.club.Club;
-import com.capstone.fans.domain.user.fans.FanS;
-import com.capstone.fans.web.dto.post.PostPostDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,11 +51,15 @@ public class Post extends BaseTimeEntity {
 
 
 
-    public void update(PostPostDto postPostDto){
-        this.postType = postPostDto.getCategory();
-        this.title = postPostDto.getTitle();
-        this.content = postPostDto.getContents();
-        this.image = postPostDto.getImages();
+    public void update(String postType, String title, String content, List<byte[]> images){
+        // this.postType = postSaveRequestDto.getCategory();
+        // this.title = postSaveRequestDto.getTitle();
+        // this.content = postSaveRequestDto.getContents();
+        // this.image = postSaveRequestDto.getImages();
+        this.postType = postType;
+        this.title = title;
+        this.content = content;
+        this.image = images;
     }
 
 }

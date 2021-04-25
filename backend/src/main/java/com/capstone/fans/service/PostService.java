@@ -8,8 +8,9 @@ import com.capstone.fans.domain.post.PostRepository;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.web.dto.comment.CommentDto;
-import com.capstone.fans.web.dto.post.PostDto;
-import com.capstone.fans.web.dto.post.PostPostDto;
+import com.capstone.fans.web.dto.post.PostResponseDto;
+import com.capstone.fans.web.dto.post.PostSaveRequestDto;
+import com.capstone.fans.web.dto.post.PostUpdateRequestDto;
 import com.capstone.fans.web.dto.user.SimpleUserInfoDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,39 +29,44 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Long save(Long id, PostPostDto postPostDto, User user) {
+    public Long save(Long id, PostSaveRequestDto postSaveRequestDto, User user) {
         return postRepository.save(
                 Post.builder()
                         .user(user)
                         .club(clubRepository.findById(id).get())
-                        .postType(postPostDto.getCategory())
-                        .title(postPostDto.getTitle())
-                        .content(postPostDto.getContents())
-                        .image(postPostDto.getImages())
+                        .postType(postSaveRequestDto.getCategory())
+                        .title(postSaveRequestDto.getTitle())
+                        .content(postSaveRequestDto.getContents())
+                        .image(postSaveRequestDto.getImages())
                         .build()
         ).getId();
     }
 
     @Transactional
-    public Long update(Long id, PostPostDto postPostDto, User user) {
-        Post post = postRepository.findById(id).orElse(null);
+    public Long update(Long id, PostUpdateRequestDto postUpdateRequestDto, User user) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
         if(post == null)
             return -1L;
         else if(user.getId() != post.getId())
             return -2L;
-        post.update(postPostDto);
+        post.update(postUpdateRequestDto.getPostType(), postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent(), postUpdateRequestDto.getImages());
         return id;
     }
 
+    @Transactional
+    public void delete(Long id){
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
+        postRepository.delete(post);
+    }
 
-
-    public PostDto findById(Long id){
-        Post post = postRepository.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public PostResponseDto findById(Long id){
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
         List<Comment> commentList = commentRepository.findByPost(post);
         List<CommentDto> commentDtoList = new ArrayList<>();
         for(Comment comment : commentList)
             commentDtoList.add(CommentDto.createCommentDto(comment));
-        return PostDto.builder()
+        return PostResponseDto.builder()
                 .title(post.getTitle())
                 .images(post.getImage())
                 .contents(post.getContent())

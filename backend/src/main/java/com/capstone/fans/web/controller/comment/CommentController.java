@@ -6,8 +6,6 @@ import com.capstone.fans.domain.user.User;
 import com.capstone.fans.service.CommentService;
 import com.capstone.fans.web.dto.comment.CommentDto;
 import com.capstone.fans.web.dto.comment.PostCommentDto;
-import com.capstone.fans.web.dto.post.PostPostDto;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

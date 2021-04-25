@@ -1,19 +1,17 @@
 package com.capstone.fans.web.dto.post;
 
-import com.capstone.fans.web.dto.comment.CommentDto;
-import com.capstone.fans.web.dto.user.SimpleUserInfoDto;
+import com.capstone.fans.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostPostDto {
+public class PostSaveRequestDto {
     private String title;
     private List<byte[]> images;
     private String contents;
@@ -21,10 +19,19 @@ public class PostPostDto {
 
 
     @Builder
-    public PostPostDto(String title, List<byte[]> images, String contents, String category) {
+    public PostSaveRequestDto(String title, List<byte[]> images, String contents, String category) {
         this.title = title;
         this.images = images;
         this.contents = contents;
         this.category = category;
     }
+
+    public Post toEntity() {
+        return Post.builder()
+                .title(title)
+                .image(images)
+                .content(contents)
+                .build();
+    }
+
 }
