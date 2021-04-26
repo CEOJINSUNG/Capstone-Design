@@ -187,7 +187,8 @@ public class CommentControllerTest {
                 .param(csrfToken.getParameterName(), csrfToken.getToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(commentSaveDto)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
 
         List<Comment> all = commentRepository.findByPost(post);
 

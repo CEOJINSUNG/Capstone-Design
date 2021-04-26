@@ -8,14 +8,13 @@ import com.capstone.fans.web.dto.comment.CommentDto;
 import com.capstone.fans.web.dto.comment.CommentSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class CommentController {
     private final CommentService commentService;
 
