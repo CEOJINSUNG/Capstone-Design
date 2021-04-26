@@ -30,7 +30,6 @@ public class PostService {
 
     @Transactional
     public Long save(Long id, PostSaveRequestDto postSaveRequestDto, User user) {
-        /*
         return postRepository.save(
                 Post.builder()
                         .user(user)
@@ -41,27 +40,29 @@ public class PostService {
                         .image(postSaveRequestDto.getImages())
                         .build()
         ).getId();
-         */
-        return postRepository.save(postSaveRequestDto.toEntity()).getId();
+
     }
 
     @Transactional
     public Long update(Long id, PostUpdateRequestDto postUpdateRequestDto, User user) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
-        /*
+        Post post = postRepository.findById(id).orElse(null);
         if(post == null)
             return -1L;
         else if(user.getId() != post.getId())
             return -2L;
-         */
         post.update(postUpdateRequestDto.getPostType(), postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent(), postUpdateRequestDto.getImages());
         return id;
     }
 
     @Transactional
-    public void delete(Long id){
-        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
+    public Long delete(Long id, User user){
+        Post post = postRepository.findById(id).orElse(null);
+        if(post == null)
+            return -1L;
+        else if(user.getId() != post.getId())
+            return -2L;
         postRepository.delete(post);
+        return 1L;
     }
 
     @Transactional(readOnly = true)

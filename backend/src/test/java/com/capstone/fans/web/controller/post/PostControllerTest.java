@@ -3,6 +3,8 @@ package com.capstone.fans.web.controller.post;
 
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
+import com.capstone.fans.domain.user.club.Club;
+import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.web.dto.post.PostSaveRequestDto;
 import com.capstone.fans.web.dto.post.PostUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +32,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -44,6 +47,9 @@ public class PostControllerTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private ClubRepository clubRepository;
 
     @Autowired
     private WebApplicationContext context;
@@ -67,6 +73,33 @@ public class PostControllerTest {
     @WithMockUser(roles="USER")
     public void PostSaveTest() throws Exception{
 
+
+        String adress = "suwon";
+        String description = "no description";
+        String clubname = "club 1";
+        byte[] image = null;
+        String blockChain = "asdf";
+        String email = "email@asdf";
+        String password = "qwer!@#$";
+        String phone_number = "123-123-123";
+        String name = "hell0";
+
+
+        Long clubId = clubRepository.save(Club.builder()
+                .address(adress)
+                .club_description(description)
+                .club_name(clubname)
+                .club_picture(image)
+                .email(email)
+                .password(password)
+                .blockchain_address(blockChain)
+                .phone_number(phone_number)
+                .name(name)
+                .build()
+        ).getId();
+
+
+
         String title = "title";
         String content = "content";
         List<byte[]> images = new ArrayList<>();
@@ -76,10 +109,10 @@ public class PostControllerTest {
                 .title(title)
                 .contents(content)
                 .images(images)
+                .category("free")
                 .build();
-        Long updateId = postRepository.save(postSaveRequestDto.toEntity()).getId();
 
-        String url = "http://localhost:" + port + "/post/save/" + updateId;
+        String url = "http://localhost:" + port + "/post/save/" + clubId;
 
         // when
         String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
@@ -99,15 +132,47 @@ public class PostControllerTest {
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
+
     @Test
     @WithMockUser(roles = "USER")
     public void PostUpdateTest() throws Exception {
+        String adress = "suwon";
+        String description = "no description";
+        String clubname = "club 1";
+        byte[] image = null;
+        String blockChain = "asdf";
+        String email = "email@asdf";
+        String password = "qwer!@#$";
+        String phone_number = "123-123-123";
+        String name = "hell0";
+
+
+        Long clubId = clubRepository.save(Club.builder()
+                .address(adress)
+                .club_description(description)
+                .club_name(clubname)
+                .club_picture(image)
+                .email(email)
+                .password(password)
+                .blockchain_address(blockChain)
+                .phone_number(phone_number)
+                .name(name)
+                .build()
+        ).getId();
 
         List<byte[]> images = new ArrayList<>();
         String PostType = "postType";
 
         Post savedPost = postRepository.save(
-                Post.builder().postType("postType").title("title").content("content").image(images).build());
+                Post.builder()
+                        .postType("postType")
+                        .title("title")
+                        .content("content")
+                        .image(images)
+                        .user(clubRepository.getOne(clubId))
+                        .club(clubRepository.getOne(clubId))
+                        .image(new ArrayList<>())
+                        .build());
 
         Long updatedId = savedPost.getId();
         String updated_title = "title2";
@@ -126,7 +191,7 @@ public class PostControllerTest {
         HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
         CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
 
-        mvc.perform(post(url)
+        mvc.perform(put(url)
                 .sessionAttr(TOKEN_ATTR_NAME,csrfToken)
                 .param(csrfToken.getParameterName(), csrfToken.getToken())
                 .contentType(MediaType.APPLICATION_JSON)
