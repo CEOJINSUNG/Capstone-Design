@@ -32,6 +32,8 @@ public class GoodsOrder extends BaseTimeEntity {
 
     private String address;
 
+    @ManyToOne
+    @JoinColumn
     private Option option;
 
     private LocalDateTime shipped_date;
