@@ -2,7 +2,10 @@ package com.capstone.fans.domain.goods_order;
 
 import com.capstone.fans.domain.BaseTimeEntity;
 import com.capstone.fans.domain.goods.Goods;
+import com.capstone.fans.domain.goods.option.Option;
+import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.fans.FanS;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +22,7 @@ public class GoodsOrder extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn
-    private FanS fanS;
+    private User user;
 
     @ManyToOne
     @JoinColumn
@@ -27,5 +30,27 @@ public class GoodsOrder extends BaseTimeEntity {
 
     private String state;
 
+    private String address;
+
+    private Option option;
+
     private LocalDateTime shipped_date;
+
+
+
+
+    @Builder
+
+    public GoodsOrder(User user, Goods goods, String state, String address, Option option, LocalDateTime shipped_date) {
+        this.user = user;
+        this.goods = goods;
+        this.state = state;
+        this.address = address;
+        this.option = option;
+        this.shipped_date = shipped_date;
+    }
+
+    public void update(){
+
+    }
 }
