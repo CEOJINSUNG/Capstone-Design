@@ -10,12 +10,18 @@ import com.capstone.fans.domain.goods_order.GoodsOrderRepository;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.erorrs.ErrorCodes;
+import com.capstone.fans.web.dto.goods.GoodsOrderListDto;
 import com.capstone.fans.web.dto.goods.GoodsOrderSaveDto;
 import com.capstone.fans.web.dto.goods.GoodsOrderUpdateDto;
 import com.capstone.fans.web.dto.goods.GoodsSaveDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -94,6 +100,34 @@ public class GoodsService {
 
         goodsOrderRepository.delete(goodsOrder);
         return orderId;
+    }
+
+    @Transactional
+    public List<GoodsOrderListDto> getOrderList(User user, Integer page, Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        return goodsOrderRepository.findByUser(user, pageRequest).get()
+                .map(o->GoodsOrderListDto.builder()
+                        .id(o.getId())
+                        .image(o.getGoods().getPictures().size() == 0? null : o.getGoods().getPictures().get(0))
+                        .state(o.getState())
+                        .address(o.getAddress())
+                        .option_description(o.getOption().getName())
+                        .cost(o.getGoods().getPrice() + o.getOption().getCosts())
+                        .shipped_date(o.getShipped_date())
+                        .created_date(o.getCreatedDate())
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long changeOrderState(String state, Long id, User user){
+        GoodsOrder goodsOrder = goodsOrderRepository.findById(id).orElse(null);
+        if(goodsOrder == null)
+            return ErrorCodes.NOT_EXIST;
+        else if(!user.getId().equals(goodsOrder.getGoods().getClub().getId()))
+            return ErrorCodes.NO_AUTHORITY;
+        goodsOrder.updateState(state);
+        return id;
     }
 
 

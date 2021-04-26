@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class GoodsOrder extends BaseTimeEntity {
+    public static final String DONE = "배송완료";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,7 +52,19 @@ public class GoodsOrder extends BaseTimeEntity {
         this.shipped_date = shipped_date;
     }
 
-    public void update(){
-
+    public void update(Option option, String address){
+        this.option = option;
+        this.address = address;
     }
+
+    public void updateState(String state){
+        if(this.state.equals(DONE))
+            return;
+        else if(state.equals(DONE))
+            this.shipped_date = LocalDateTime.now();
+        this.state = state;
+    }
+
+
+
 }
