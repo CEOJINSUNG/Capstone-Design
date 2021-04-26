@@ -6,7 +6,7 @@ import com.capstone.fans.domain.comment.CommentRepository;
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
 import com.capstone.fans.domain.user.User;
-import com.capstone.fans.web.dto.comment.PostCommentDto;
+import com.capstone.fans.web.dto.comment.CommentSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +21,11 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Long save(Long id, PostCommentDto postCommentDto, User user){
+    public Long save(Long id, CommentSaveDto commentSaveDto, User user){
         Post post = postRepository.findById(id).orElse(null);
         if(post == null) return -1L;
         return commentRepository.save(Comment.builder()
-                .comment(postCommentDto.getComment())
+                .comment(commentSaveDto.getComment())
                 .user(user)
                 .post(post)
                 .build()
@@ -34,13 +34,13 @@ public class CommentService {
 
 
     @Transactional
-    public Long update(Long id, PostCommentDto postCommentDto, User user){
+    public Long update(Long id, CommentSaveDto commentSaveDto, User user){
         Comment comment = commentRepository.findById(id).orElse(null);
         if(comment == null)
             return -1L;
         else if(!comment.getUser().getId().equals(user.getId()))
             return -2L;
-        comment.update(postCommentDto);
+        comment.update(commentSaveDto);
         return id;
     }
 
