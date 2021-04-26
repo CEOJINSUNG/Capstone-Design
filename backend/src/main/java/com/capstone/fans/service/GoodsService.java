@@ -12,10 +12,13 @@ import com.capstone.fans.domain.user.club.Club;
 
 import com.capstone.fans.erorrs.ErrorCodes;
 import com.capstone.fans.web.dto.goods.GoodsOrderSaveDto;
+import com.capstone.fans.web.dto.goods.GoodsOrderUpdateDto;
 import com.capstone.fans.web.dto.goods.GoodsSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.criteria.Order;
 
 @RequiredArgsConstructor
 @Service
@@ -62,22 +65,39 @@ public class GoodsService {
 
 
     @Transactional
-    public Long updateOrder(){
+    public Long updateOrder(GoodsOrderUpdateDto goodsOrderUpdateDto, User user){
 
         /*추가결제 진행 또는 환불 잔액부족시 에러*/
 
 
 
+        /*수정 불가 조건 에러*/
 
 
 
-
-
-
-
-        return -1L;
+        GoodsOrder order = goodsOrderRepository.findById(goodsOrderUpdateDto.getOrderId()).orElse(null);
+        Option option = optionRepository.findById(goodsOrderUpdateDto.getOptionId()).orElse(null);
+        if(option == null || order == null)
+            return ErrorCodes.NOT_EXIST;
+        else if(!user.getId().equals(order.getUser().getId()))
+            return ErrorCodes.NOT_SAME_USER;
+        else if(!option.getGoods_id().equals(order.getGoods().getId()))
+            return ErrorCodes.INVALID_VAR;
+        order.update(option, goodsOrderUpdateDto.getAddress());
+        return goodsOrderUpdateDto.getOrderId();
     }
 
+    @Transactional
+    public Long cancelOrder(Long orderId, User user){
+        GoodsOrder goodsOrder = goodsOrderRepository.findById(orderId).orElse(null);
+        if(goodsOrder == null)
+            return ErrorCodes.NOT_EXIST;
+        else if(!goodsOrder.getUser().getId().equals(user.getId()))
+            return ErrorCodes.NOT_SAME_USER;
+
+        goodsOrderRepository.delete(goodsOrder);
+        return orderId;
+    }
 
 
 }
