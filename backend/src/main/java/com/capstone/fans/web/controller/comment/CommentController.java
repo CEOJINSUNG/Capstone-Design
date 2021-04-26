@@ -5,7 +5,7 @@ import com.capstone.fans.domain.comment.Comment;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.service.CommentService;
 import com.capstone.fans.web.dto.comment.CommentDto;
-import com.capstone.fans.web.dto.comment.PostCommentDto;
+import com.capstone.fans.web.dto.comment.CommentSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,17 +19,17 @@ import java.util.stream.Collectors;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/comment/{id}")
-    public Long postComment(@PathVariable Long id, @RequestBody PostCommentDto postCommentDto, @AuthenticationPrincipal User user) {
-        return commentService.save(id, postCommentDto, user);
+    @PostMapping("/comment/save/{id}")
+    public Long postComment(@PathVariable Long id, @RequestBody CommentSaveDto commentSaveDto, @AuthenticationPrincipal User user) {
+        return commentService.save(id, commentSaveDto, user);
     }
 
-    @PutMapping("/comment/{id}")
-    public Long updateComment(@PathVariable Long id, @RequestBody PostCommentDto postCommentDto, @AuthenticationPrincipal User user) {
-        return commentService.update(id, postCommentDto, user);
+    @PutMapping("/comment/update/{id}")
+    public Long updateComment(@PathVariable Long id, @RequestBody CommentSaveDto commentSaveDto, @AuthenticationPrincipal User user) {
+        return commentService.update(id, commentSaveDto, user);
     }
 
-    @GetMapping("/comment/{id}")
+    @GetMapping("/comment/find/{id}")
     public List<CommentDto> commentLookUp(@PathVariable Long id) {
         List<Comment> commentList = commentService.findByPost(id);
         if(commentList == null) return null;

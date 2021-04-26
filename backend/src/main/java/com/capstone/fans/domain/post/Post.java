@@ -52,10 +52,6 @@ public class Post extends BaseTimeEntity {
 
 
     public void update(String postType, String title, String content, List<byte[]> images){
-        // this.postType = postSaveRequestDto.getCategory();
-        // this.title = postSaveRequestDto.getTitle();
-        // this.content = postSaveRequestDto.getContents();
-        // this.image = postSaveRequestDto.getImages();
         this.postType = postType;
         this.title = title;
         this.content = content;
