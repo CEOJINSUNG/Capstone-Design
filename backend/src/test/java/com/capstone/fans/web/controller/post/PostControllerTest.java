@@ -65,6 +65,7 @@ public class PostControllerTest {
     @Autowired
     private UserService userService;
 
+    private Long userId;
     private MockMvc mvc;
 
 
@@ -85,7 +86,7 @@ public class PostControllerTest {
         String name = "hell1";
 
 
-        fanSRepository.save(FanS.builder()
+        userId = fanSRepository.save(FanS.builder()
                 .address(adress)
                 .profile_description(description)
                 .profile_image(image)
@@ -96,7 +97,7 @@ public class PostControllerTest {
                 .name(name)
                 .auth("USER")
                 .build()
-        );
+        ).getId();
     }
 
     @After
@@ -206,7 +207,7 @@ public class PostControllerTest {
                         .title("title")
                         .content("content")
                         .image(images)
-                        .user(clubRepository.getOne(clubId))
+                        .user(fanSRepository.getOne(userId))
                         .club(clubRepository.getOne(clubId))
                         .image(new ArrayList<>())
                         .build());
@@ -240,8 +241,8 @@ public class PostControllerTest {
         List<Post> all = postRepository.findAll();
 
         Long id = new ObjectMapper().readValue(mvcResult.getResponse().getContentAsString(), Long.class);
-        assertThat(id).isEqualTo(-2L);
-        // assertThat(all.get(0).getTitle()).isEqualTo(updated_title);
+
+        assertThat(all.get(0).getTitle()).isEqualTo(updated_title);
     }
 
 }
