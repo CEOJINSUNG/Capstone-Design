@@ -9,7 +9,6 @@ import com.capstone.fans.domain.goods_order.GoodsOrder;
 import com.capstone.fans.domain.goods_order.GoodsOrderRepository;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.club.Club;
-
 import com.capstone.fans.erorrs.ErrorCodes;
 import com.capstone.fans.web.dto.goods.GoodsOrderSaveDto;
 import com.capstone.fans.web.dto.goods.GoodsOrderUpdateDto;
@@ -17,8 +16,6 @@ import com.capstone.fans.web.dto.goods.GoodsSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.criteria.Order;
 
 @RequiredArgsConstructor
 @Service

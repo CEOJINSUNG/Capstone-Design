@@ -6,6 +6,7 @@ import com.capstone.fans.domain.user.User;
 import com.capstone.fans.service.CommentService;
 import com.capstone.fans.web.dto.comment.CommentDto;
 import com.capstone.fans.web.dto.comment.CommentSaveDto;
+import com.capstone.fans.web.dto.comment.CommentUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class CommentController {
     }
 
     @PutMapping("/comment/update/{id}")
-    public Long updateComment(@PathVariable Long id, @RequestBody CommentSaveDto commentSaveDto, @AuthenticationPrincipal User user) {
-        return commentService.update(id, commentSaveDto, user);
+    public Long updateComment(@PathVariable Long id, @RequestBody CommentUpdateDto commentUpdateDto, @AuthenticationPrincipal User user) {
+        return commentService.update(id, commentUpdateDto, user);
     }
 
     @GetMapping("/comment/find/{id}")

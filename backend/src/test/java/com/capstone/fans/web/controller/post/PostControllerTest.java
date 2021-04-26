@@ -3,11 +3,9 @@ package com.capstone.fans.web.controller.post;
 
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
-import com.capstone.fans.domain.user.UserRepository;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
-import com.capstone.fans.domain.user.fans.FanSRepositoryTest;
 import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.service.UserService;
 import com.capstone.fans.web.dto.post.PostSaveRequestDto;
@@ -16,19 +14,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.TestExecutionEvent;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -248,6 +241,7 @@ public class PostControllerTest {
 
         Long id = new ObjectMapper().readValue(mvcResult.getResponse().getContentAsString(), Long.class);
         assertThat(id).isEqualTo(-2L);
+        // assertThat(all.get(0).getTitle()).isEqualTo(updated_title);
     }
 
 }
