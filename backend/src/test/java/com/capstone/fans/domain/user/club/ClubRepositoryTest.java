@@ -3,21 +3,25 @@ package com.capstone.fans.domain.user.club;
 
 
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.After;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ClubRepositoryTest {
     @Autowired
     ClubRepository clubRepository;
 
-    @AfterEach
+    @After
     public void cleanup(){
         clubRepository.deleteAll();
     }
@@ -45,6 +49,7 @@ public class ClubRepositoryTest {
                 .blockchain_address(blockChain)
                 .phone_number(phone_number)
                 .name(name)
+                .auth("USER")
                 .build()
         );
 

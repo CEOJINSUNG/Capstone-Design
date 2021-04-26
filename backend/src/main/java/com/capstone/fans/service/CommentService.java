@@ -38,7 +38,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(id).orElse(null);
         if(comment == null)
             return -1L;
-        else if(comment.getUser().getId() != user.getId())
+        else if(!comment.getUser().getId().equals(user.getId()))
             return -2L;
         comment.update(postCommentDto);
         return id;
@@ -52,12 +52,4 @@ public class CommentService {
             return null;
         return commentRepository.findByPost(post);
     }
-
-
-
-
-
-
-
-
 }
