@@ -39,13 +39,18 @@ public class UserService implements UserDetailsService {
             if(email.equals(user.getEmail()))
                 return -1L;
         }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        signUpDto.setPassword(encoder.encode(signUpDto.getPassword()));
         if(signUpDto.getUser_type().equals("FANS")){
             return fansRepository.save(signUpDto.toFanSEntity()).getId();
         }else{
             return clubRepository.save(signUpDto.toClubEntity()).getId();
         }
     }
+
+    @Transactional(readOnly = true)
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+    }
+
 
 }

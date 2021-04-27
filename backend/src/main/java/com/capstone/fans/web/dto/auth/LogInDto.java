@@ -1,6 +1,7 @@
 package com.capstone.fans.web.dto.auth;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,4 +10,10 @@ import lombok.NoArgsConstructor;
 public class LogInDto {
     private String email;
     private String password;
+
+    @Builder
+    public LogInDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

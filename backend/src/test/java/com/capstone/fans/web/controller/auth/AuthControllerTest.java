@@ -53,7 +53,9 @@ public class AuthControllerTest {
     private MockMvc mockMvc;
     @Before
     public void setUp(){
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).
+                apply(springSecurity()).
+                build();
 
     }
 
@@ -90,6 +92,7 @@ public class AuthControllerTest {
                 .sessionAttr(TOKEN_ATTR_NAME, csrfToken)
                 .param(csrfToken.getParameterName(), csrfToken.getToken())
                 .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
                 .content(new ObjectMapper().writeValueAsString(signUpDto)))
                 .andExpect(status().isOk());
 
@@ -98,7 +101,6 @@ public class AuthControllerTest {
         List<FanS> all = fansRepository.findAll();
         assertThat(all.get(0).getEmail()).isEqualTo("email");
         assertThat(all.get(0).getName()).isEqualTo("name");
-        assertThat(all.get(0).getNickname()).isEqualTo("한글");
         assertThat(all.get(0).getAddress()).isEqualTo("address");
         assertThat(all.get(0).getPhone_number()).isEqualTo("1111");
         assertThat(all.get(0).getBlockchain_address()).isEqualTo("2222");
@@ -138,7 +140,6 @@ public class AuthControllerTest {
         List<Club> all = clubRepository.findAll();
         assertThat(all.get(0).getEmail()).isEqualTo("email");
         assertThat(all.get(0).getName()).isEqualTo("name");
-        assertThat(all.get(0).getNickname()).isEqualTo("한글");
         assertThat(all.get(0).getAddress()).isEqualTo("address");
         assertThat(all.get(0).getPhone_number()).isEqualTo("1111");
         assertThat(all.get(0).getBlockchain_address()).isEqualTo("2222");
