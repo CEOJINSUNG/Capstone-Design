@@ -5,13 +5,12 @@ import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
+import org.junit.After;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class PostRepositoryTest {
     PostRepository postRepository;
 
 
-    @AfterEach
+    @After
     public void cleanup(){
         postRepository.deleteAll();
         clubRepository.deleteAll();
@@ -42,7 +41,6 @@ public class PostRepositoryTest {
     }
 
     @Test
-    @Transactional
     public void 게시글저장_불러오기(){
         String adress = "suwon";
         String description = "no description";
@@ -105,7 +103,6 @@ public class PostRepositoryTest {
 
         assertThat(post.getPostType()).isEqualTo(postType);
         assertThat(post.getContent()).isEqualTo(content);
-        assertThat(post.getImage().size()).isEqualTo(0);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(((FanS)post.getUser()).getProfile_description()).isEqualTo(fanS.getProfile_description());
     }

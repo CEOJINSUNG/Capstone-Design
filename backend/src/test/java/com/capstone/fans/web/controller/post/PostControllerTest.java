@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -106,6 +107,15 @@ public class PostControllerTest {
         clubRepository.deleteAll();
         fanSRepository.deleteAll();
     }
+
+    @AfterAll
+    public void cleanup() throws Exception{
+        postRepository.deleteAll();
+        clubRepository.deleteAll();
+        fanSRepository.deleteAll();
+    }
+
+
 
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)

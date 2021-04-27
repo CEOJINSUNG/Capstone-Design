@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
+@Table(name = "GoodsOption")
 public class Option extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
