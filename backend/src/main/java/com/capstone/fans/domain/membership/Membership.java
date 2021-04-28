@@ -27,10 +27,16 @@ public class Membership extends BaseTimeEntity {
 
     private Long cashPerMonth;
 
+    private String description;
+
+    private byte[] membershipImage;
+
     @Builder
-    public Membership(Club club, LocalDateTime valid_date, Long cashPerMonth) {
+    public Membership(Club club, LocalDateTime valid_date, Long cashPerMonth, String description, byte[] membershipImage) {
         this.club = club;
         this.valid_date = valid_date;
         this.cashPerMonth = cashPerMonth;
+        this.description = description;
+        this.membershipImage = membershipImage;
     }
 }
