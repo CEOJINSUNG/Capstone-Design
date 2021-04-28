@@ -1,25 +1,23 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FC from './component/FC';
-import Personal from './component/Personal';
-import Splash from './component/Splash';
-import Info from './component/Info';
-import Community from './component/Community';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Tab = createBottomTabNavigator()
+import React from 'react';
+import Home from './component/Home';
+import Main from './component/Main';
 
-const App = () => {
+
+function App() {
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Community" component={Community} />
-        <Tab.Screen name="Splash" component={Splash} />
-        <Tab.Screen name="Personal" component={Personal} />
-        <Tab.Screen name="FC" component={FC} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home}
+          options={{headerShown: false}} />
+        <Stack.Screen name="Main" component={Main}
+          options={{headerShown: false}} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
-};
-
+}
+ 
 export default App;
