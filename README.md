@@ -3,6 +3,23 @@
 
 # Frontend
 
+Please refer below url to use react native
+https://reactnative.dev/docs/environment-setup -> React Native CLI Quickstart
+
+```
+### On Ubuntu
+# After Setup
+# You should use two terminal tabs
+
+# 1st tab
+cd frontend
+npx react-native start
+
+# 2nd tab
+cd frontend
+npx react-native run-android
+```
+
 ### 사용한 패키지
 ```
 1. react navigation : https://reactnavigation.org/
