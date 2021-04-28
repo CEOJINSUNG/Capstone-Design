@@ -3,11 +3,11 @@
 
 # Frontend
 
-Please refer below url to use react native
+Please refer below url to use react native <br>
 https://reactnative.dev/docs/environment-setup -> React Native CLI Quickstart
 
+### On Ubuntu (After environment setup)
 ```
-### On Ubuntu
 # After Setup
 # You should use two terminal tabs
 
