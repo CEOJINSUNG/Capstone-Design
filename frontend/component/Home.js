@@ -60,7 +60,7 @@ export default function Home({navigation}) {
                         marginTop:50
                 }}>
                     <Button
-                        title="Press me"
+                        title="Log in"
                         color="#000000"
                         onPress={() => navigation.navigate('Main')}
                     />
