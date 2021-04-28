@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class MembershipService {
     private final MembershipRepository membershipRepository;
-    private final SubscribeRepository subscribeRepository;
     private final ClubRepository clubRepository;
 
 
@@ -100,12 +99,5 @@ public class MembershipService {
                         .build()
                 ).collect(Collectors.toList());
     }
-
-
-
-
-
-
-
 
 }
