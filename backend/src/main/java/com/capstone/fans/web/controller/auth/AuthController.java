@@ -8,21 +8,14 @@ import com.capstone.fans.web.dto.auth.LogInDto;
 import com.capstone.fans.web.dto.auth.SignUpDto;
 import com.capstone.fans.web.dto.user.UserInfoDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -50,6 +43,7 @@ public class AuthController{
     // Read
     @GetMapping("/auth/userInfo")
     public UserInfoDto userInfo(@AuthenticationPrincipal User user) {
+        System.out.println(user.getAuthorities().stream().collect(Collectors.toList()).get(0).toString());
         return UserInfoDto.createDto(user);
     }
 

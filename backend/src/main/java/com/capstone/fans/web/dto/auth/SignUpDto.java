@@ -42,7 +42,7 @@ public class SignUpDto {
                 .address(address)
                 .phone_number(phone_number)
                 .blockchain_address(blockChain_address)
-                .auth("USER")
+                .auth("ROLE_USER")
                 .build();
     }
 
@@ -57,7 +57,7 @@ public class SignUpDto {
                 .address(address)
                 .phone_number(phone_number)
                 .blockchain_address(blockChain_address)
-                .auth("USER")
+                .auth("ROLE_USER")
                 .build();
     }
 }
