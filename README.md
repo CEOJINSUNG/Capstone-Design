@@ -3,11 +3,6 @@
 
 # Frontend
 
-```
-cd frontend
-npm install expo-cli
-```
-
 ### 사용한 패키지
 ```
 1. react navigation : https://reactnavigation.org/
