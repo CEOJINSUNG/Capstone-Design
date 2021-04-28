@@ -7,24 +7,27 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @Getter
 @NoArgsConstructor
-public class MembershipResponseDto {
-    private Long id;
+public class MembershipUpdateDto {
     private LocalDateTime valid_date;
+
     private Long cashPerMonth;
-    private String description;
+
     private String membershipName;
+
+    private String description;
+
     private byte[] membershipImage;
 
-
     @Builder
-    public MembershipResponseDto(Long id, LocalDateTime valid_date, Long cashPerMonth, String description, String membershipName, byte[] membershipImage) {
-        this.id = id;
+
+    public MembershipUpdateDto(LocalDateTime valid_date, Long cashPerMonth, String membershipName, String description, byte[] membershipImage) {
         this.valid_date = valid_date;
         this.cashPerMonth = cashPerMonth;
-        this.description = description;
         this.membershipName = membershipName;
+        this.description = description;
         this.membershipImage = membershipImage;
     }
 }
