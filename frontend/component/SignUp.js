@@ -14,10 +14,13 @@ import { NavigationHelpersContext } from "@react-navigation/core";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-export default function Home({navigation}) {
+export default function SignUp({navigation}) {
     const isDarkMode = useColorScheme() === 'dark';
-    const [text, onChangeText] = React.useState("");
+    const [name, onChangeName] = React.useState("");
+    const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
+    const [nickname, onChangeNickname] = React.useState("");
+    const [address, onChangeAddress] = React.useState("");
   
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -33,24 +36,42 @@ export default function Home({navigation}) {
                 <Text style={{
                     fontSize: 64,
                     color: "#FFFFFF",
-                    marginTop: 150,
+                    marginTop: 50,
                     fontWeight: "bold",
                 }}>Fan:S</Text>
                 <View style={{
-                    marginTop: 80
+                    marginTop: 40
                 }}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={onChangeText}
-                        placeholder="Please Type Your ID"
-                        value={text}
+                        onChangeText={onChangeName}
+                        placeholder="Type Your Name"
+                        value={name}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeEmail}
+                        placeholder="Type Your E-mail"
+                        value={email}
                     />
                     <TextInput
                         style={styles.input}
                         onChangeText={onChangePassword}
                         value={password}
                         secureTextEntry={true}
-                        placeholder="Please Type Your Password"
+                        placeholder="Type Your Password"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeNickname}
+                        placeholder="Type Your Nickname"
+                        value={nickname}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeAddress}
+                        placeholder="Type Your Address"
+                        value={address}
                     />
                 </View>
                 <View
@@ -58,19 +79,9 @@ export default function Home({navigation}) {
                         marginTop:50
                 }}>
                     <Button
-                        title="Log in"
+                        title="Submit"
                         color="#000000"
-                        onPress={() => navigation.navigate('Main')}
-                    />
-                </View>
-                <View
-                    style={{
-                        marginTop:50
-                }}>
-                    <Button
-                        title="Sign Up"
-                        color="#777777"
-                        onPress={() => navigation.navigate('SignUp')}
+                        onPress={() => navigation.navigate('Home')}
                     />
                 </View>
             </View>
