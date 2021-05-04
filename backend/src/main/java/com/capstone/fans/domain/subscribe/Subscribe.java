@@ -40,4 +40,11 @@ public class Subscribe extends BaseTimeEntity {
         this.total_cash = total_cash;
         this.payment_date = payment_date;
     }
+
+
+    public void updatePayment(){
+        total_cash += membership.getCashPerMonth();
+        payment_date = LocalDateTime.now().plusMonths(1);
+    }
+
 }

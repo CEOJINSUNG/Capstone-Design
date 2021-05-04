@@ -66,4 +66,16 @@ public class SubscribeService {
     }
 
 
+    @Transactional
+    public void processPayment() {
+        List<Subscribe> subscribes = subscribeRepository.findByDateLimit(LocalDateTime.now());
+        for (Subscribe subscribe : subscribes) {
+            if (false/* 돈이 모자를 경우 */) {
+                /*모자를 시 알고리즘*/
+            } else {
+                /* 블록체인 송금 알고리즘*/
+                subscribe.updatePayment();
+            }
+        }
+    }
 }
