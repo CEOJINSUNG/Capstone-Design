@@ -3,6 +3,7 @@ import {
     View,
     Text,
     SafeAreaView,
+    ScrollView,
     StatusBar,
     useColorScheme,
     TextInput,
@@ -21,77 +22,115 @@ export default function SignUp({navigation}) {
     const [password, onChangePassword] = React.useState("");
     const [nickname, onChangeNickname] = React.useState("");
     const [address, onChangeAddress] = React.useState("");
-  
+    const [phone_number, onChangePhoneNumber] = React.useState("");
+    
+    //TODO : backend port should be opened
+    // TODO: make block chain address id will be added
+    function signUpButtonHandler(){
+        fetch('http://backend_ip/auth/signup', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: {email},
+                name: {name},
+                password: {password},
+                nickname: {nickname},
+                address : {address},
+                phone_number : {phone_number},
+                blockchain_address : "ABCDEF123456$",
+                user_type : "f"
+            })
+        });
+        navigation.navigate('Home');
+    }
+
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-            <View style={{
+            <ScrollView 
+                style={{
+                    contentInsetAdjustmentBehavior: "automatic",
+                    backgroundColor: "#9520FF",
+            }}>
+                <View style={{
                 backgroundColor: "#9520FF",
                 flex: 1,
 
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-            }}>
-                <Text style={{
-                    fontSize: 64,
-                    color: "#FFFFFF",
-                    marginTop: 50,
-                    fontWeight: "bold",
-                }}>Fan:S</Text>
-                <View style={{
-                    marginTop: 40
                 }}>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeName}
-                        placeholder="Type Your Name"
-                        value={name}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeEmail}
-                        placeholder="Type Your E-mail"
-                        value={email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangePassword}
-                        value={password}
-                        secureTextEntry={true}
-                        placeholder="Type Your Password"
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeNickname}
-                        placeholder="Type Your Nickname"
-                        value={nickname}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeAddress}
-                        placeholder="Type Your Address"
-                        value={address}
-                    />
+                    <Text style={{
+                        fontSize: 64,
+                        color: "#FFFFFF",
+                        marginTop: 20,
+                        fontWeight: "bold",
+                    }}>Fan:S</Text>
+                    <View style={{
+                        marginTop: 20
+                    }}>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangeName}
+                            placeholder="Type Your Name"
+                            value={name}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangeEmail}
+                            placeholder="Type Your E-mail"
+                            value={email}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangePassword}
+                            value={password}
+                            secureTextEntry={true}
+                            placeholder="Type Your Password"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangeNickname}
+                            placeholder="Type Your Nickname"
+                            value={nickname}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangeAddress}
+                            placeholder="Type Your Address"
+                            value={address}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangePhoneNumber}
+                            placeholder="Type Your Address"
+                            value={phone_number}
+                        />
+                    </View>
+                    <View
+                        style={{
+                            marginTop:0
+                    }}>
+                        <Button
+                            title="Submit"
+                            color="#000000"
+                            onPress={signUpButtonHandler}
+                        />
+                    </View>
                 </View>
-                <View
-                    style={{
-                        marginTop:50
-                }}>
-                    <Button
-                        title="Submit"
-                        color="#000000"
-                        onPress={() => navigation.navigate('Home')}
-                    />
-                </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
+
+    
 }
 
 const styles = StyleSheet.create({
     input: {
-      height: 70,
+      height: 40,
       width: 300,
       margin: 12,
       borderWidth: 1,

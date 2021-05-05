@@ -7,7 +7,8 @@ import {
     useColorScheme,
     TextInput,
     StyleSheet,
-    Button
+    Button,
+    Alert
 } from "react-native"
 
 import { NavigationHelpersContext } from "@react-navigation/core";
@@ -16,9 +17,29 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 export default function Home({navigation}) {
     const isDarkMode = useColorScheme() === 'dark';
-    const [text, onChangeText] = React.useState("");
+    const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
-  
+
+    function logInButtonHandler(){
+        fetch('http://localhost:8080/auth/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: {email},
+                password: {password}
+            })
+        })
+        .then((response) => {
+            console.log(response);
+            navigation.navigate('Main');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -41,9 +62,9 @@ export default function Home({navigation}) {
                 }}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={onChangeText}
-                        placeholder="Please Type Your ID"
-                        value={text}
+                        onChangeText={onChangeEmail}
+                        placeholder="Please Type Your E-mail"
+                        value={email}
                     />
                     <TextInput
                         style={styles.input}
@@ -60,7 +81,7 @@ export default function Home({navigation}) {
                     <Button
                         title="Log in"
                         color="#000000"
-                        onPress={() => navigation.navigate('Main')}
+                        onPress={logInButtonHandler}
                     />
                 </View>
                 <View
