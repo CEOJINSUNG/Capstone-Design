@@ -8,8 +8,11 @@ import {
     Image
 } from "react-native"
 
-export default function Splash() {
+export default function Splash({ navigation }) {
     const isDarkMode = useColorScheme() === 'dark';
+    setTimeout(() => {
+        navigation.navigate("Main")
+    }, 2000)
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
