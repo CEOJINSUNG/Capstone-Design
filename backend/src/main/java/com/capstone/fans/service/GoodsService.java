@@ -84,7 +84,7 @@ public class GoodsService {
             return ErrorCodes.NOT_EXIST;
         else if(!user.getId().equals(order.getUser().getId()))
             return ErrorCodes.NOT_SAME_USER;
-        else if(!option.getGoods_id().equals(order.getGoods().getId()))
+        else if(!option.getGoods().getId().equals(order.getGoods().getId()))
             return ErrorCodes.INVALID_VAR;
         order.update(option, goodsOrderUpdateDto.getAddress());
         return goodsOrderUpdateDto.getOrderId();

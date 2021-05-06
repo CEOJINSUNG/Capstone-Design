@@ -19,16 +19,18 @@ public class Option extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "GOODS_IDSS")
-    private Long goods_id;
+
+    @ManyToOne
+    @JoinColumn
+    private Goods goods;
 
     private String name;
 
     private Long costs;
 
     @Builder
-    public Option(Long goods_id, String name, Long costs) {
-        this.goods_id = goods_id;
+    public Option(Goods goods, String name, Long costs) {
+        this.goods = goods;
         this.name = name;
         this.costs = costs;
     }

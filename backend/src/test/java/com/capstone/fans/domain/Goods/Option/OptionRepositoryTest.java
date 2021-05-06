@@ -40,7 +40,6 @@ public class OptionRepositoryTest {
 
     @Test
     public void OptionSaveTest() {
-
         String adress = "suwon";
         String description = "no description";
         String clubname = "club 1";
@@ -99,7 +98,7 @@ public class OptionRepositoryTest {
         String OptionName = "option_name";
         Long OptionCost = 1L;
 
-        optionRepository.save(Option.builder().goods_id(goods_id).name(OptionName).costs(OptionCost).build());
+        optionRepository.save(Option.builder().goods(goods).name(OptionName).costs(OptionCost).build());
 
         List<Option> options = optionRepository.findAll();
         Option option = options.get(0);
@@ -109,5 +108,4 @@ public class OptionRepositoryTest {
 
 
     }
-
 }

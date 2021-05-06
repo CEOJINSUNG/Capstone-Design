@@ -34,13 +34,13 @@ public class GoodsRepositoryTest {
 
     @Autowired
     OptionRepository optionRepository;
-
+/*
     @After
     public void cleanup(){
         optionRepository.deleteAll();
         goodsRepository.deleteAll();
         clubRepository.deleteAll();
-    }
+    }*/
 
     @Test
     public void GoodsSaveLoadTest() {
@@ -103,8 +103,8 @@ public class GoodsRepositoryTest {
         assertThat(goods.getName()).isEqualTo(GoodsName);
         assertThat((goods.getClub()).getClub_description()).isEqualTo("no description");
     }
+
     @Test
-    @Transactional
     public void GoodsAddOptionTest() {
         String adress = "suwon";
         String description = "no description";
@@ -143,6 +143,9 @@ public class GoodsRepositoryTest {
         LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 12,12, 32,22,3333);
 
 
+        String OptionName = "option_name";
+        Long OptionCost = 1L;
+
         goodsRepository.save(Goods.builder()
                 .name(GoodsName)
                 .type(GoodsType)
@@ -153,10 +156,17 @@ public class GoodsRepositoryTest {
                 .startDate(startDateTime)
                 .endDate(endDateTime)
                 .stock(1L)
-                .options(new ArrayList<Option>())
+                .options(new ArrayList<>())
                 .build());
 
         List<Goods> goodsList = goodsRepository.findAll();
+
+        optionRepository.save(Option.builder()
+                .goods(goodsList.get(0))
+                .name(OptionName)
+                .costs(OptionCost)
+                .build()
+        );
 
         Goods goods = goodsList.get(0);
 
@@ -165,23 +175,15 @@ public class GoodsRepositoryTest {
         assertThat(goods.getName()).isEqualTo(GoodsName);
         assertThat((goods.getClub()).getClub_description()).isEqualTo("no description");
 
-        Long goods_id = goods.getId();
-        String OptionName = "option_name";
-        Long OptionCost = 1L;
 
-        optionRepository.save(Option.builder().goods_id(goods_id).name(OptionName).costs(OptionCost).build());
+        goods = goodsRepository.findAll().get(0);
 
-        List<Option> options = optionRepository.findAll();
-        Option option = options.get(0);
+        Option option = goods.getOptions().get(0);
+        System.out.println(option.getGoods().getId());
+        Option option2 = optionRepository.findAll().get(0);
+        System.out.println(option2.getGoods().getId());
 
         assertThat(option.getName()).isEqualTo(OptionName);
         assertThat(option.getCosts()).isEqualTo(OptionCost);
-
-        goods.getOptions().add(option);
-
-        Option TestOption = goods.getOptions().get(0);
-
-        assertThat(TestOption.getName()).isEqualTo(OptionName);
-        assertThat(TestOption.getCosts()).isEqualTo(OptionCost);
     }
 }

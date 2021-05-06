@@ -44,8 +44,7 @@ public class Goods extends BaseTimeEntity {
     private LocalDateTime endDate;
 
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "GOODS_IDSS")
+    @OneToMany(mappedBy = "goods", fetch = FetchType.EAGER)
     private List<Option> options;
 
 
