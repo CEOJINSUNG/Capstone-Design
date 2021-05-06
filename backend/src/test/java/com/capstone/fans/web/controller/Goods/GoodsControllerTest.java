@@ -2,16 +2,13 @@ package com.capstone.fans.web.controller.Goods;
 
 import com.capstone.fans.domain.goods.Goods;
 import com.capstone.fans.domain.goods.GoodsRepository;
-import com.capstone.fans.domain.goods.option.Option;
-import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.service.GoodsService;
 import com.capstone.fans.service.UserService;
-import com.capstone.fans.web.dto.goods.GoodsSaveDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.capstone.fans.web.dto.goods.GoodsSaveClientDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -19,22 +16,19 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,27 +139,22 @@ public class GoodsControllerTest {
         LocalDateTime startDateTime = LocalDateTime.now();
         LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 12,12, 32,22,3333);
 
-        GoodsSaveDto goodsSaveDto = GoodsSaveDto.builder()
+        GoodsSaveClientDto goodsSaveDto = GoodsSaveClientDto.builder()
                 .name("goods")
-                .type("type")
+                .type("Free")
                 .description("desc")
-                .price(1L)
+                .price(100L)
                 .pictures(new ArrayList<>())
-                .stock(2L)
-                .startDate(startDateTime)
-                .endDate(endDateTime)
-                .options(null)
+                .stock(200L)
+                .startDate(startDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+                .endDate(endDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+                .options(new ArrayList<>())
                 .build();
 
-        String url = "http://localhost:" + port + "/goods";
+        String url = "http://localhost:" + port + "/goods/save";
 
-//        String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
-//        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
-//        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
 
         mockMvc.perform(post(url)
-//                .sessionAttr(TOKEN_ATTR_NAME,csrfToken)
-//                .param(csrfToken.getParameterName(), csrfToken.getToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(goodsSaveDto)))
                 .andExpect(status().isOk());

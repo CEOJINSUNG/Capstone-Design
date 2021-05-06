@@ -18,7 +18,7 @@ public class GoodsController {
     private final GoodsService goodsService;
 
 
-    @PostMapping("/goods")
+    @PostMapping("/goods/save")
     public Long saveGoods(@RequestBody GoodsSaveDto goodsSaveDto, @AuthenticationPrincipal User user){
         return goodsService.save(goodsSaveDto, user);
     }

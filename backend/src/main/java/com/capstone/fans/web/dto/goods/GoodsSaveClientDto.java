@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GoodsSaveDto {
+public class GoodsSaveClientDto {
     private String name;
     private String type;
     private String description;
@@ -26,16 +26,14 @@ public class GoodsSaveDto {
     private List<byte[]> pictures;
     private Long stock;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime startDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
 
     private List<Option> options;
 
 
     @Builder
-    public GoodsSaveDto(String name, String type, String description, Long price, List<byte[]> pictures, Long stock, LocalDateTime startDate, LocalDateTime endDate, List<Option> options) {
+    public GoodsSaveClientDto(String name, String type, String description, Long price, List<byte[]> pictures, Long stock, String startDate, String endDate, List<Option> options) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -46,20 +44,4 @@ public class GoodsSaveDto {
         this.endDate = endDate;
         this.options = options;
     }
-
-    public Goods toEntity(Club club){
-        return Goods.builder()
-                .club(club)
-                .name(name)
-                .type(type)
-                .description(description)
-                .price(price)
-                .pictures(pictures)
-                .stock(stock)
-                .startDate(startDate)
-                .endDate(endDate)
-                .options(options)
-                .build();
-    }
-
 }
