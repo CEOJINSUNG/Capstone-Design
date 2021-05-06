@@ -7,7 +7,8 @@ import {
     StatusBar,
     ScrollView,
     useColorScheme,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Image
 } from "react-native"
 import Swiper from "react-native-swiper"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
@@ -347,11 +348,14 @@ export default function FC() {
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={[style.row, { marginTop: 12, width: "90%", marginLeft: "5%", marginBottom: 40, }]}>
-                    <View style={{
-                        width: 120,
-                        height: 88,
-                        backgroundColor: "#000000"
-                    }} />
+                    <Image
+                        source={require("./icon/news.png")}
+                        style={{
+                            width: 120,
+                            height: 88,
+                            backgroundColor: "#000000"
+                        }}
+                    />
                     <View style={{
                         display: "flex",
                         flexDirection: "column",
