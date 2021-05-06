@@ -47,7 +47,6 @@ public class AuthController{
         return UserInfoDto.createDto(user);
     }
 
-    //Update
 
     @PostMapping("/auth/login")
     public String login(@RequestBody LogInDto logInDto) {
