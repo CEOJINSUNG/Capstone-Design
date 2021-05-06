@@ -3,6 +3,7 @@ package com.capstone.fans.domain.goods.option;
 
 import com.capstone.fans.domain.BaseTimeEntity;
 import com.capstone.fans.domain.goods.Goods;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,7 @@ public class Option extends BaseTimeEntity {
 
     private Long costs;
 
+    @Builder
     public Option(Long goods_id, String name, Long costs) {
         this.goods_id = goods_id;
         this.name = name;
