@@ -1,13 +1,8 @@
-import React from "react"
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from "react-native-vector-icons/Ionicons"
-
+import Ionicons from "react-native-vector-icons/Ionicons";
 import FC from './FC';
 import Personal from './Personal';
-import Splash from './Splash';
 import Community from './Community';
 
 const Tab = createBottomTabNavigator();

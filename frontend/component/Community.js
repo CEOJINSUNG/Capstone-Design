@@ -15,7 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const tab = createMaterialTopTabNavigator()
 
-export default function Community() {
+export default function Community({navigation}) {
     const isDarkMode = useColorScheme() === 'dark';
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -387,7 +387,7 @@ export default function Community() {
                     marginTop: 50,
                     alignSelf: "center"
                 }}>미리 구매하고 여름에 같이 축구 보러가자!</Text>
-                <TouchableOpacity style={{
+                <TouchableOpacity onPress={() => navigation.navigate("Shop")} style={{
                     width: 150,
                     height: 30,
                     backgroundColor: "#650AB2",

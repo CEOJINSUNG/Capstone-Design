@@ -5,11 +5,12 @@ import {
     StatusBar,
     SafeAreaView,
     useColorScheme,
-    Image
+    Image,
+    TouchableOpacity
 } from "react-native"
 import AntDesign from "react-native-vector-icons/AntDesign"
 
-export default function Info() {
+export default function Info({ navigation }) {
     const isDarkMode = useColorScheme() === 'dark';
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -21,7 +22,12 @@ export default function Info() {
                 marginTop: 16,
                 marginLeft: 16,
             }}>
-                <AntDesign name="arrowleft" size={20} />
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image source={require("./icon/arrow.png")} style={{
+                        width: 14,
+                        height: 14,
+                    }} />
+                </TouchableOpacity>
                 <Text style={{
                     fontSize: 16,
                     color: "#000000",
@@ -33,7 +39,7 @@ export default function Info() {
                 marginTop: 12,
                 marginLeft: 16,
             }}>
-                <InfoList 
+                <InfoList
                     icon={<Image source={require("./icon/megaphone.png")} />}
                     title="공지사항"
                 />

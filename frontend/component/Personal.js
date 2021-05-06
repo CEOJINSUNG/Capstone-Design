@@ -8,6 +8,7 @@ import {
     ScrollView,
     useColorScheme
 } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
@@ -49,7 +50,7 @@ const Status = ({ current, standard }) => {
 }
 
 //NFT 로고 디자인
-const NFTLogo = ({name, follower}) => {
+const NFTLogo = ({ name, follower }) => {
     return (
         <View style={{
             width: 75,
@@ -77,14 +78,14 @@ const NFTLogo = ({name, follower}) => {
             <Text style={{
                 fontSize: 8,
                 color: "#000000",
-                opacity: 0.6, 
+                opacity: 0.6,
                 marginTop: 4,
             }}>{follower} 팔로우</Text>
         </View>
     )
 }
 
-export default function Personal() {
+export default function Personal({ navigation }) {
     const isDarkMode = useColorScheme() === 'dark';
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -144,10 +145,10 @@ export default function Personal() {
                         <MaterialCommunityIcons name="soccer-field" size={30} />
                         <Text style={style.tenFont}>예측 기록</Text>
                     </View>
-                    <View style={[style.column, { alignItems: "center", width: 60 }]}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Info")} style={[style.column, { alignItems: "center", width: 60 }]}>
                         <Ionicons name="settings-outline" size={30} />
                         <Text style={style.tenFont}>설정</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <Text style={{
                     marginLeft: "5%",
