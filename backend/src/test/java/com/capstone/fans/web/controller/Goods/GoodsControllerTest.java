@@ -9,6 +9,7 @@ import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.service.GoodsService;
+import com.capstone.fans.service.UserService;
 import com.capstone.fans.web.dto.goods.GoodsSaveDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,6 +68,9 @@ public class GoodsControllerTest {
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private UserService userService;
+
     private MockMvc mockMvc;
 
     private Long fans_userId;
@@ -96,24 +100,26 @@ public class GoodsControllerTest {
                 .blockchain_address(blockChain)
                 .phone_number(phone_number)
                 .name(name)
-                .auth("USER")
+                .auth("ROLE_USER")
                 .build()
         ).getId();
 
 
         String clubname = "club 1";
-        String club_email = "abcd@asdf";
+        String club_email = "abcd@asdfsdf";
 
         club_userId = clubRepository.save(Club.builder()
                 .address(adress)
                 .club_description(description)
-                .club_name(clubname)
                 .club_picture(image)
+                .club_name(clubname)
+                .profile_image(image)
                 .email(club_email)
                 .password(password)
                 .blockchain_address(blockChain)
                 .phone_number(phone_number)
                 .name(name)
+                .auth("ROLE_USER")
                 .build()).getId();
 
     }
@@ -133,7 +139,7 @@ public class GoodsControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = "abcd@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "abcd@asdfsdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void saveGoodsTest() throws Exception {
 
         LocalDateTime startDateTime = LocalDateTime.now();
@@ -148,7 +154,7 @@ public class GoodsControllerTest {
                 .stock(2L)
                 .startDate(startDateTime)
                 .endDate(endDateTime)
-                .options(new ArrayList<Option>())
+                .options(null)
                 .build();
 
         String url = "http://localhost:" + port + "/goods";
