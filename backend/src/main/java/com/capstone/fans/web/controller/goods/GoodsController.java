@@ -45,8 +45,7 @@ public class GoodsController {
 
 
     @PutMapping("/goods/clubs/order_manage/{id}")
-    public Long updateOrderState(@PathVariable Long id, @RequestBody String state, @AuthenticationPrincipal User user){
+    public Long updateOrderState(@PathVariable Long id, @RequestBody String state, @AuthenticationPrincipal User user) {
         return goodsService.changeOrderState(state, id, user);
     }
-    
 }

@@ -42,7 +42,6 @@ public class GoodsOrder extends BaseTimeEntity {
 
 
     @Builder
-
     public GoodsOrder(User user, Goods goods, String state, String address, Option option, LocalDateTime shipped_date) {
         this.user = user;
         this.goods = goods;
