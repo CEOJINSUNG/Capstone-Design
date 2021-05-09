@@ -48,7 +48,5 @@ public class GoodsController {
     public Long updateOrderState(@PathVariable Long id, @RequestBody String state, @AuthenticationPrincipal User user){
         return goodsService.changeOrderState(state, id, user);
     }
-
-
-
+    
 }

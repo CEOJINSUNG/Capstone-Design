@@ -60,7 +60,7 @@ public class GoodsService {
                 .user(user)
                 .goods(goods)
                 .state(initialState)
-                .address(goodsOrderSaveDto.getAdress())
+                .address(goodsOrderSaveDto.getAddress())
                 .shipped_date(null)
                 .option(option)
                 .build()).getId();
@@ -75,7 +75,6 @@ public class GoodsService {
 
 
         /*수정 불가 조건 에러*/
-
 
 
         GoodsOrder order = goodsOrderRepository.findById(goodsOrderUpdateDto.getOrderId()).orElse(null);
@@ -129,6 +128,4 @@ public class GoodsService {
         goodsOrder.updateState(state);
         return id;
     }
-
-
 }

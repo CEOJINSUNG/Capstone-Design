@@ -61,5 +61,4 @@ public class GoodsSaveDto {
                 .options(options)
                 .build();
     }
-
 }

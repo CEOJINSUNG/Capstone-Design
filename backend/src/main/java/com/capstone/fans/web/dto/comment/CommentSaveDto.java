@@ -20,22 +20,6 @@ public class CommentSaveDto {
     public Comment toEntity() {
         return Comment.builder().comment(comment).build();
     }
-    /*
-    @Builder
-    public PostSaveRequestDto(String title, List<byte[]> images, String contents, String category) {
-        this.title = title;
-        this.images = images;
-        this.contents = contents;
-        this.category = category;
-    }
 
-    public Post toEntity() {
-        return Post.builder()
-                .title(title)
-                .image(images)
-                .content(contents)
-                .build();
-    }
-    */
 
 }

@@ -2,12 +2,15 @@ package com.capstone.fans.web.controller.Goods;
 
 import com.capstone.fans.domain.goods.Goods;
 import com.capstone.fans.domain.goods.GoodsRepository;
+import com.capstone.fans.domain.goods.option.Option;
+import com.capstone.fans.domain.goods.option.OptionRepository;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.service.GoodsService;
 import com.capstone.fans.service.UserService;
+import com.capstone.fans.web.dto.goods.GoodsOrderSaveDto;
 import com.capstone.fans.web.dto.goods.GoodsSaveClientDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
@@ -49,6 +52,9 @@ public class GoodsControllerTest {
 
     @Autowired
     private GoodsRepository goodsRepository;
+
+    @Autowired
+    private OptionRepository optionRepository;
 
     @Autowired
     private ClubRepository clubRepository;
@@ -117,7 +123,7 @@ public class GoodsControllerTest {
                 .build()).getId();
 
     }
-
+/*
     @After
     public void tearDown() throws Exception{
         goodsRepository.deleteAll();
@@ -131,7 +137,7 @@ public class GoodsControllerTest {
         clubRepository.deleteAll();
         fansRepository.deleteAll();
     }
-
+*/
     @Test
     @WithUserDetails(value = "abcd@asdfsdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void saveGoodsTest() throws Exception {
@@ -165,7 +171,53 @@ public class GoodsControllerTest {
         assertThat(all.get(0).getDescription()).isEqualTo("desc");
     }
     @Test
-    public void saveOrderTest() {
+    @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void saveOrderTest() throws Exception {
+        LocalDateTime startDateTime = LocalDateTime.now();
+        LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 12,12, 32,22,3333);
+
+        goodsRepository.save(Goods.builder()
+                .name("goods")
+                .type("type")
+                .description("desc")
+                .price(11L)
+                .club(clubRepository.getOne(club_userId))
+                .pictures(new ArrayList<>())
+                .startDate(startDateTime)
+                .endDate(endDateTime)
+                .build());
+
+        String OptionName = "option_name";
+        Long OptionCost = 1L;
+
+        List<Goods> goodsList = goodsRepository.findAll();
+
+
+        optionRepository.save(Option.builder()
+                .goods(goodsList.get(0))
+                .name(OptionName)
+                .costs(OptionCost)
+                .build()
+        );
+
+        Option option = goodsRepository.findAll().get(0).getOptions().get(0);
+
+        GoodsOrderSaveDto goodsOrderSaveDto = GoodsOrderSaveDto.builder()
+                .address("address")
+                .option_id(option.getId())
+                .goods_id(goodsList.get(0).getId())
+                .build();
+
+
+        System.out.println("fans user id : " + fans_userId);
+        System.out.println("goods option id : " + option.getId());
+        String url = "http://localhost:" + port + "/goods/buy/" + fans_userId;
+
+
+        mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(goodsOrderSaveDto)))
+                .andExpect(status().isOk());
 
     }
     @Test
