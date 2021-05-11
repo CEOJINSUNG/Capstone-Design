@@ -14,6 +14,7 @@ import com.capstone.fans.web.dto.membership.MembershipSaveDto;
 import com.capstone.fans.web.dto.membership.MembershipUpdateClientDto;
 import com.capstone.fans.web.dto.membership.MembershipUpdateDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,6 +73,14 @@ public class MembershipControllerTest {
     private MockMvc mockMvc;
     private Long club_id;
     private Long fans_userId;
+
+    @After
+    public void teardown(){
+        membershipRepository.deleteAll();
+        clubRepository.deleteAll();
+        fansRepository.deleteAll();
+    }
+
 
     @Before
     public void setup() {
