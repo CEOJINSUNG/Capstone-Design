@@ -125,8 +125,8 @@ Using Web3 & See Web3.js API Documentation
 
 ### Writer - 작성자
 ```
-This README.md is made by JinsungKIM(CEOJINSUNG) 
-이 블록체인 연동과정은 김진성(CEOJINSUNG)에 의해 작성됨
+This README.md is made and tested by JinsungKIM(CEOJINSUNG) 
+이 블록체인 연동과정은 김진성(CEOJINSUNG)에 의해 작성되고 테스트 되었음
 ```
 
 
