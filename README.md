@@ -1,39 +1,12 @@
 # Capstone-Design
 여기는 2021-1 종합설계 프로젝트 4조 방입니다.
 
-# Frontend
-
-Please refer below url to use react native <br>
-https://reactnative.dev/docs/environment-setup -> React Native CLI Quickstart
-
-### On Ubuntu (After environment setup)
-```
-# After Setup
-# You should use two terminal tabs
-
-# 1st tab
-cd frontend
-npx react-native start
-
-# 2nd tab
-cd frontend
-npx react-native run-android
-```
-
-### 사용한 패키지
-```
-1. react navigation : https://reactnavigation.org/
-2. react-native-vector-icons : https://github.com/oblador/react-native-vector-icons
-3. react-native-swiper : https://github.com/leecade/react-native-swiper
-```
-
-
-# How to setup web3.js in React Native(React Native에서 web3.js 연동하기)
+## How to setup web3.js in React Native (React Native에서 web3.js 연동하기)
 ```
 - This is a simple guide to get you started with using the Ethereum Javascript API (web3.js) with the Create React Native App project. This is not an in-depth guide.
 ```
 
-## Installation guide
+### Installation guide
 
 1. Install Create React Native App
 ```
@@ -112,8 +85,35 @@ import Web3 from "web3"
 Using Web3 & See Web3.js API Documentation
 ```
 
-## Writer - 작성자
+### Writer - 작성자
 ```
 This README.md is made by JinsungKIM(CEOJINSUNG) 
 이 블록체인 연동과정은 김진성(CEOJINSUNG)에 의해 작성됨
+```
+
+
+# Frontend
+
+Please refer below url to use react native <br>
+https://reactnative.dev/docs/environment-setup -> React Native CLI Quickstart
+
+### On Ubuntu (After environment setup)
+```
+# After Setup
+# You should use two terminal tabs
+
+# 1st tab
+cd frontend
+npx react-native start
+
+# 2nd tab
+cd frontend
+npx react-native run-android
+```
+
+### 사용한 패키지
+```
+1. react navigation : https://reactnavigation.org/
+2. react-native-vector-icons : https://github.com/oblador/react-native-vector-icons
+3. react-native-swiper : https://github.com/leecade/react-native-swiper
 ```
