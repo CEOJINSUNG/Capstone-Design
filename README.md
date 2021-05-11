@@ -33,7 +33,7 @@ npx react-native run-android
 - This is a simple guide to get you started with using the Ethereum Javascript API (web3.js) with the Create React Native App project. This is not an in-depth guide.
 ```
 
-### Installation guide
+## Installation guide
 
 1. Install Create React Native App
 ```
@@ -112,7 +112,7 @@ import Web3 from "web3"
 Using Web3 & See Web3.js API Documentation
 ```
 
-#### 추가
+## Adding - 추가
 ```
 This README.md is made by JinsungKIM(CEOJINSUNG) 
 이 블록체인 연동과정은 김진성(CEOJINSUNG)에 의해 작성됨
