@@ -74,16 +74,16 @@ export default function Shop({navigation}) {
                     <DisplayShop 
                         link={require("./icon/tshirts.png")}
                         title="토트넘 축구 저지"
-                        price="87,200원"
-                        saleprice="109,000원"
+                        price="0.005 ether"
+                        saleprice="0.01 ether"
                         rate={4.5}
                         navigation={navigation}
                     />
                     <DisplayShop 
                         link={require("./icon/ballcap.png")}
                         title="볼캡 화이트"
-                        price="36,500원"
-                        saleprice="36,000원"
+                        price="0.01 ether"
+                        saleprice="0.02 ether"
                         rate={3.8}
                     />
                 </View>
@@ -285,13 +285,13 @@ const MiniDisplay = () => {
                             fontSize: 12,
                             fontWeight: "bold",
                             color: "#650ab2",
-                        }}>87,200원</Text>
+                        }}>0.005 ether</Text>
                         <Text style={{
                             fontSize: 10,
                             color: "#000000",
                             textDecorationLine: "line-through",
                             marginLeft: 4,
-                        }}>109,000원</Text>
+                        }}>0.01 ether</Text>
                     </View>
                     <Text style={{
                         fontSize: 12,

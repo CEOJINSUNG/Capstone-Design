@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react";
 import {
     View,
@@ -9,17 +9,74 @@ import {
     useColorScheme,
     Image,
     TextInput,
+    RefreshControl,
 } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { web3, buyAccount, sellAccount, privateKey } from "./config"
 
-export default function Purchase({navigation}) {
+export default function Purchase({ navigation }) {
+    const [refreshing, setRefreshing] = useState(false);
+
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+
+        wait(1000).then(() => setRefreshing(false));
+    }, []);
+
     const isDarkMode = useColorScheme() === 'dark';
-    const [amount, onChangeAmount] = useState("");
+    const [amount, onChangeAmount] = useState(0);
     const [size, onChangeSize] = useState("");
+    const [total, setTotal] = useState(0);
+
+    const Tx = require("ethereumjs-tx").Transaction
+    const sendmoney = () => {
+        if (total > 0) {
+            web3.eth.getTransactionCount(buyAccount, (err, txCount) => {
+                const txObject = {
+                    nonce: web3.utils.toHex(txCount),
+                    to: sellAccount,
+                    value: web3.utils.toHex(web3.utils.toWei('0.005', 'ether')),
+                    gasLimit: web3.utils.toHex(100000),
+                    gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
+                }
+                //여기서 web3가 2이상이면 아래의 {chain: 'ropsten}을 선언해줘야함
+                const tx = new Tx(txObject, { chain: 'ropsten' });
+                tx.sign(privateKey);
+                const serializedTx = tx.serialize();
+                const raw = '0x' + serializedTx.toString('hex');
+                web3.eth.sendSignedTransaction(raw)
+                    .once('transactionHash', (hash) => {
+                        console.info('transactionHash', 'https://ropsten.etherscan.io/tx/' + hash);
+                    })
+                    .once('receipt', (receipt) => {
+                        console.info('receipt', receipt);
+                    }).on('error', console.error);
+            });
+        }
+    }
+
+    useEffect(() => {
+        web3.eth.getBalance(buyAccount, function (err, wei) {
+            const balance = web3.utils.fromWei(wei, 'ether')
+            console.log(balance)
+        })
+
+        setTotal(amount * 0.005)
+    }, [refreshing, amount])
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScrollView contentInsetAdjustmentBehavior="automatic"
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+            >
                 <View style={{
                     display: "flex",
                     flexDirection: "row",
@@ -62,26 +119,28 @@ export default function Purchase({navigation}) {
                     marginTop: 2,
                 }}>토트넘 홋스퍼 2020/21 스타디움 홈</Text>
                 <Text style={{
-                    fontSize: 24,
-                    color: "#650ab2",
+                    fontSize: 20,
+                    color: "#000000",
                     marginLeft: "5%",
                     fontWeight: "bold",
                     marginTop: 16,
-                }}>20% Sale</Text>
+                }}>50% Sale</Text>
                 <Text style={{
                     marginTop: 4,
                     marginLeft: "5%"
                 }}>
                     <Text style={{
-                        fontSize: 20,
+                        fontSize: 24,
                         fontWeight: "bold",
-                        color: "#000000"
-                    }}>109,000원 -> </Text>
+                        color: "#650ab2",
+                        marginRight: 16,
+                    }}>0.005 ether </Text>
                     <Text style={{
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: "bold",
-                        color: "#650ab2"
-                    }}>87,200원</Text>
+                        color: "#000000",
+                        textDecorationLine: "line-through"
+                    }}>0.01 ether</Text>
                 </Text>
                 <View style={{
                     display: "flex",
@@ -147,8 +206,8 @@ export default function Purchase({navigation}) {
                     marginRight: "10%",
                     alignSelf: "flex-end",
                     color: "#650ab2",
-                }}>87,200원</Text>
-                <TouchableOpacity style={{
+                }}>{total} ether</Text>
+                <TouchableOpacity onPress={sendmoney} style={{
                     width: "80%",
                     backgroundColor: "#650ab2",
                     height: 56,
