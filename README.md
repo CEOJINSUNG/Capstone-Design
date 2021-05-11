@@ -116,7 +116,6 @@ if (typeof localStorage !== 'undefined') {
   localStorage.debug = isDev ? '*' : ''
 }
 ```
-
 + Finish
 ```
 import Web3 from "web3"
