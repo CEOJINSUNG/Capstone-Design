@@ -1,5 +1,6 @@
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import "./globals"
 
 import React from 'react';
 import Home from './component/Home';
@@ -9,6 +10,8 @@ import Purchase from './component/Purchase';
 import Shop from './component/Shop';
 import SignUp from './component/SignUp';
 import Splash from './component/Splash';
+
+export const Web3 = require("web3")
 
 function App() {
   const Stack = createStackNavigator();
