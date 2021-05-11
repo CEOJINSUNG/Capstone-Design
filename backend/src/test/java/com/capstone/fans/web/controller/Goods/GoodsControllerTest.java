@@ -88,7 +88,7 @@ public class GoodsControllerTest {
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
 
-        String adress = "suwon";
+        String address = "suwon";
         String description = "no description";
         byte[] image = null;
         String blockChain = "asdf";
@@ -99,7 +99,7 @@ public class GoodsControllerTest {
 
 
         fans_userId = fansRepository.save(FanS.builder()
-                .address(adress)
+                .address(address)
                 .profile_description(description)
                 .profile_image(image)
                 .email(email)
@@ -116,7 +116,7 @@ public class GoodsControllerTest {
         String club_email = "abcd@asdfsdf";
 
         club_userId = clubRepository.save(Club.builder()
-                .address(adress)
+                .address(address)
                 .club_description(description)
                 .club_picture(image)
                 .club_name(clubname)

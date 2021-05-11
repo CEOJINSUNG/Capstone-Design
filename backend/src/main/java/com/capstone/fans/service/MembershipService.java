@@ -31,18 +31,7 @@ public class MembershipService {
     public Long saveMembership(MembershipSaveDto membershipSaveDto, User user){
         if(!(user instanceof Club))
             return ErrorCodes.NO_AUTHORITY;
-        return membershipRepository.save(
-                Membership.builder()
-                .club((Club)user)
-                .valid_date(membershipSaveDto.getValid_date())
-                .cashPerMonth(membershipSaveDto.getCashPerMonth())
-                .membershipName(membershipSaveDto.getMembershipName())
-                .description(membershipSaveDto.getDescription())
-                .membershipImage(membershipSaveDto.getMembershipImage())
-                .build()
-        ).getId();
-
-
+        return membershipRepository.save(membershipSaveDto.toEntity((Club)user)).getId();
     }
 
     @Transactional
