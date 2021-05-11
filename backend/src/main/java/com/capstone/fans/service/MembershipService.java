@@ -39,7 +39,7 @@ public class MembershipService {
         Membership membership = membershipRepository.findById(membership_id).orElse(null);
         if(membership == null)
             return ErrorCodes.NOT_EXIST;
-        else if(user.getId().equals(membership.getClub().getId()))
+        else if(!user.getId().equals(membership.getClub().getId()))
             return ErrorCodes.NO_AUTHORITY;
         membership.update(membershipUpdateDto);
         return membership_id;
@@ -50,7 +50,7 @@ public class MembershipService {
         Membership membership = membershipRepository.findById(membership_id).orElse(null);
         if(membership == null)
             return ErrorCodes.NOT_EXIST;
-        else if(user.getId().equals(membership.getClub().getId()))
+        else if(!user.getId().equals(membership.getClub().getId()))
             return ErrorCodes.NO_AUTHORITY;
         membershipRepository.delete(membership);
         return membership_id;
