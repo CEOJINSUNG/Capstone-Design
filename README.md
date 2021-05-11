@@ -112,7 +112,7 @@ import Web3 from "web3"
 Using Web3 & See Web3.js API Documentation
 ```
 
-## Adding - 추가
+## Writer - 작성자
 ```
 This README.md is made by JinsungKIM(CEOJINSUNG) 
 이 블록체인 연동과정은 김진성(CEOJINSUNG)에 의해 작성됨
