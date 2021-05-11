@@ -33,7 +33,6 @@ public class Subscribe extends BaseTimeEntity {
     private LocalDateTime payment_date;
 
     @Builder
-
     public Subscribe(Membership membership, User user, Long total_cash, LocalDateTime payment_date) {
         this.membership = membership;
         this.user = user;
@@ -46,5 +45,4 @@ public class Subscribe extends BaseTimeEntity {
         total_cash += membership.getCashPerMonth();
         payment_date = LocalDateTime.now().plusMonths(1);
     }
-
 }

@@ -44,12 +44,4 @@ public class MembershipController {
     public Long deleteMembership(@PathVariable Long membership_id, User user) {
         return membershipService.deleteMembership(membership_id, user);
     }
-
-
-
-
-
-
-
-
 }

@@ -8,6 +8,7 @@ import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.service.UserService;
+import com.capstone.fans.web.dto.post.PostListDto;
 import com.capstone.fans.web.dto.post.PostSaveRequestDto;
 import com.capstone.fans.web.dto.post.PostUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,8 +38,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -121,7 +121,6 @@ public class PostControllerTest {
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void PostSaveTest() throws Exception{
-
 
         String adress = "suwon";
         String description = "no description";
@@ -220,7 +219,6 @@ public class PostControllerTest {
                         .image(images)
                         .user(fanSRepository.getOne(userId))
                         .club(clubRepository.getOne(clubId))
-                        .image(new ArrayList<>())
                         .build());
 
         Long updatedId = savedPost.getId();
@@ -257,4 +255,69 @@ public class PostControllerTest {
         assertThat(all.get(0).getTitle()).isEqualTo(updated_title);
     }
 
+    @Test
+    @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void ReadPostTest() throws Exception {
+        String adress = "suwon";
+        String description = "no description";
+        String clubname = "club 1";
+        byte[] image = null;
+        String blockChain = "asdf";
+        String email = "email@asfdf";
+        String password = "qwer!@#$";
+        String phone_number = "123-123-123";
+        String name = "hell0";
+
+
+        Long clubId = clubRepository.save(Club.builder()
+                .address(adress)
+                .club_description(description)
+                .club_name(clubname)
+                .club_picture(image)
+                .email(email)
+                .password(password)
+                .blockchain_address(blockChain)
+                .phone_number(phone_number)
+                .name(name)
+                .build()
+        ).getId();
+
+        List<byte[]> images = new ArrayList<>();
+
+        Post savedPost_1 = postRepository.save(
+                Post.builder()
+                        .postType("postType_1")
+                        .title("title_1")
+                        .content("content_1")
+                        .image(images)
+                        .user(fanSRepository.getOne(userId))
+                        .club(clubRepository.getOne(clubId))
+                        .build());
+
+        Post savedPost_2 = postRepository.save(
+                Post.builder()
+                        .postType("postType_2")
+                        .title("title_2")
+                        .content("content_2")
+                        .image(images)
+                        .user(fanSRepository.getOne(userId))
+                        .club(clubRepository.getOne(clubId))
+                        .build());
+
+        Post savedPost_3 = postRepository.save(
+                Post.builder()
+                        .postType("postType_3")
+                        .title("title_3")
+                        .content("content_3")
+                        .image(images)
+                        .user(fanSRepository.getOne(userId))
+                        .club(clubRepository.getOne(clubId))
+                        .build());
+
+
+//        String url = "http://localhost:" + port + "/post/list?page=1&size=3&sortBy=createdDate-desc";
+//
+//
+//        mvc.perform(get(url)).andExpect(status().isOk());
+    }
 }

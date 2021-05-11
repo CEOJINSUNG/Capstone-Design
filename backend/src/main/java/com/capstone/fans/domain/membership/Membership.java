@@ -35,7 +35,6 @@ public class Membership extends BaseTimeEntity {
     private byte[] membershipImage;
 
     @Builder
-
     public Membership(Club club, LocalDateTime valid_date, Long cashPerMonth, String membershipName, String description, byte[] membershipImage) {
         this.club = club;
         this.valid_date = valid_date;
