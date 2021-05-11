@@ -78,6 +78,18 @@ npm install react-native-randombytes
 npm install @tradle/react-native-http
 npm install https-browserify
 ```
+8. Add line to the metro.config.js
+```
+const nodeLibs = require('node-libs-browser');
+
+module.exports = {
+  ...
+  resolver: {
+    extraNodeModules: nodeLibs
+  },
+  ...
+};
+```
 + Finish
 ```
 import Web3 from "web3"
