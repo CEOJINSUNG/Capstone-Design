@@ -56,6 +56,4 @@ public class AuthController{
         }
         return jwtTokenProvider.createToken(member.getUsername(), member.getAuthorities().stream().map(a->a.toString()).collect(Collectors.toList()));
     }
-
-
 }

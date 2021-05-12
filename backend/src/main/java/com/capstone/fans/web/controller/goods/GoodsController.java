@@ -28,13 +28,13 @@ public class GoodsController {
         return goodsService.saveOrder(goodsOrderSaveDto, user);
     }
 
-    @PutMapping("/goods/{id}")
+    @PutMapping("/goods/update/{id}")
     public Long updateOrder(@RequestBody GoodsOrderUpdateDto goodsOrderUpdateDto, @AuthenticationPrincipal User user){
         return goodsService.updateOrder(goodsOrderUpdateDto, user);
     }
 
-    @DeleteMapping("/goods/{id}")
-    public Long updateOrder(@PathVariable Long id, @AuthenticationPrincipal User user){
+    @DeleteMapping("/goods/delete/{id}")
+    public Long deleteOrder(@PathVariable Long id, @AuthenticationPrincipal User user){
         return goodsService.cancelOrder(id, user);
     }
 
@@ -45,7 +45,7 @@ public class GoodsController {
 
 
     @PutMapping("/goods/clubs/order_manage/{id}")
-    public Long updateOrderState(@PathVariable Long id, @RequestBody String state, @AuthenticationPrincipal User user) {
+    public Long updateOrderState(@PathVariable Long id, @RequestParam String state, @AuthenticationPrincipal User user) {
         return goodsService.changeOrderState(state, id, user);
     }
 }

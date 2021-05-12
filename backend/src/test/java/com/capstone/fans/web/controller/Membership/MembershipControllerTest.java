@@ -36,8 +36,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -129,7 +128,7 @@ public class MembershipControllerTest {
 
     @Test
     @WithUserDetails(value = "club@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    public void MembershipControllerSaveTest() throws Exception {
+    public void MembershipSaveTest() throws Exception {
 
         byte[] image = null;
 
@@ -197,5 +196,34 @@ public class MembershipControllerTest {
 
         assertThat(updated_membership.getMembershipName()).isEqualTo("aaa");
         assertThat(updated_membership.getDescription()).isEqualTo("ddd");
+    }
+
+    @Test
+    @WithUserDetails(value = "club@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void MembershipDeleteTest() throws Exception {
+        byte[] image = null;
+        Club club = clubRepository.findAll().get(0);
+        LocalDateTime DateTime = LocalDateTime.now();
+
+        membershipRepository.save(Membership.builder()
+                .club(club)
+                .membershipImage(image)
+                .cashPerMonth(100L)
+                .membershipName("test_membership")
+                .description("desc")
+                .valid_date(DateTime)
+                .build());
+
+        List<Membership> all = membershipRepository.findAll();
+        Membership test_membership = all.get(0);
+
+        String url = "http://localhost:" + port + "/membership/delete/" + test_membership.getId();
+
+        mockMvc.perform(delete(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        System.out.println(membershipRepository.findAll().size());
     }
 }

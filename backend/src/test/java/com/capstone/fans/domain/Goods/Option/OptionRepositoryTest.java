@@ -105,7 +105,5 @@ public class OptionRepositoryTest {
 
         assertThat(option.getName()).isEqualTo(OptionName);
         assertThat(option.getCosts()).isEqualTo(OptionCost);
-
-
     }
 }

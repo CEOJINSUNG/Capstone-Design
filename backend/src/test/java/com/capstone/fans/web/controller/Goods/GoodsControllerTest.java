@@ -40,8 +40,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -177,6 +177,7 @@ public class GoodsControllerTest {
         assertThat(all.get(0).getName()).isEqualTo("goods");
         assertThat(all.get(0).getDescription()).isEqualTo("desc");
     }
+
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void saveOrderTest() throws Exception {
@@ -198,7 +199,6 @@ public class GoodsControllerTest {
         Long OptionCost = 1L;
 
         List<Goods> goodsList = goodsRepository.findAll();
-
 
         optionRepository.save(Option.builder()
                 .goods(goodsList.get(0))
@@ -279,7 +279,7 @@ public class GoodsControllerTest {
                 .optionId(option.getId())
                 .build();
 
-        String url = "http://localhost:" + port + "/goods/" + fans_userId;
+        String url = "http://localhost:" + port + "/goods/update/" + fans_userId;
 
         mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -341,11 +341,68 @@ public class GoodsControllerTest {
         String updated_state = "배송완료";
 
         mockMvc.perform(put(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(updated_state)))
+                .param("state", updated_state))
                 .andExpect(status().isOk());
 
         List<GoodsOrder> all = goodsOrderRepository.findAll();
         assertThat(all.get(0).getState()).isEqualTo(updated_state);
+    }
+
+    @Test
+    @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void CancelOrderTest() throws Exception {
+        LocalDateTime startDateTime = LocalDateTime.now();
+        LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 12,12, 32,22,3333);
+
+        goodsRepository.save(Goods.builder()
+                .name("goods")
+                .type("type")
+                .description("desc")
+                .price(11L)
+                .club(clubRepository.getOne(club_userId))
+                .pictures(new ArrayList<>())
+                .startDate(startDateTime)
+                .endDate(endDateTime)
+                .build());
+
+        String OptionName = "option_name";
+        Long OptionCost = 1L;
+
+        List<Goods> goodsList = goodsRepository.findAll();
+
+
+        optionRepository.save(Option.builder()
+                .goods(goodsList.get(0))
+                .name(OptionName)
+                .costs(OptionCost)
+                .build()
+        );
+
+        Option option = goodsRepository.findAll().get(0).getOptions().get(0);
+
+        goodsOrderRepository.save(GoodsOrder.builder()
+                .address("address")
+                .goods(goodsList.get(0))
+                .option(option)
+                .state("TEST_STATE")
+                .shipped_date(LocalDateTime.now())
+                .user(fansRepository.getOne(fans_userId))
+                .build());
+
+
+        GoodsOrder goodsOrder = goodsOrderRepository.findAll().get(0);
+        Long goods_order_id = goodsOrder.getId();
+
+        System.out.println(goodsOrderRepository.findAll().size());
+
+        String url = "http://localhost:" + port + "/goods/delete/" + goods_order_id;
+
+        mockMvc.perform(delete(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        System.out.println(goodsOrderRepository.findAll().size());
     }
 }

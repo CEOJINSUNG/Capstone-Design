@@ -6,6 +6,7 @@ import com.capstone.fans.domain.comment.CommentRepository;
 import com.capstone.fans.domain.post.Post;
 import com.capstone.fans.domain.post.PostRepository;
 import com.capstone.fans.domain.user.User;
+import com.capstone.fans.erorrs.ErrorCodes;
 import com.capstone.fans.web.dto.comment.CommentSaveDto;
 import com.capstone.fans.web.dto.comment.CommentUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +39,24 @@ public class CommentService {
     public Long update(Long id, CommentUpdateDto commentUpdateDto, User user){
         Comment comment = commentRepository.findById(id).orElse(null);
         if(comment == null)
-            return -1L;
+            return ErrorCodes.NOT_EXIST;
         else if(!comment.getUser().getId().equals(user.getId()))
-            return -2L;
+            return ErrorCodes.NOT_SAME_USER;
         comment.update(commentUpdateDto.getComment());
         return id;
     }
 
+    @Transactional
+    public Long delete(Long id, User user){
+        Comment comment = commentRepository.findById(id).orElse(null);
+        if(comment == null)
+            return ErrorCodes.NOT_EXIST;
+        else if(!comment.getUser().getId().equals(user.getId()))
+            return ErrorCodes.NOT_SAME_USER;
+        commentRepository.deleteById(id);
+
+        return id;
+    }
 
 
     public List<Comment> findByPost(Long PostId){

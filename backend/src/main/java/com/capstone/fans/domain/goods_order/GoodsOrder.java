@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 public class GoodsOrder extends BaseTimeEntity {
     public static final String DONE = "배송완료";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,9 +38,6 @@ public class GoodsOrder extends BaseTimeEntity {
     private Option option;
 
     private LocalDateTime shipped_date;
-
-
-
 
     @Builder
     public GoodsOrder(User user, Goods goods, String state, String address, Option option, LocalDateTime shipped_date) {
@@ -63,7 +61,4 @@ public class GoodsOrder extends BaseTimeEntity {
             this.shipped_date = LocalDateTime.now();
         this.state = state;
     }
-
-
-
 }

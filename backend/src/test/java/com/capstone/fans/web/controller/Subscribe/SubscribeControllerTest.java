@@ -32,6 +32,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,16 +46,16 @@ public class SubscribeControllerTest {
     private int port;
 
     @Autowired
-    FansRepository fansRepository;
+    private FansRepository fansRepository;
 
     @Autowired
-    ClubRepository clubRepository;
+    private ClubRepository clubRepository;
 
     @Autowired
-    MembershipRepository membershipRepository;
+    private MembershipRepository membershipRepository;
 
     @Autowired
-    SubscribeRepository subscribeRepository;
+    private SubscribeRepository subscribeRepository;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -154,5 +155,34 @@ public class SubscribeControllerTest {
 
         assertThat(subscribe.getMembership().getId()).isEqualTo(test_membership.getId());
         assertThat(subscribe.getUser().getId()).isEqualTo(fans_id);
+    }
+
+    @Test
+    @WithUserDetails(value = "asdf@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void CancelSubscribeTest() throws Exception {
+
+        LocalDateTime DateTime = LocalDateTime.now();
+
+        List<Membership> all = membershipRepository.findAll();
+        Membership test_membership = all.get(0);
+        Long membership_id = test_membership.getId();
+
+        subscribeRepository.save(Subscribe.builder()
+                .total_cash(100000L)
+                .membership(test_membership)
+                .user(fansRepository.findAll().get(0))
+                .payment_date(DateTime)
+                .build());
+
+        Subscribe test_subscribe = subscribeRepository.findAll().get(0);
+
+        String url = "http://localhost:" + port + "/subscribe/delete/" + membership_id;
+
+        mockMvc.perform(delete(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        System.out.println(subscribeRepository.findAll().size());
     }
 }

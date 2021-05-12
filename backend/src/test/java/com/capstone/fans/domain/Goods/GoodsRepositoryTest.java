@@ -34,13 +34,13 @@ public class GoodsRepositoryTest {
 
     @Autowired
     OptionRepository optionRepository;
-/*
+
     @After
     public void cleanup(){
         optionRepository.deleteAll();
         goodsRepository.deleteAll();
         clubRepository.deleteAll();
-    }*/
+    }
 
     @Test
     public void GoodsSaveLoadTest() {

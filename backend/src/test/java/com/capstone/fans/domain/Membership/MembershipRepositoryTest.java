@@ -4,6 +4,7 @@ import com.capstone.fans.domain.membership.Membership;
 import com.capstone.fans.domain.membership.MembershipRepository;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class MembershipRepositoryTest {
 
     @Autowired
     MembershipRepository membershipRepository;
+
+    @After
+    public void cleanup() {
+        membershipRepository.deleteAll();
+        clubRepository.deleteAll();
+    }
 
     @Test
     public void MembershipSaveTest() throws Exception {

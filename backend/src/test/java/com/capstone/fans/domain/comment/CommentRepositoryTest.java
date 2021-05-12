@@ -124,7 +124,4 @@ public class CommentRepositoryTest {
         assertThat(comment.getUser() instanceof Club).isEqualTo(true);
         assertThat(((Club)comment.getUser()).getClub_name()).isEqualTo(club.getClub_name());
     }
-
-
-
 }

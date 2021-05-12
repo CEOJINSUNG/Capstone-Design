@@ -1,8 +1,5 @@
 package com.capstone.fans.domain.user.fans;
 
-
-
-
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -53,9 +48,7 @@ public class FanSRepositoryTest {
 
         List<FanS> fansList = fanSRepository.findAll();
 
-
         FanS fanS = fansList.get(0);
-
 
         assertThat(fanS.getAddress()).isEqualTo(adress);
         assertThat(fanS.getProfile_description()).isEqualTo(description);
@@ -65,10 +58,6 @@ public class FanSRepositoryTest {
         assertThat(fanS.getPassword()).isEqualTo(password);
         assertThat(fanS.getPhone_number()).isEqualTo(phone_number);
         assertThat(fanS.getName()).isEqualTo(name);
-
-
-
-
 
     }
 }

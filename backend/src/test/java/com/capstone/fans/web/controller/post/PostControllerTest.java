@@ -67,7 +67,8 @@ public class PostControllerTest {
     @Autowired
     private UserService userService;
 
-    private Long userId;
+    private Long fans_userId;
+    private Long club_userId;
     private MockMvc mvc;
 
 
@@ -88,7 +89,7 @@ public class PostControllerTest {
         String name = "hell1";
 
 
-        userId = fanSRepository.save(FanS.builder()
+        fans_userId = fanSRepository.save(FanS.builder()
                 .address(adress)
                 .profile_description(description)
                 .profile_image(image)
@@ -100,6 +101,20 @@ public class PostControllerTest {
                 .auth("USER")
                 .build()
         ).getId();
+
+        String club_email = "club@asdf";
+
+        club_userId = clubRepository.save(Club.builder()
+                .address(adress)
+                .club_description(description)
+                .club_name("club_1")
+                .club_picture(image)
+                .email("club@asdf")
+                .password(password)
+                .blockchain_address(blockChain)
+                .phone_number(phone_number)
+                .name(name)
+                .build()).getId();
     }
 
     @After
@@ -109,50 +124,13 @@ public class PostControllerTest {
         fanSRepository.deleteAll();
     }
 
-    @AfterAll
-    public void cleanup() throws Exception{
-        postRepository.deleteAll();
-        clubRepository.deleteAll();
-        fanSRepository.deleteAll();
-    }
-
-
-
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void PostSaveTest() throws Exception{
-
-        String adress = "suwon";
-        String description = "no description";
-        String clubname = "club 1";
-        byte[] image = null;
-        String blockChain = "asdf";
-        String email = "email@asdf";
-        String password = "qwer!@#$";
-        String phone_number = "123-123-123";
-        String name = "hell0";
-
-
-        Long clubId = clubRepository.save(Club.builder()
-                .address(adress)
-                .club_description(description)
-                .club_name(clubname)
-                .club_picture(image)
-                .email(email)
-                .password(password)
-                .blockchain_address(blockChain)
-                .phone_number(phone_number)
-                .name(name)
-                .build()
-        ).getId();
-
-
-
         String title = "title";
         String content = "content";
         List<byte[]> images = new ArrayList<>();
-        //byte[] temp = 1;
-        String category = "category";
+
         PostSaveRequestDto postSaveRequestDto = PostSaveRequestDto.builder()
                 .title(title)
                 .contents(content)
@@ -160,20 +138,12 @@ public class PostControllerTest {
                 .category("free")
                 .build();
 
-        String url = "http://localhost:" + port + "/post/save/" + clubId;
-
-        // when
-        String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
-        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
-        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
+        String url = "http://localhost:" + port + "/post/save/" + club_userId;
 
         mvc.perform(post(url)
-                .sessionAttr(TOKEN_ATTR_NAME,csrfToken)
-                .param(csrfToken.getParameterName(), csrfToken.getToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postSaveRequestDto)))
                 .andExpect(status().isOk());
-
 
         List<Post> all = postRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
@@ -184,41 +154,17 @@ public class PostControllerTest {
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void PostUpdateTest() throws Exception {
-        String adress = "suwon";
-        String description = "no description";
-        String clubname = "club 1";
-        byte[] image = null;
-        String blockChain = "asdf";
-        String email = "email@asfdf";
-        String password = "qwer!@#$";
-        String phone_number = "123-123-123";
-        String name = "hell0";
-
-
-        Long clubId = clubRepository.save(Club.builder()
-                .address(adress)
-                .club_description(description)
-                .club_name(clubname)
-                .club_picture(image)
-                .email(email)
-                .password(password)
-                .blockchain_address(blockChain)
-                .phone_number(phone_number)
-                .name(name)
-                .build()
-        ).getId();
-
         List<byte[]> images = new ArrayList<>();
         String PostType = "postType";
 
         Post savedPost = postRepository.save(
                 Post.builder()
-                        .postType("postType")
+                        .postType(PostType)
                         .title("title")
                         .content("content")
                         .image(images)
-                        .user(fanSRepository.getOne(userId))
-                        .club(clubRepository.getOne(clubId))
+                        .user(fanSRepository.getOne(fans_userId))
+                        .club(clubRepository.getOne(club_userId))
                         .build());
 
         Long updatedId = savedPost.getId();
@@ -234,90 +180,41 @@ public class PostControllerTest {
 
         String url = "http://localhost:" + port + "/post/update/" + updatedId;
 
-        String TOKEN_ATTR_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
-        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
-        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
-
-        MvcResult mvcResult = mvc.perform(put(url)
-                .sessionAttr(TOKEN_ATTR_NAME,csrfToken)
-                .param(csrfToken.getParameterName(), csrfToken.getToken())
+        mvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postUpdateRequestDto)))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-
+                .andExpect(status().isOk());
 
         List<Post> all = postRepository.findAll();
-
-        Long id = new ObjectMapper().readValue(mvcResult.getResponse().getContentAsString(), Long.class);
-
         assertThat(all.get(0).getTitle()).isEqualTo(updated_title);
+        assertThat(all.get(0).getContent()).isEqualTo(updated_content);
     }
 
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    public void ReadPostTest() throws Exception {
-        String adress = "suwon";
-        String description = "no description";
-        String clubname = "club 1";
-        byte[] image = null;
-        String blockChain = "asdf";
-        String email = "email@asfdf";
-        String password = "qwer!@#$";
-        String phone_number = "123-123-123";
-        String name = "hell0";
-
-
-        Long clubId = clubRepository.save(Club.builder()
-                .address(adress)
-                .club_description(description)
-                .club_name(clubname)
-                .club_picture(image)
-                .email(email)
-                .password(password)
-                .blockchain_address(blockChain)
-                .phone_number(phone_number)
-                .name(name)
-                .build()
-        ).getId();
-
+    public void PostDeleteTest() throws Exception {
         List<byte[]> images = new ArrayList<>();
 
-        Post savedPost_1 = postRepository.save(
+        Post savedPost = postRepository.save(
                 Post.builder()
-                        .postType("postType_1")
-                        .title("title_1")
-                        .content("content_1")
+                        .postType("postType")
+                        .title("title")
+                        .content("content")
                         .image(images)
-                        .user(fanSRepository.getOne(userId))
-                        .club(clubRepository.getOne(clubId))
+                        .user(fanSRepository.getOne(fans_userId))
+                        .club(clubRepository.getOne(club_userId))
                         .build());
 
-        Post savedPost_2 = postRepository.save(
-                Post.builder()
-                        .postType("postType_2")
-                        .title("title_2")
-                        .content("content_2")
-                        .image(images)
-                        .user(fanSRepository.getOne(userId))
-                        .club(clubRepository.getOne(clubId))
-                        .build());
+        Long post_id = savedPost.getId();
 
-        Post savedPost_3 = postRepository.save(
-                Post.builder()
-                        .postType("postType_3")
-                        .title("title_3")
-                        .content("content_3")
-                        .image(images)
-                        .user(fanSRepository.getOne(userId))
-                        .club(clubRepository.getOne(clubId))
-                        .build());
+        String url = "http://localhost:" + port + "/post/delete/" + post_id;
 
+        mvc.perform(delete(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
-//        String url = "http://localhost:" + port + "/post/list?page=1&size=3&sortBy=createdDate-desc";
-//
-//
-//        mvc.perform(get(url)).andExpect(status().isOk());
+        System.out.println(postRepository.findAll().size());
     }
 }

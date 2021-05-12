@@ -40,7 +40,7 @@ public class MembershipController {
         return membershipService.getMembershipList(club_id);
     }
 
-    @DeleteMapping("/membership/club/{membership_id}")
+    @DeleteMapping("/membership/delete/{membership_id}")
     public Long deleteMembership(@PathVariable Long membership_id, User user) {
         return membershipService.deleteMembership(membership_id, user);
     }

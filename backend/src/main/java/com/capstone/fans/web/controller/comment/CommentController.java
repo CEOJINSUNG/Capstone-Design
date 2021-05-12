@@ -29,6 +29,11 @@ public class CommentController {
         return commentService.update(id, commentUpdateDto, user);
     }
 
+    @DeleteMapping("/comment/delete/{id}")
+    public Long deleteComment(@PathVariable Long id, @AuthenticationPrincipal User user){
+        return commentService.delete(id, user);
+    }
+
     @GetMapping("/comment/find/{id}")
     public List<CommentDto> commentLookUp(@PathVariable Long id) {
         List<Comment> commentList = commentService.findByPost(id);

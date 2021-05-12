@@ -21,5 +21,4 @@ public class CommentSaveDto {
         return Comment.builder().comment(comment).build();
     }
 
-
 }

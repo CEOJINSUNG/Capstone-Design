@@ -8,6 +8,7 @@ import com.capstone.fans.domain.post.PostRepository;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
+import com.capstone.fans.erorrs.ErrorCodes;
 import com.capstone.fans.web.dto.comment.CommentDto;
 import com.capstone.fans.web.dto.post.PostListDto;
 import com.capstone.fans.web.dto.post.PostResponseDto;
@@ -39,7 +40,7 @@ public class PostService {
     public Long save(Long id, PostSaveRequestDto postSaveRequestDto, User user) {
         Club club = clubRepository.findById(id).orElse(null);
         if(club == null)
-            return -1L;
+            return ErrorCodes.NOT_EXIST;
         return postRepository.save(
                 Post.builder()
                         .user(user)
@@ -57,9 +58,9 @@ public class PostService {
     public Long update(Long id, PostUpdateRequestDto postUpdateRequestDto, User user) {
         Post post = postRepository.findById(id).orElse(null);
         if(post == null)
-            return -1L;
+            return ErrorCodes.NOT_EXIST;
         else if(!user.getId().equals(post.getUser().getId()))
-            return -2L;
+            return ErrorCodes.NOT_SAME_USER;
         post.update(postUpdateRequestDto.getPostType(), postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent(), postUpdateRequestDto.getImages());
         return id;
     }
@@ -68,9 +69,9 @@ public class PostService {
     public Long delete(Long id, User user){
         Post post = postRepository.findById(id).orElse(null);
         if(post == null)
-            return -1L;
+            return ErrorCodes.NOT_EXIST;
         else if(!user.getId().equals(post.getUser().getId()))
-            return -2L;
+            return ErrorCodes.NOT_SAME_USER;
         postRepository.delete(post);
         return id;
     }
