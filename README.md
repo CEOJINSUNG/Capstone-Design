@@ -155,3 +155,8 @@ npx react-native run-android
 2. react-native-vector-icons : https://github.com/oblador/react-native-vector-icons
 3. react-native-swiper : https://github.com/leecade/react-native-swiper
 ```
+
+### 5/12 frontend 추가 dependency
+```
+npm install @react-navigation/material-top-tabs react-native-tab-view@^2.16.0
+```
