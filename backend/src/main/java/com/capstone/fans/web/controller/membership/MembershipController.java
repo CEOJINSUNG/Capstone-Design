@@ -41,7 +41,7 @@ public class MembershipController {
     }
 
     @DeleteMapping("/membership/delete/{membership_id}")
-    public Long deleteMembership(@PathVariable Long membership_id, User user) {
+    public Long deleteMembership(@PathVariable Long membership_id, @AuthenticationPrincipal  User user) {
         return membershipService.deleteMembership(membership_id, user);
     }
 }
