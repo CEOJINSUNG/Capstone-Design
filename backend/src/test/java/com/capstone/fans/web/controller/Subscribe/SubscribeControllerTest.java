@@ -11,6 +11,7 @@ import com.capstone.fans.domain.user.fans.FansRepository;
 import com.capstone.fans.service.UserService;
 import com.capstone.fans.web.dto.subscribe.SubscribeSaveClientDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,6 +70,17 @@ public class SubscribeControllerTest {
     private MockMvc mockMvc;
     private Long club_id;
     private Long fans_id;
+
+
+    @After
+    public void cleanup(){
+        subscribeRepository.deleteAll();
+        membershipRepository.deleteAll();
+        clubRepository.deleteAll();
+        fansRepository.deleteAll();
+    }
+
+
 
 
     @Before

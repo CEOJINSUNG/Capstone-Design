@@ -130,14 +130,17 @@ public class GoodsControllerTest {
                 .build()).getId();
 
     }
-/*
+
     @After
     public void tearDown() throws Exception{
+
+        goodsOrderRepository.deleteAll();
+        optionRepository.deleteAll();
         goodsRepository.deleteAll();
         clubRepository.deleteAll();
         fansRepository.deleteAll();
     }
-
+/*
     @AfterAll
     public void cleanup() throws Exception{
         goodsRepository.deleteAll();
@@ -263,19 +266,19 @@ public class GoodsControllerTest {
 
         Option option = goodsRepository.findAll().get(0).getOptions().get(0);
 
-        goodsOrderRepository.save(GoodsOrder.builder()
+        Long orderIdLong = goodsOrderRepository.save(GoodsOrder.builder()
                 .address("address")
                 .goods(goodsList.get(0))
                 .option(option)
                 .state("TEST_STATE")
                 .shipped_date(LocalDateTime.now())
                 .user(fansRepository.getOne(fans_userId))
-                .build());
+                .build()).getId();
 
 
         GoodsOrderUpdateDto goodsOrderUpdateDto = GoodsOrderUpdateDto.builder()
                 .address("123")
-                .orderId(goodsList.get(0).getId())
+                .orderId(orderIdLong)
                 .optionId(option.getId())
                 .build();
 

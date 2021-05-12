@@ -9,6 +9,7 @@ import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ public class SubscribeRepositoryTest {
     @Autowired
     SubscribeRepository subscribeRepository;
 
+    @After
+    public void cleanup(){
+        subscribeRepository.deleteAll();
+        membershipRepository.deleteAll();
+        clubRepository.deleteAll();
+        fansRepository.deleteAll();
+    }
 
     @Test
     public void SubscribeSaveTest() throws Exception {
