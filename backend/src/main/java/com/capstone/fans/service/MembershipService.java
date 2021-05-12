@@ -88,5 +88,4 @@ public class MembershipService {
                         .build()
                 ).collect(Collectors.toList());
     }
-
 }

@@ -8,6 +8,8 @@ import com.capstone.fans.domain.subscribe.SubscribeRepository;
 import com.capstone.fans.domain.user.User;
 import com.capstone.fans.erorrs.ErrorCodes;
 import com.capstone.fans.web.dto.subscribe.SubscribeListDto;
+import com.capstone.fans.web.dto.subscribe.SubscribeResponseDto;
+import com.capstone.fans.web.dto.subscribe.SubscribeSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,23 +29,16 @@ public class SubscribeService {
 
 
     @Transactional
-    public Long  saveSubscribe(Long membership_id, User user){
-        Membership membership = membershipRepository.getOne(membership_id);
+    public Long  saveSubscribe(Long membership_id, SubscribeSaveDto subscribeSaveDto, User user){
+        Membership membership = membershipRepository.findById(membership_id).orElse(null);
         if(membership == null)
             return ErrorCodes.NOT_EXIST;
-
-        return subscribeRepository.save(Subscribe.builder()
-                .membership(membership)
-                .user(user)
-                .total_cash(0L)
-                .payment_date(LocalDateTime.now())
-                .build()
-        ).getId();
+        return subscribeRepository.save(subscribeSaveDto.toEntity(user, membership)).getId();
     }
 
     @Transactional
     public Long  cancelSubscribe(Long subscribe_id, User user){
-        Subscribe subscribe = subscribeRepository.getOne(subscribe_id);
+        Subscribe subscribe = subscribeRepository.findById(subscribe_id).orElse(null);
 
         if(subscribe == null)
             return ErrorCodes.NOT_EXIST;
@@ -77,5 +72,17 @@ public class SubscribeService {
                 subscribe.updatePayment();
             }
         }
+    }
+
+    @Transactional(readOnly = true)
+    public SubscribeResponseDto findById(Long id){
+        Subscribe subscribe = subscribeRepository.findById(id).orElse(null);
+        if(subscribe == null)   return null;
+        return SubscribeResponseDto.builder()
+                .id(subscribe.getId())
+                .total_cash(subscribe.getTotal_cash())
+                .payment_date(subscribe.getPayment_date())
+                .membership(subscribe.getMembership())
+                .build();
     }
 }

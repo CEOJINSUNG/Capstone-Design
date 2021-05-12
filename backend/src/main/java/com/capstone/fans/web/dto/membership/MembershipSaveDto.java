@@ -44,5 +44,4 @@ public class MembershipSaveDto {
                 .membershipName(membershipName)
                 .build();
     }
-
 }

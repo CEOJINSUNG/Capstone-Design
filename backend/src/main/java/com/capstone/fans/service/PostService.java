@@ -109,7 +109,4 @@ public class PostService {
                 .category(post.getPostType())
                 .build();
     }
-
-
-
 }
