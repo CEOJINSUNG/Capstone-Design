@@ -17,29 +17,36 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 export default function Home({navigation}) {
     const isDarkMode = useColorScheme() === 'dark';
-    const [email, onChangeEmail] = React.useState("");
-    const [password, onChangePassword] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
+    //TODO : backend port should be opened
     function logInButtonHandler(){
-        fetch('http://localhost:8080/auth/login', {
+        fetch('http://3.139.204.200:8080/auth/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: {email},
-                password: {password}
+                "email" : email,
+                "password" : password
             })
         })
         .then((response) => {
+            if(!response.ok){
+                throw Error(response.statusText);
+            }
+            return response;
+        }).then((response) => {
             console.log(response);
-            navigation.navigate('Main');
         })
         .catch((error) => {
             console.log(error);
         });
+        navigation.navigate('Main');
     }
+
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -62,14 +69,14 @@ export default function Home({navigation}) {
                 }}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={onChangeEmail}
+                        onChangeText={text => setEmail(text)}
                         placeholder="Please Type Your E-mail"
-                        value={email}
+                        defaultvalue={email}
                     />
                     <TextInput
                         style={styles.input}
-                        onChangeText={onChangePassword}
-                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        defaultvalue={password}
                         secureTextEntry={true}
                         placeholder="Please Type Your Password"
                     />

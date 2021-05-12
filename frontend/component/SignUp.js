@@ -27,24 +27,30 @@ export default function SignUp({navigation}) {
     //TODO : backend port should be opened
     // TODO: make block chain address id will be added
     function signUpButtonHandler(){
-        fetch('http://backend_ip/auth/signup', {
+        fetch('http://3.139.204.200:8080/auth/signup', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: {email},
-                name: {name},
-                password: {password},
-                nickname: {nickname},
-                address : {address},
-                phone_number : {phone_number},
-                blockchain_address : "ABCDEF123456$",
-                user_type : "f"
+                "email": email,
+                "name": name,
+                "password": password,
+                "nickname": nickname,
+                "address" : address,
+                "phone_number" : phone_number,
+                "blockchain_address" : "ABCDEF123456$",
+                "user_type" : "f"
             })
+        })
+        .then((response) => {
+            console.log(response.body);
+            navigation.navigate('Home');
+        })
+        .catch((error) => {
+            console.log(error);
         });
-        navigation.navigate('Home');
     }
 
     return (
@@ -106,7 +112,7 @@ export default function SignUp({navigation}) {
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangePhoneNumber}
-                            placeholder="Type Your Address"
+                            placeholder="Type Your Phone Number"
                             value={phone_number}
                         />
                     </View>
