@@ -11,7 +11,7 @@ import {
 export default function Splash({ navigation }) {
     const isDarkMode = useColorScheme() === 'dark';
     setTimeout(() => {
-        navigation.navigate("Main")
+        navigation.navigate("Home")
     }, 2000)
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
