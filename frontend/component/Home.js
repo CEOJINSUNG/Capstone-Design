@@ -21,30 +21,28 @@ export default function Home({navigation}) {
     const [password, setPassword] = React.useState("");
 
     //TODO : backend port should be opened
-    function logInButtonHandler(){
-        fetch('http://3.139.204.200:8080/auth/login', {
+    async function logInButtonHandler(){
+        var data = {
+            "email" : email,
+            "password" : password
+        }
+        await fetch('http://3.139.204.200:8080/auth/login', {
             method: 'POST',
+            credentials: true,
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+                "Accept": "application/json",
+                'Content-type': 'application/json',
             },
-            body: JSON.stringify({
-                "email" : email,
-                "password" : password
-            })
+            body: JSON.stringify(data)
         })
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.statusText);
-            }
-            return response;
-        }).then((response) => {
+        .then(response => response.text())
+        .then(response => {
             console.log(response);
+            navigation.navigate('Main');
         })
         .catch((error) => {
             console.log(error);
         });
-        navigation.navigate('Main');
     }
 
     return (
