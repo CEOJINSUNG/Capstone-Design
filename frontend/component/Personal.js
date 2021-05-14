@@ -133,10 +133,10 @@ export default function Personal({ navigation }) {
                     marginTop: 12,
                     borderRadius: 6,
                 }]}>
-                    <View style={[style.column, { alignItems: "center", width: 60 }]}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Wallet")} style={[style.column, { alignItems: "center", width: 60 }]}>
                         <Ionicons name="ios-wallet-outline" size={30} />
                         <Text style={style.tenFont}>FanS Wallet</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={[style.column, { alignItems: "center", width: 60 }]}>
                         <MaterialCommunityIcons name="notebook-outline" size={30} />
                         <Text style={style.tenFont}>내가 쓴 글</Text>
