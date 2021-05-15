@@ -86,11 +86,12 @@ export default function Home({navigation}) {
                         backgroundColor: "#FFFFFF"
                     }}
                     onChangeText={text => setEmail(text)}
-                    placeholder="Please Type Your E-mail"
+                    placeholder="E-mail"
                     defaultvalue={email}
                 />
                 <TextInput
                     style={{
+                        marginTop: 0,
                         width: 300,
                         marginTop: 8,
                         borderRadius: 8,
@@ -101,7 +102,7 @@ export default function Home({navigation}) {
                     onChangeText={text => setPassword(text)}
                     defaultvalue={password}
                     secureTextEntry={true}
-                    placeholder="Please Type Your Password"
+                    placeholder="Password"
                 />
                 <TouchableOpacity onPress={logInButtonHandler} style={{
                     width: 300,

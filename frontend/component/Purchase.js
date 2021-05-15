@@ -53,6 +53,7 @@ export default function Purchase({ navigation }) {
                 web3.eth.sendSignedTransaction(raw)
                     .once('transactionHash', (hash) => {
                         console.info('transactionHash', 'https://ropsten.etherscan.io/tx/' + hash);
+                        navigation.navigate("Main")
                     })
                     .once('receipt', (receipt) => {
                         console.info('receipt', receipt);
@@ -239,7 +240,7 @@ export default function Purchase({ navigation }) {
                     alignSelf: "flex-end",
                     color: "#650ab2",
                 }}>{total} ether</Text>
-                <TouchableOpacity onPress={NFT} style={{
+                <TouchableOpacity onPress={sendmoney} style={{
                     width: "80%",
                     backgroundColor: "#650ab2",
                     height: 56,
