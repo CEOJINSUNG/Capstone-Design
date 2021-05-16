@@ -11,6 +11,7 @@ import Shop from './component/Shop';
 import SignUp from './component/SignUp';
 import Splash from './component/Splash';
 import Posting from './component/Post/Posting';
+import Wallet from './component/Wallet';
 
 function App() {
   const Stack = createStackNavigator();
@@ -31,6 +32,8 @@ function App() {
         <Stack.Screen name="Purchase" component={Purchase} 
           options={{headerShown: false}} />
         <Stack.Screen name="Info" component={Info}
+          options={{headerShown: false}} />
+        <Stack.Screen name="Wallet" component={Wallet}
           options={{headerShown: false}} />
         <Stack.Screen name="Posting" component={Posting}
           options={{headerShown: false}} />

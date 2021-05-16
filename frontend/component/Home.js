@@ -8,7 +8,9 @@ import {
     TextInput,
     StyleSheet,
     Button,
-    Alert
+    Alert,
+    Image,
+    TouchableOpacity
 } from "react-native"
 
 import { NavigationHelpersContext } from "@react-navigation/core";
@@ -48,56 +50,92 @@ export default function Home({navigation}) {
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
             <View style={{
-                backgroundColor: "#9520FF",
+                backgroundColor: "#ffffff",
                 flex: 1,
 
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
             }}>
-                <Text style={{
-                    fontSize: 64,
-                    color: "#FFFFFF",
-                    marginTop: 150,
-                    fontWeight: "bold",
-                }}>Fan:S</Text>
                 <View style={{
-                    marginTop: 80
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 0,
                 }}>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={text => setEmail(text)}
-                        placeholder="Please Type Your E-mail"
-                        defaultvalue={email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={text => setPassword(text)}
-                        defaultvalue={password}
-                        secureTextEntry={true}
-                        placeholder="Please Type Your Password"
-                    />
+                    <Image resizeMode="contain" style={{
+                        width: 40
+                    }} source={require("./icon/logo.png")} />
+                    <Text style={{
+                        fontSize: 32,
+                        color: "#650ab2",
+                        fontWeight: "bold",
+                        marginLeft: 8
+                    }}>Fan:S</Text>
                 </View>
-                <View
+                <TextInput
                     style={{
-                        marginTop:50
-                }}>
-                    <Button
-                        title="Log in"
-                        color="#000000"
-                        onPress={logInButtonHandler}
-                    />
-                </View>
-                <View
+                        marginTop: 0,
+                        width: 300,
+                        borderRadius: 8,
+                        borderBottomColor: "rgba(5, 26, 26, 0.2)",
+                        borderBottomWidth: 1,
+                        backgroundColor: "#FFFFFF"
+                    }}
+                    onChangeText={text => setEmail(text)}
+                    placeholder="E-mail"
+                    defaultvalue={email}
+                />
+                <TextInput
                     style={{
-                        marginTop:50
+                        marginTop: 0,
+                        width: 300,
+                        marginTop: 8,
+                        borderRadius: 8,
+                        borderBottomColor: "rgba(5, 26, 26, 0.2)",
+                        borderBottomWidth: 1,
+                        backgroundColor: "#FFFFFF"
+                    }}
+                    onChangeText={text => setPassword(text)}
+                    defaultvalue={password}
+                    secureTextEntry={true}
+                    placeholder="Password"
+                />
+                <TouchableOpacity onPress={logInButtonHandler} style={{
+                    width: 300,
+                    height: 35,
+                    backgroundColor: "#650ab2",
+                    borderRadius: 6,
+                    marginTop: 20,
+
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center"
                 }}>
-                    <Button
-                        title="Sign Up"
-                        color="#777777"
-                        onPress={() => navigation.navigate('SignUp')}
-                    />
-                </View>
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        color: "#ffffff"
+                    }}>로그인</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={{
+                    width: 300,
+                    marginTop: 8,
+
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                    justifyContent: "center"
+                }}>
+                    <Text style={{
+                        fontSize: 12,
+                        color: "rgba(0, 0, 0, 0.6)",
+                        textDecorationLine: "underline"
+                    }}>아이디가 없으신가요?</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
