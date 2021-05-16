@@ -136,7 +136,7 @@ export default function Home({navigation}) {
                         textDecorationLine: "underline"
                     }}>아이디가 없으신가요?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={{
+                <TouchableOpacity onPress={() => navigation.navigate("ClubLogin")} style={{
                     width: 300,
                     marginTop: 20,
 
