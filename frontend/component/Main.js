@@ -7,7 +7,9 @@ import Community from './Community';
 
 const Tab = createBottomTabNavigator();
 
-export default function Main({ navigation }) {
+export default function Main({ route, navigation }) {
+    const {token} = route.params;
+    console.log(JSON.stringify(token));
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -29,13 +31,14 @@ export default function Main({ navigation }) {
 
                     return <Ionicons name={iconName} size={24} color={color} />;
                 },
-            })}
+            })
+        }
             tabBarOptions={{
                 activeTintColor: '#650ab2',
                 inactiveTintColor: '#000000',
             }}
         >
-            <Tab.Screen name="Community" component={Community} />
+            <Tab.Screen name="Community" component={Community}/>
             <Tab.Screen name="FC" component={FC} />
             <Tab.Screen name="Personal" component={Personal} />
         </Tab.Navigator>

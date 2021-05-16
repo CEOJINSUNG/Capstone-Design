@@ -123,7 +123,7 @@ export default function FreeBoard({navigation}) {
                         marginLeft: "5%"
                     }}>
                     <View style={{
-                        width: "50%"
+                        width: "25%"
                     }}>
                         <Text style={{
                             fontSize: 30,
@@ -133,6 +133,24 @@ export default function FreeBoard({navigation}) {
                             자유게시판
                         </Text>
                     </View>
+                    <TouchableOpacity onPress={() => navigation.navigate("Posting", {"postType": "free"})} style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: "#650AB2",
+                        borderRadius: 8,
+                        alignSelf: "center",
+                        marginTop: 5,
+
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+                        <Text style={{
+                            fontSize: 12,
+                            fontWeight: "bold",
+                            color: "#ffffff"
+                        }}>글쓰기</Text>
+                    </TouchableOpacity>
                     <View style={{
                         display: "flex",
                         flexDirection: "row",

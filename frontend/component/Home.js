@@ -37,8 +37,7 @@ export default function Home({navigation}) {
         })
         .then(response => response.text())
         .then(response => {
-            console.log(response);
-            navigation.navigate('Main');
+            navigation.navigate('Main', {token: response});
         })
         .catch((error) => {
             console.log(error);
