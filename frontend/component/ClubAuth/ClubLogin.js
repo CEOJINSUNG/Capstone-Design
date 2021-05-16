@@ -67,7 +67,7 @@ export default function Home({navigation}) {
                 }}>
                     <Image resizeMode="contain" style={{
                         width: 40
-                    }} source={require("./icon/logo.png")} />
+                    }} source={require("../icon/logo.png")} />
                     <Text style={{
                         fontSize: 32,
                         color: "#650ab2",
@@ -75,9 +75,13 @@ export default function Home({navigation}) {
                         marginLeft: 8
                     }}>Fan:S</Text>
                 </View>
+                <Text style={{
+                        fontSize: 30,
+                        color: "#650ab2",
+                    }}>클럽 관리자 로그인 페이지</Text>
                 <TextInput
                     style={{
-                        marginTop: 0,
+                        marginTop: 30,
                         width: 300,
                         borderRadius: 8,
                         borderBottomColor: "rgba(5, 26, 26, 0.2)",
@@ -131,25 +135,11 @@ export default function Home({navigation}) {
                     justifyContent: "center"
                 }}>
                     <Text style={{
+                        marginTop: 5,
                         fontSize: 12,
-                        color: "rgba(0, 0, 0, 0.6)",
+                        color: "rgba(0, 0, 0, 1)",
                         textDecorationLine: "underline"
-                    }}>아이디가 없으신가요?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={{
-                    width: 300,
-                    marginTop: 20,
-
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-end",
-                    justifyContent: "center"
-                }}>
-                    <Text style={{
-                        fontSize: 12,
-                        color: "rgba(0, 0, 0, 0.6)",
-                        textDecorationLine: "underline"
-                    }}>클럽 관리자이신가요?</Text>
+                    }}>클럽 등록이 필요하시다면 클릭해주세요</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
