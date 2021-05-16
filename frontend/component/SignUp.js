@@ -8,7 +8,7 @@ import {
     useColorScheme,
     TextInput,
     StyleSheet,
-    Button
+    TouchableOpacity
 } from "react-native"
 
 import { NavigationHelpersContext } from "@react-navigation/core";
@@ -59,10 +59,9 @@ export default function SignUp({navigation}) {
             <ScrollView 
                 style={{
                     contentInsetAdjustmentBehavior: "automatic",
-                    backgroundColor: "#9520FF",
+                    backgroundColor: "#FFFFFF",
             }}>
                 <View style={{
-                backgroundColor: "#9520FF",
                 flex: 1,
 
                 display: "flex",
@@ -71,25 +70,37 @@ export default function SignUp({navigation}) {
                 }}>
                     <Text style={{
                         fontSize: 64,
-                        color: "#FFFFFF",
+                        color: "#650ab2",
                         marginTop: 20,
                         fontWeight: "bold",
                     }}>Fan:S</Text>
                     <View style={{
                         marginTop: 20
                     }}>
+                        <Text 
+                            style={styles.text}>
+                            Name
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangeName}
                             placeholder="Type Your Name"
                             value={name}
                         />
+                        <Text 
+                            style={styles.text}>
+                            E-mail
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangeEmail}
                             placeholder="Type Your E-mail"
                             value={email}
                         />
+                        <Text 
+                            style={styles.text}>
+                            Password
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangePassword}
@@ -97,18 +108,30 @@ export default function SignUp({navigation}) {
                             secureTextEntry={true}
                             placeholder="Type Your Password"
                         />
+                        <Text 
+                            style={styles.text}>
+                            Nickname
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangeNickname}
                             placeholder="Type Your Nickname"
                             value={nickname}
                         />
+                        <Text 
+                            style={styles.text}>
+                            Address
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangeAddress}
                             placeholder="Type Your Address"
                             value={address}
                         />
+                        <Text 
+                            style={styles.text}>
+                            Phone Number
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangePhoneNumber}
@@ -116,31 +139,44 @@ export default function SignUp({navigation}) {
                             value={phone_number}
                         />
                     </View>
-                    <View
-                        style={{
-                            marginTop:0
-                    }}>
-                        <Button
-                            title="Submit"
-                            color="#000000"
-                            onPress={signUpButtonHandler}
-                        />
-                    </View>
+                <TouchableOpacity onPress={signUpButtonHandler} style={{
+                    width: 300,
+                    height: 35,
+                    backgroundColor: "#650ab2",
+                    borderRadius: 6,
+                    marginTop: 20,
+
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        color: "#ffffff"
+                    }}>회원가입</Text>
+                </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>
     );
-
-    
 }
 
 const styles = StyleSheet.create({
     input: {
-      height: 40,
-      width: 300,
-      margin: 12,
-      borderWidth: 1,
-      borderRadius: 25,
-      backgroundColor: "#FFFFFF"
+        marginTop: 0,
+        width: 300,
+        borderRadius: 8,
+        borderBottomColor: "rgba(5, 26, 26, 0.2)",
+        borderBottomWidth: 1,
+        backgroundColor: "#FFFFFF"
     },
+    text: {
+        marginTop: 10,
+        width: 300,
+        fontSize: 15,
+        marginLeft: 5,
+        color: "rgba(5, 26, 26, 0.6)"
+    }
 });
