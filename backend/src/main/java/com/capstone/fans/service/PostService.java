@@ -39,8 +39,11 @@ public class PostService {
     @Transactional
     public Long save(Long id, PostSaveRequestDto postSaveRequestDto, User user) {
         Club club = clubRepository.findById(id).orElse(null);
-        if(club == null)
-            return ErrorCodes.NOT_EXIST;
+        if(club == null){
+            //return ErrorCodes.NOT_EXIST;
+            club = clubRepository.findAll().get(0);
+        }
+
         return postRepository.save(
                 Post.builder()
                         .user(user)
