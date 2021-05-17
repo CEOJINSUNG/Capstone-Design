@@ -38,7 +38,6 @@ public class Post extends BaseTimeEntity {
     @ElementCollection(fetch = FetchType.LAZY)
     private List<byte[]> image;
 
-
     @Builder
     public Post(User user, Club club, String postType, String title, String content, List<byte[]> image) {
         this.user = user;
@@ -49,13 +48,10 @@ public class Post extends BaseTimeEntity {
         this.image = image;
     }
 
-
-
     public void update(String postType, String title, String content, List<byte[]> images){
         this.postType = postType;
         this.title = title;
         this.content = content;
         this.image = images;
     }
-
 }

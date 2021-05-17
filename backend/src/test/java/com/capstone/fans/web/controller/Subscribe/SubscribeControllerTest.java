@@ -71,6 +71,13 @@ public class SubscribeControllerTest {
     private Long club_id;
     private Long fans_id;
 
+    @After
+    public void teardown(){
+        subscribeRepository.deleteAll();
+        membershipRepository.deleteAll();
+        clubRepository.deleteAll();
+        fansRepository.deleteAll();
+    }
 
     @After
     public void cleanup(){
@@ -92,7 +99,7 @@ public class SubscribeControllerTest {
         String clubname = "club 1";
         byte[] image = null;
         String blockChain = "asdf";
-        String email = "asdf@asdf";
+        String email = "abcd@abcd";
         String password = "qwer!@#$";
         String phone_number = "123-123-123";
         String name = "hell0";
@@ -141,7 +148,7 @@ public class SubscribeControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = "asdf@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "abcd@abcd", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void SubscribeSaveTest() throws Exception {
         byte[] image = null;
         LocalDateTime DateTime = LocalDateTime.now();
@@ -170,7 +177,7 @@ public class SubscribeControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = "asdf@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "abcd@abcd", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void CancelSubscribeTest() throws Exception {
 
         LocalDateTime DateTime = LocalDateTime.now();

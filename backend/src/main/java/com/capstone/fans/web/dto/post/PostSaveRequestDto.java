@@ -33,5 +33,4 @@ public class PostSaveRequestDto {
                 .content(contents)
                 .build();
     }
-
 }
