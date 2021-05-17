@@ -19,7 +19,7 @@ import DiscussBoard from "./community/DiscussBoard";
 
 const Tab = createMaterialTopTabNavigator()
 
-export default function Community({navigation}) {
+export default function Community({token, navigation}) {
     const isDarkMode = useColorScheme() === 'dark';
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -234,7 +234,7 @@ export default function Community({navigation}) {
                 </View>
                 <Tab.Navigator>
                     <Tab.Screen name="FanS" component={ClubMain} />
-                    <Tab.Screen name="자유게시판" component={FreeBoard} />
+                    <Tab.Screen name="자유게시판" children={() => <FreeBoard token={token} navigation={navigation} />} />
                     <Tab.Screen name="토론게시판" component={DiscussBoard} />
                 </Tab.Navigator>
                 

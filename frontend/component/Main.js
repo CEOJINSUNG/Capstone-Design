@@ -38,7 +38,7 @@ export default function Main({ route, navigation }) {
                 inactiveTintColor: '#000000',
             }}
         >
-            <Tab.Screen name="Community" component={Community}/>
+            <Tab.Screen name="Community" children={() => <Community token={token} navigation={navigation} />} />
             <Tab.Screen name="FC" component={FC} />
             <Tab.Screen name="Personal" component={Personal} />
         </Tab.Navigator>

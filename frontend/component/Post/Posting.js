@@ -25,7 +25,10 @@ export default function Posting({route, navigation}) {
     const [content, setContent] = React.useState("");
     const [imageUri, setImageUri] = React.useState("");
     const [imageData, setImageData] = React.useState("");
-    const {boardType} = route.params;
+    const {boardType, token} = route.params;
+
+    console.log(boardType);
+    console.log(JSON.stringify(token));
 
     async function pickImage(){
         var options = {
@@ -40,6 +43,7 @@ export default function Posting({route, navigation}) {
               skipBackup: true,
               path: 'images',
             },
+            includeBase64: true
         };
         ImagePicker.launchImageLibrary(options, res => {
             console.log('Response = ', res);
@@ -53,7 +57,7 @@ export default function Posting({route, navigation}) {
               alert(res.customButton);
             } else {
                 setImageUri(res.uri);
-                setImageData('data:image/jpeg;base64,' + res.data);
+                setImageData(res.base64);
                 console.log(imageUri);
                 console.log(imageData);
             }
@@ -67,12 +71,14 @@ export default function Posting({route, navigation}) {
             "images" : [imageData],
             "category" : boardType
         }
+        console.log(JSON.stringify(data));
         await fetch('http://3.139.204.200:8080/post/save/1', {
             method: 'POST',
             credentials: true,
             headers: {
                 "Accept": "application/json",
                 'Content-type': 'application/json',
+                'X-AUTH-TOKEN': token
             },
             body: JSON.stringify(data)
         })

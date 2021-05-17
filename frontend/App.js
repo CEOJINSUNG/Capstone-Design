@@ -6,12 +6,10 @@ import React from 'react';
 import Home from './component/Home';
 import Info from './component/Info';
 import Main from './component/Main';
-import Purchase from './component/Purchase';
 import Shop from './component/Shop';
 import SignUp from './component/SignUp';
 import Splash from './component/Splash';
 import Posting from './component/Post/Posting';
-import Wallet from './component/Wallet';
 import ClubLogin from './component/ClubAuth/ClubLogin';
 
 function App() {
@@ -30,11 +28,7 @@ function App() {
           options={{headerShown: false}} />
         <Stack.Screen name="Shop" component={Shop}
           options={{headerShown: false}} />
-        <Stack.Screen name="Purchase" component={Purchase} 
-          options={{headerShown: false}} />
         <Stack.Screen name="Info" component={Info}
-          options={{headerShown: false}} />
-        <Stack.Screen name="Wallet" component={Wallet}
           options={{headerShown: false}} />
         <Stack.Screen name="Posting" component={Posting}
           options={{headerShown: false}} />

@@ -64,7 +64,7 @@ const PostForm = ({title, content, imageDir, like, comments}) => {
     )
 }
 
-export default function FreeBoard({navigation}) {   
+export default function FreeBoard({token, navigation}) {   
     const [search, setSearch] = React.useState("");
    
     const postData = [
@@ -133,7 +133,7 @@ export default function FreeBoard({navigation}) {
                             자유게시판
                         </Text>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate("Posting", {"postType": "free"})} style={{
+                    <TouchableOpacity onPress={() => navigation.navigate("Posting", { boardType: "free", "token": token })} style={{
                         width: 50,
                         height: 30,
                         backgroundColor: "#650AB2",
