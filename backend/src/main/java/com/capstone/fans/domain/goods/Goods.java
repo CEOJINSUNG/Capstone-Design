@@ -35,7 +35,7 @@ public class Goods extends BaseTimeEntity {
 
     @Lob
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<byte[]> pictures;
+    private List<String> pictures;
 
     private Long stock;
 
@@ -49,7 +49,7 @@ public class Goods extends BaseTimeEntity {
 
 
     @Builder
-    public Goods(Club club, String name, String type, String description, Long price, List<byte[]> pictures, Long stock, LocalDateTime startDate, LocalDateTime endDate, List<Option> options) {
+    public Goods(Club club, String name, String type, String description, Long price, List<String> pictures, Long stock, LocalDateTime startDate, LocalDateTime endDate, List<Option> options) {
         this.club = club;
         this.name = name;
         this.type = type;

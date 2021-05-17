@@ -88,7 +88,7 @@ public class MembershipControllerTest {
         String address = "suwon";
         String description = "no description";
         String clubname = "club 1";
-        byte[] image = null;
+        String image = null;
         String blockChain = "asdf";
         String email = "asdf@asdf";
         String password = "qwer!@#$";
@@ -130,7 +130,7 @@ public class MembershipControllerTest {
     @WithUserDetails(value = "club@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void MembershipSaveTest() throws Exception {
 
-        byte[] image = null;
+        String image = null;
 
         LocalDateTime DateTime = LocalDateTime.now();
 
@@ -159,7 +159,7 @@ public class MembershipControllerTest {
     @Test
     @WithUserDetails(value = "club@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void MembershipUpdateTest() throws Exception{
-        byte[] image = null;
+        String image = null;
         Club club = clubRepository.findAll().get(0);
         LocalDateTime DateTime = LocalDateTime.now();
 
@@ -201,7 +201,7 @@ public class MembershipControllerTest {
     @Test
     @WithUserDetails(value = "club@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void MembershipDeleteTest() throws Exception {
-        byte[] image = null;
+        String image = null;
         Club club = clubRepository.findAll().get(0);
         LocalDateTime DateTime = LocalDateTime.now();
 

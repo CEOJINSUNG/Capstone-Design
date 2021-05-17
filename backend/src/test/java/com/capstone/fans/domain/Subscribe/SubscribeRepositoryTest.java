@@ -49,7 +49,7 @@ public class SubscribeRepositoryTest {
         String address = "suwon";
         String description = "no description";
         String clubname = "club 1";
-        byte[] image = null;
+        String image = null;
         String blockChain = "asdf";
         String email = "email@asdf";
         String password = "qwer!@#$";

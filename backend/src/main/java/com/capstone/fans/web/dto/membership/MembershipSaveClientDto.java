@@ -17,10 +17,10 @@ public class MembershipSaveClientDto {
 
     private String description;
 
-    private byte[] membershipImage;
+    private String membershipImage;
 
     @Builder
-    public MembershipSaveClientDto (String valid_date, Long cashPerMonth, String membershipName, String description, byte[] image){
+    public MembershipSaveClientDto (String valid_date, Long cashPerMonth, String membershipName, String description, String image){
         this.valid_date = valid_date;
         this.cashPerMonth = cashPerMonth;
         this.membershipImage = image;

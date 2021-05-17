@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GoodsOrderListDto {
     private Long id;
-    private byte[] image;
+    private String image;
     private String state;
     private String address;
     private String option_description;
@@ -24,7 +24,7 @@ public class GoodsOrderListDto {
     private LocalDateTime created_date;
 
     @Builder
-    public GoodsOrderListDto(Long id, byte[] image, String state, String address, String option_description, Long cost, LocalDateTime shipped_date, LocalDateTime created_date) {
+    public GoodsOrderListDto(Long id, String image, String state, String address, String option_description, Long cost, LocalDateTime shipped_date, LocalDateTime created_date) {
         this.id = id;
         this.image = image;
         this.state = state;

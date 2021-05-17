@@ -12,10 +12,10 @@ public class PostUpdateRequestDto {
     private String title;
     private String content;
     private String postType;
-    private List<byte[]> images;
+    private List<String> images;
 
     @Builder
-    public PostUpdateRequestDto(String title, String content, String postType, List<byte[]> images){
+    public PostUpdateRequestDto(String title, String content, String postType, List<String> images){
         this.title = title;
         this.content = content;
         this.postType = postType;

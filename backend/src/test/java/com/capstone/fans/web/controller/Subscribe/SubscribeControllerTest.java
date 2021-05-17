@@ -97,7 +97,7 @@ public class SubscribeControllerTest {
         String address = "suwon";
         String description = "no description";
         String clubname = "club 1";
-        byte[] image = null;
+        String image = null;
         String blockChain = "asdf";
         String email = "abcd@abcd";
         String password = "qwer!@#$";
@@ -150,7 +150,7 @@ public class SubscribeControllerTest {
     @Test
     @WithUserDetails(value = "abcd@abcd", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void SubscribeSaveTest() throws Exception {
-        byte[] image = null;
+        String image = null;
         LocalDateTime DateTime = LocalDateTime.now();
 
         List<Membership> all = membershipRepository.findAll();

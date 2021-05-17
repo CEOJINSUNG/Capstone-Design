@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PostResponseDto {
     private String title;
-    private List<byte[]> images;
+    private List<String> images;
     private String contents;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -26,7 +26,7 @@ public class PostResponseDto {
 
 
     @Builder
-    public PostResponseDto(String title, List<byte[]> images, String contents, LocalDateTime createdDate, LocalDateTime modifiedDate, SimpleUserInfoDto user, List<CommentDto> commentDtoList, String category) {
+    public PostResponseDto(String title, List<String> images, String contents, LocalDateTime createdDate, LocalDateTime modifiedDate, SimpleUserInfoDto user, List<CommentDto> commentDtoList, String category) {
         this.title = title;
         this.images = images;
         this.contents = contents;

@@ -13,11 +13,11 @@ import lombok.Setter;
 public class SimpleUserInfoDto {
     private Long id;
     private String nickname;
-    private byte[] profile;
+    private String profile;
 
 
     @Builder
-    public SimpleUserInfoDto(Long id, String nickname, byte[] profile) {
+    public SimpleUserInfoDto(Long id, String nickname, String profile) {
         this.id = id;
         this.nickname = nickname;
         this.profile = profile;

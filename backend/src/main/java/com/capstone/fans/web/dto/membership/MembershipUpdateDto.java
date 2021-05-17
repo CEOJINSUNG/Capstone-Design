@@ -21,10 +21,10 @@ public class MembershipUpdateDto {
 
     private String description;
 
-    private byte[] membershipImage;
+    private String membershipImage;
 
     @Builder
-    public MembershipUpdateDto(LocalDateTime valid_date, Long cashPerMonth, String membershipName, String description, byte[] membershipImage) {
+    public MembershipUpdateDto(LocalDateTime valid_date, Long cashPerMonth, String membershipName, String description, String membershipImage) {
         this.valid_date = valid_date;
         this.cashPerMonth = cashPerMonth;
         this.membershipName = membershipName;

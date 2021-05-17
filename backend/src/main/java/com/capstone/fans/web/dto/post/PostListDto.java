@@ -13,13 +13,16 @@ import lombok.Setter;
 public class PostListDto {
     private Long id;
     private String title;
-    private byte[] image;
+    private String simpleContent;
+    private String image;
     private SimpleUserInfoDto simpleUserInfoDto;
 
     @Builder
-    public PostListDto(Long id, String title, byte[] image, SimpleUserInfoDto simpleUserInfoDto) {
+
+    public PostListDto(Long id, String title, String simpleContent, String image, SimpleUserInfoDto simpleUserInfoDto) {
         this.id = id;
         this.title = title;
+        this.simpleContent = simpleContent;
         this.image = image;
         this.simpleUserInfoDto = simpleUserInfoDto;
     }

@@ -23,7 +23,7 @@ public class GoodsSaveDto {
     private String type;
     private String description;
     private Long price;
-    private List<byte[]> pictures;
+    private List<String> pictures;
     private Long stock;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -35,7 +35,7 @@ public class GoodsSaveDto {
 
 
     @Builder
-    public GoodsSaveDto(String name, String type, String description, Long price, List<byte[]> pictures, Long stock, LocalDateTime startDate, LocalDateTime endDate, List<Option> options) {
+    public GoodsSaveDto(String name, String type, String description, Long price, List<String> pictures, Long stock, LocalDateTime startDate, LocalDateTime endDate, List<Option> options) {
         this.name = name;
         this.type = type;
         this.description = description;

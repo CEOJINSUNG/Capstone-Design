@@ -86,7 +86,7 @@ public class CommentControllerTest {
 
         String adress = "suwon";
         String description = "no description";
-        byte[] image = null;
+        String image = null;
         String blockChain = "asdf";
         String email = "email@asdf";
         String password = "qwer!@#$";

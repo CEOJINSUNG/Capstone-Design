@@ -88,7 +88,7 @@ public class PostControllerTest {
 
         String adress = "suwon";
         String description = "no description";
-        byte[] image = null;
+        String image = null;
         String blockChain = "asdf";
         String email = "email@asdf";
         String password = "qwer!@#$";
@@ -136,7 +136,7 @@ public class PostControllerTest {
     public void PostSaveTest() throws Exception{
         String title = "title";
         String content = "content";
-        List<byte[]> images = new ArrayList<>();
+        List<String> images = new ArrayList<>();
 
         PostSaveRequestDto postSaveRequestDto = PostSaveRequestDto.builder()
                 .title(title)
@@ -161,7 +161,7 @@ public class PostControllerTest {
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void PostUpdateTest() throws Exception {
-        List<byte[]> images = new ArrayList<>();
+        List<String> images = new ArrayList<>();
         String PostType = "postType";
 
         Post savedPost = postRepository.save(
@@ -201,7 +201,7 @@ public class PostControllerTest {
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void PostDeleteTest() throws Exception {
-        List<byte[]> images = new ArrayList<>();
+        List<String> images = new ArrayList<>();
 
         Post savedPost = postRepository.save(
                 Post.builder()
@@ -228,7 +228,7 @@ public class PostControllerTest {
     @Test
     @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void GetPostListTest() throws Exception {
-        List<byte[]> images = new ArrayList<>();
+        List<String> images = new ArrayList<>();
 
         Post savedPost_1 = postRepository.save(
                 Post.builder()

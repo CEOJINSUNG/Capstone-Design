@@ -44,9 +44,9 @@ public abstract class User extends BaseTimeEntity implements UserDetails {
 
     private String phone_number;
 
-    @Lob
+    @Column(length = 1024*1024*3)
     @Basic(fetch = FetchType.LAZY)
-    private byte[] profile_image;
+    private String profile_image;
 
 
     private String auth;
@@ -91,7 +91,7 @@ public abstract class User extends BaseTimeEntity implements UserDetails {
         return true;
     }
 
-    public User(String email, String password, String name, String blockchain_address, String nickname, String address, String phone_number, byte[] profile_image, String auth) {
+    public User(String email, String password, String name, String blockchain_address, String nickname, String address, String phone_number, String profile_image, String auth) {
         this.email = email;
         this.password = password;
         this.name = name;

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { 
     View,
     Text,
@@ -9,7 +9,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 //TODO : imageDir to image from DB
-const PostForm = ({title, content, imageDir, like, comments}) => {
+const PostForm = ({ title, content, encodedData}) => {
     return (
         <TouchableOpacity style={{
             display: "flex",
@@ -25,7 +25,7 @@ const PostForm = ({title, content, imageDir, like, comments}) => {
                     width: "20%",
                     height: "100%",
                 }} 
-                source={require("../icon/news.png")} />
+                source={{ uri: `data:image/jpa;base64,${encodedData}` }} />
             <View style={{
                     width: "65%"
                 }}>
@@ -53,10 +53,6 @@ const PostForm = ({title, content, imageDir, like, comments}) => {
                         flexDirection: "row",
                         marginBottom: 3,
                     }}>
-                        <Text style={{
-                            fontSize: 7,
-                            color: "#000000"
-                        }}>{like}likes {comments}com</Text>
                     </View>
                 </View>
             </View>
@@ -66,6 +62,31 @@ const PostForm = ({title, content, imageDir, like, comments}) => {
 
 export default function FreeBoard({token, navigation}) {   
     const [search, setSearch] = React.useState("");
+    const [lists, setLists] = React.useState([]);
+
+    async function getPosts() {
+        fetch('http://3.139.204.200:8080/post/list/0/5', {
+            method: 'GET',
+            credentials: true,
+            headers: {
+                "Accept": "application/json",
+            }
+        }).then(res =>
+            res.json()
+        ).then(response => {
+            setLists(response);
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+    console.log(lists);
+
+    useEffect(getPosts, []);
+
+    
+        
+        
    
     const postData = [
         {
@@ -179,7 +200,7 @@ export default function FreeBoard({token, navigation}) {
                             source={require("../icon/arrow.png")}/>
                     </View>
                 </View>
-                {postData.map(item => (<PostForm title={item.title} content={item.content} imageDir={item.imageDir} like={item.like} comments={item.comments} />))}
+                {lists.map(item => (<PostForm title={item.title} content={item.title} encodedData={item.image} />))}
 
             </ScrollView>
         </SafeAreaView>

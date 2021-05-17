@@ -89,6 +89,13 @@ public class PostService {
                         .id(p.getId())
                         .image(p.getImage().size()==0? null : p.getImage().get(0))
                         .title(p.getTitle())
+                        .simpleUserInfoDto(SimpleUserInfoDto.builder()
+                                .id(p.getUser().getId())
+                                .nickname(p.getUser().getNickname())
+                                .profile(p.getUser().getProfile_image())
+                                .build()
+                        )
+                        .simpleContent(p.getContent().substring(0, p.getContent().length()>100? 100: p.getContent().length())+"...")
                         .build()
                 ).collect(Collectors.toList());
     }

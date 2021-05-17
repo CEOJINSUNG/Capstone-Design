@@ -26,7 +26,7 @@ public class FanSRepositoryTest {
     public void 팬저장_불러오기(){
         String adress = "suwon";
         String description = "no description";
-        byte[] image = null;
+        String image = null;
         String blockChain = "asdf";
         String email = "email@asdf";
         String password = "qwer!@#$";

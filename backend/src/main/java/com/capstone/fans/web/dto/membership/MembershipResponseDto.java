@@ -15,11 +15,11 @@ public class MembershipResponseDto {
     private Long cashPerMonth;
     private String description;
     private String membershipName;
-    private byte[] membershipImage;
+    private String membershipImage;
 
 
     @Builder
-    public MembershipResponseDto(Long id, LocalDateTime valid_date, Long cashPerMonth, String description, String membershipName, byte[] membershipImage) {
+    public MembershipResponseDto(Long id, LocalDateTime valid_date, Long cashPerMonth, String description, String membershipName, String membershipImage) {
         this.id = id;
         this.valid_date = valid_date;
         this.cashPerMonth = cashPerMonth;

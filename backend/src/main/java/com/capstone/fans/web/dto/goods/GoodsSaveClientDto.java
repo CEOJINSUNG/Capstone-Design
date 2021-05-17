@@ -23,7 +23,7 @@ public class GoodsSaveClientDto {
     private String type;
     private String description;
     private Long price;
-    private List<byte[]> pictures;
+    private List<String> pictures;
     private Long stock;
 
     private String startDate;
@@ -33,7 +33,7 @@ public class GoodsSaveClientDto {
 
 
     @Builder
-    public GoodsSaveClientDto(String name, String type, String description, Long price, List<byte[]> pictures, Long stock, String startDate, String endDate, List<Option> options) {
+    public GoodsSaveClientDto(String name, String type, String description, Long price, List<String> pictures, Long stock, String startDate, String endDate, List<Option> options) {
         this.name = name;
         this.type = type;
         this.description = description;

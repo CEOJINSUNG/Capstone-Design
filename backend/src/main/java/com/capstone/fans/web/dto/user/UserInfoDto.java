@@ -18,15 +18,15 @@ public class UserInfoDto {
     private String email;
     private String address;
     private String phone_number;
-    private byte[] profile_image;
+    private String profile_image;
     private String description;
 
     private String club_name;
-    private byte[] club_image;
+    private String club_image;
 
 
     @Builder
-    public UserInfoDto(Long id, String name, String nickname, String email, String address, String phone_number, byte[] profile_image, String description, String club_name, byte[] club_image) {
+    public UserInfoDto(Long id, String name, String nickname, String email, String address, String phone_number, String profile_image, String description, String club_name, String club_image) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
