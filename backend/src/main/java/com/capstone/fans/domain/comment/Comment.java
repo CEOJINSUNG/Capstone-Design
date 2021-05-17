@@ -41,5 +41,4 @@ public class Comment extends BaseTimeEntity {
     public void update(String updated_comment){
         this.comment = updated_comment;
     }
-
 }

@@ -7,11 +7,14 @@ import com.capstone.fans.domain.user.club.Club;
 import com.capstone.fans.domain.user.club.ClubRepository;
 import com.capstone.fans.domain.user.fans.FanS;
 import com.capstone.fans.domain.user.fans.FansRepository;
+import com.capstone.fans.service.PostService;
 import com.capstone.fans.service.UserService;
 import com.capstone.fans.web.dto.post.PostListDto;
 import com.capstone.fans.web.dto.post.PostSaveRequestDto;
 import com.capstone.fans.web.dto.post.PostUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -66,6 +70,9 @@ public class PostControllerTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
 
     private Long fans_userId;
     private Long club_userId;
@@ -216,5 +223,55 @@ public class PostControllerTest {
                 .andExpect(status().isOk());
 
         System.out.println(postRepository.findAll().size());
+    }
+
+    @Test
+    @WithUserDetails(value = "email@asdf", userDetailsServiceBeanName = "userService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void GetPostListTest() throws Exception {
+        List<byte[]> images = new ArrayList<>();
+
+        Post savedPost_1 = postRepository.save(
+                Post.builder()
+                        .postType("postType")
+                        .title("title_1")
+                        .content("content")
+                        .image(images)
+                        .user(fanSRepository.getOne(fans_userId))
+                        .club(clubRepository.getOne(club_userId))
+                        .build());
+
+        Post savedPost_2 = postRepository.save(
+                Post.builder()
+                        .postType("postType")
+                        .title("title_2")
+                        .content("content")
+                        .image(images)
+                        .user(fanSRepository.getOne(fans_userId))
+                        .club(clubRepository.getOne(club_userId))
+                        .build());
+
+        Post savedPost_3 = postRepository.save(
+                Post.builder()
+                        .postType("postType")
+                        .title("title_3")
+                        .content("content")
+                        .image(images)
+                        .user(fanSRepository.getOne(fans_userId))
+                        .club(clubRepository.getOne(club_userId))
+                        .build());
+
+        String url = "http://localhost:" + port + "/post/list/0/3";
+        // ~/post/list/page_number/page_size
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.registerModule(new JavaTimeModule());
+
+
+        mvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)))
+                .andExpect(content().json(objectMapper.writeValueAsString(postService.getPostList(0, 3))));
+
     }
 }
