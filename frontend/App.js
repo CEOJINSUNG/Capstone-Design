@@ -10,6 +10,7 @@ import Shop from './component/Shop';
 import SignUp from './component/SignUp';
 import Splash from './component/Splash';
 import Posting from './component/Post/Posting';
+import PostDetail from './component/Post/PostDetail';
 import ClubLogin from './component/ClubAuth/ClubLogin';
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
         <Stack.Screen name="Info" component={Info}
           options={{headerShown: false}} />
         <Stack.Screen name="Posting" component={Posting}
+          options={{headerShown: false}} />
+        <Stack.Screen name="PostDetail" component={PostDetail}
           options={{headerShown: false}} />
         <Stack.Screen name="ClubLogin" component={ClubLogin}
          options={{headerShown: false}} />

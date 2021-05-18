@@ -15,7 +15,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import ClubMain from "./community/ClubMain";
 import FreeBoard from "./community/FreeBoard";
-import DiscussBoard from "./community/DiscussBoard";
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -234,8 +233,8 @@ export default function Community({token, navigation}) {
                 </View>
                 <Tab.Navigator>
                     <Tab.Screen name="FanS" component={ClubMain} />
-                    <Tab.Screen name="자유게시판" children={() => <FreeBoard token={token} navigation={navigation} />} />
-                    <Tab.Screen name="토론게시판" component={DiscussBoard} />
+                    <Tab.Screen name="자유게시판" children={() => <FreeBoard token={token} boardType="free" navigation={navigation} />} />
+                    <Tab.Screen name="토론게시판" children={() => <FreeBoard token={token} boardType="discuss" navigation={navigation} />} />
                 </Tab.Navigator>
                 
             </ScrollView>

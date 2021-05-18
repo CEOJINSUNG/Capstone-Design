@@ -9,17 +9,19 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 //TODO : imageDir to image from DB
-const PostForm = ({ title, content, encodedData}) => {
+const PostForm = ({ navigation, token, title, content, boardType, encodedData}) => {
     return (
-        <TouchableOpacity style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            alignSelf: "center",
-            width: "90%",
-            height: 60,
-            marginTop: 10,
+        <TouchableOpacity 
+            onPress={() => navigation.navigate("PostDetail", {token: token, postId: 1, boardType: boardType})}
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                alignSelf: "center",
+                width: "90%",
+                height: 60,
+                marginTop: 10,
         }}>
             <Image style={{
                     width: "20%",
@@ -60,7 +62,7 @@ const PostForm = ({ title, content, encodedData}) => {
     )
 }
 
-export default function FreeBoard({token, navigation}) {   
+export default function FreeBoard({token, boardType, navigation}) {   
     const [search, setSearch] = React.useState("");
     const [lists, setLists] = React.useState([]);
 
@@ -84,54 +86,6 @@ export default function FreeBoard({token, navigation}) {
 
     useEffect(getPosts, []);
 
-    
-        
-        
-   
-    const postData = [
-        {
-            title: "이번에 메시 연봉 공개 뭐냐",
-            content: "메시 4년 계약 4000억원이고 그러면 주급이 ㄹㅇ 25억인데 개부럽다 메시..",
-            imageDir: "../icon/news.png",
-            like: 142,
-            comments: 54,
-        },
-        {
-            title: "이번에 메시 연봉 공개 뭐냐",
-            content: "메시 4년 계약 4000억원이고 그러면 주급이 ㄹㅇ 25억인데 개부럽다 메시..",
-            imageDir: "../icon/news.png",
-            like: 142,
-            comments: 54,
-        },
-        {
-            title: "이번에 메시 연봉 공개 뭐냐",
-            content: "메시 4년 계약 4000억원이고 그러면 주급이 ㄹㅇ 25억인데 개부럽다 메시..",
-            imageDir: "../icon/news.png",
-            like: 142,
-            comments: 54,
-        },
-        {
-            title: "이번에 메시 연봉 공개 뭐냐",
-            content: "메시 4년 계약 4000억원이고 그러면 주급이 ㄹㅇ 25억인데 개부럽다 메시..",
-            imageDir: "../icon/news.png",
-            like: 142,
-            comments: 54,
-        },
-        {
-            title: "이번에 메시 연봉 공개 뭐냐",
-            content: "메시 4년 계약 4000억원이고 그러면 주급이 ㄹㅇ 25억인데 개부럽다 메시..",
-            imageDir: "../icon/news.png",
-            like: 142,
-            comments: 54,
-        },
-        {
-            title: "이번에 메시 연봉 공개 뭐냐",
-            content: "메시 4년 계약 4000억원이고 그러면 주급이 ㄹㅇ 25억인데 개부럽다 메시..",
-            imageDir: "../icon/news.png",
-            like: 142,
-            comments: 54,
-        },
-    ]
     return(
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -151,10 +105,10 @@ export default function FreeBoard({token, navigation}) {
                             fontWeight: "bold",
                             color: "#000000",
                         }}>
-                            자유게시판
+                            {boardType == "free" ? "자유게시판" : "토론게시판"}
                         </Text>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate("Posting", { boardType: "free", "token": token })} style={{
+                    <TouchableOpacity onPress={() => navigation.navigate("Posting", { boardType: boardType, "token": token })} style={{
                         width: 50,
                         height: 30,
                         backgroundColor: "#650AB2",
@@ -193,14 +147,14 @@ export default function FreeBoard({token, navigation}) {
                         />
                         <Image style={{
                                 marginLeft: 10,
-                                marginTop: 15,
-                                width: "10%",
-                                height: "20%",
+                                marginTop: 0,
+                                width: 20,
+                                height: 20,
                             }}
-                            source={require("../icon/arrow.png")}/>
+                            source={require("../icon/search.png")}/>
                     </View>
                 </View>
-                {lists.map(item => (<PostForm title={item.title} content={item.title} encodedData={item.image} />))}
+                {lists.map(item => (<PostForm navigation={navigation} token={token} title={item.title} content={item.title} encodedData={item.image} />))}
 
             </ScrollView>
         </SafeAreaView>

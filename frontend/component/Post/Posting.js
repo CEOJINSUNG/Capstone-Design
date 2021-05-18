@@ -102,7 +102,7 @@ export default function Posting({route, navigation}) {
                 <View style={{
                         display: "flex",
                         flexDirection: "row",
-                        marginTop: 5,
+                        marginTop: 15,
                         marginBottom: 20
                     }}>
                     <Image style={{
@@ -113,7 +113,7 @@ export default function Posting({route, navigation}) {
                         }}
                         source={require("../icon/arrow.png")}/>
                     <View style={{
-                        width: "80%"
+                        width: "90%"
                     }}>
                         <Text style={{
                             fontSize: 30,
@@ -129,7 +129,7 @@ export default function Posting({route, navigation}) {
                         backgroundColor: "#650AB2",
                         borderRadius: 8,
                         alignSelf: "center",
-                        marginTop: 5,
+                        marginTop: 15,
 
                         display: "flex",
                         alignItems: "center",
@@ -139,7 +139,7 @@ export default function Posting({route, navigation}) {
                             fontSize: 12,
                             fontWeight: "bold",
                             color: "#ffffff"
-                        }}>글쓰기</Text>
+                        }}>완료</Text>
                     </TouchableOpacity>
                 </View>
                 <TextInput
@@ -170,14 +170,14 @@ export default function Posting({route, navigation}) {
 const styles = StyleSheet.create({
     title: {
         height: 50,
-        width: "90%",
+        width: "95%",
         marginTop: 10,
         fontSize: 30,
         borderBottomColor: '#BBBBBB',
         borderBottomWidth: 1,
     },
     content: {
-        width: "90%",
+        width: "95%",
         marginTop: 10,
         fontSize: 20,
         flex: 1,
