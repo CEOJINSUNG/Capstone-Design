@@ -19,30 +19,28 @@ export default function Wallet({ navigation }) {
 
     const Tx = require("ethereumjs-tx").Transaction
     const sendmoney = () => {
-        if (total > 0) {
-            web3.eth.getTransactionCount(buyAccount, (err, txCount) => {
-                const txObject = {
-                    nonce: web3.utils.toHex(txCount),
-                    to: sellAccount,
-                    value: web3.utils.toHex(web3.utils.toWei('0.005', 'ether')),
-                    gasLimit: web3.utils.toHex(100000),
-                    gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
-                }
-                //여기서 web3가 2이상이면 아래의 {chain: 'ropsten}을 선언해줘야함
-                const tx = new Tx(txObject, { chain: 'ropsten' });
-                tx.sign(privateKey);
-                const serializedTx = tx.serialize();
-                const raw = '0x' + serializedTx.toString('hex');
-                web3.eth.sendSignedTransaction(raw)
-                    .once('transactionHash', (hash) => {
-                        console.info('transactionHash', 'https://ropsten.etherscan.io/tx/' + hash);
-                        navigation.navigate("Main")
-                    })
-                    .once('receipt', (receipt) => {
-                        console.info('receipt', receipt);
-                    }).on('error', console.error);
-            });
-        }
+        web3.eth.getTransactionCount(buyAccount, (err, txCount) => {
+            const txObject = {
+                nonce: web3.utils.toHex(txCount),
+                to: sellAccount,
+                value: web3.utils.toHex(web3.utils.toWei('0.005', 'ether')),
+                gasLimit: web3.utils.toHex(100000),
+                gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
+            }
+            //여기서 web3가 2이상이면 아래의 {chain: 'ropsten}을 선언해줘야함
+            const tx = new Tx(txObject, { chain: 'ropsten' });
+            tx.sign(privateKey);
+            const serializedTx = tx.serialize();
+            const raw = '0x' + serializedTx.toString('hex');
+            web3.eth.sendSignedTransaction(raw)
+                .once('transactionHash', (hash) => {
+                    console.info('transactionHash', 'https://ropsten.etherscan.io/tx/' + hash);
+                    navigation.navigate("Main")
+                })
+                .once('receipt', (receipt) => {
+                    console.info('receipt', receipt);
+                }).on('error', console.error);
+        });
     }
 
     useEffect(() => {
@@ -172,7 +170,7 @@ export default function Wallet({ navigation }) {
                         fontSize: 14,
                         fontWeight: "bold",
                         color: "#000000"
-                    }}>1000000 ether</Text>
+                    }}>0 ether</Text>
                 </View>
                 <View style={{
                     display: "flex",
@@ -191,7 +189,7 @@ export default function Wallet({ navigation }) {
                         fontSize: 14,
                         fontWeight: "bold",
                         color: "#000000"
-                    }}>235000 ether</Text>
+                    }}>0 ether</Text>
                 </View>
                 <View style={{
                     display: "flex",
@@ -210,7 +208,7 @@ export default function Wallet({ navigation }) {
                         fontSize: 14,
                         fontWeight: "bold",
                         color: "#000000"
-                    }}>765000 ether</Text>
+                    }}>0 ether</Text>
                 </View>
                 <View style={{
                     display: "flex",
