@@ -9,10 +9,10 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 //TODO : imageDir to image from DB
-const PostForm = ({ navigation, token, title, content, boardType, encodedData}) => {
+const PostForm = ({ navigation, token, title, content, boardType, encodedData, postId}) => {
     return (
         <TouchableOpacity 
-            onPress={() => navigation.navigate("PostDetail", {token: token, postId: 1, boardType: boardType})}
+            onPress={() => navigation.navigate("PostDetail", { token: token, postId: {postId}, boardType: boardType})}
             style={{
                 display: "flex",
                 flexDirection: "row",
@@ -65,6 +65,7 @@ const PostForm = ({ navigation, token, title, content, boardType, encodedData}) 
 export default function FreeBoard({token, boardType, navigation}) {   
     const [search, setSearch] = React.useState("");
     const [lists, setLists] = React.useState([]);
+    const [flag, setFlags] = React.useState(0);
 
     async function getPosts() {
         fetch('http://3.139.204.200:8080/post/list/0/5', {
@@ -84,7 +85,7 @@ export default function FreeBoard({token, boardType, navigation}) {
     }
     console.log(lists);
 
-    useEffect(getPosts, []);
+    useEffect(getPosts, [flag]);
 
     return(
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -108,7 +109,7 @@ export default function FreeBoard({token, boardType, navigation}) {
                             {boardType == "free" ? "자유게시판" : "토론게시판"}
                         </Text>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate("Posting", { boardType: boardType, "token": token })} style={{
+                    <TouchableOpacity onPress={() => navigation.navigate("Posting", { boardType: boardType, "token": token, flag: flag, setFlags: setFlags })} style={{
                         width: 50,
                         height: 30,
                         backgroundColor: "#650AB2",
@@ -154,7 +155,7 @@ export default function FreeBoard({token, boardType, navigation}) {
                             source={require("../icon/search.png")}/>
                     </View>
                 </View>
-                {lists.map(item => (<PostForm navigation={navigation} token={token} title={item.title} content={item.title} encodedData={item.image} />))}
+                {lists.map(item => (<PostForm navigation={navigation} token={token} title={item.title} content={item.simpleContent} encodedData={item.image} postId={item.id} />))}
 
             </ScrollView>
         </SafeAreaView>

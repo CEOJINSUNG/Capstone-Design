@@ -25,7 +25,7 @@ export default function Posting({route, navigation}) {
     const [content, setContent] = React.useState("");
     const [imageUri, setImageUri] = React.useState("");
     const [imageData, setImageData] = React.useState("");
-    const {boardType, token} = route.params;
+    const { boardType, token, flag, setFlags} = route.params;
 
     console.log(boardType);
     console.log(JSON.stringify(token));
@@ -84,6 +84,7 @@ export default function Posting({route, navigation}) {
         })
         .then(response => {
             console.log(response);
+            setFlags(flag+1);
             navigation.goBack();
         })
         .catch((error) => {
@@ -113,7 +114,7 @@ export default function Posting({route, navigation}) {
                         }}
                         source={require("../icon/arrow.png")}/>
                     <View style={{
-                        width: "90%"
+                        width: "70%"
                     }}>
                         <Text style={{
                             fontSize: 30,

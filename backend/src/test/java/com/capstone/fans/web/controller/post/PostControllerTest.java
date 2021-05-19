@@ -274,4 +274,5 @@ public class PostControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(postService.getPostList(0, 3))));
 
     }
+
 }

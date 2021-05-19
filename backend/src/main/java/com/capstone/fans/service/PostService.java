@@ -107,11 +107,14 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no matching user. id="+id));
         List<Comment> commentList = commentRepository.findByPost(post);
         List<CommentDto> commentDtoList = new ArrayList<>();
+        List<String> images = new ArrayList<>();
+        if(post.getImage().size() != 0)
+            images.add(post.getImage().get(0));
         for(Comment comment : commentList)
             commentDtoList.add(CommentDto.createCommentDto(comment));
         return PostResponseDto.builder()
                 .title(post.getTitle())
-                .images(post.getImage())
+                .images(images)
                 .contents(post.getContent())
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())

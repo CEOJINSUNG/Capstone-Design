@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
     View,
     Text,
@@ -68,10 +68,51 @@ export default function PostDetail({route, navigation}) {
     const [title, setTitle] = React.useState("default title");
     const [content, setContent] = React.useState("default content");
     const [imageData, setImageData] = React.useState("");
-    const [postData, setPostData] = React.useState("");
+    const [profile, setProfile] = React.useState("");
+    const [userName, setUserName] = React.useState("");
+    const [postDate, setPostDate] = React.useState("");
     const [commnetData, setCommentData] = React.useState([]);
     const [commentContent, setCommentContent] = React.useState("");
-    const {token, postId, boardType} = route.params;
+    const { token, postId, boardType } = route.params;
+    const [flag, setFlag] = React.useState(0);
+
+
+    console.log(postId);
+    
+    function getPost() {
+        fetch(`http://3.139.204.200:8080/post/find/${postId.postId}`, {
+            method: 'GET',
+            credentials: true,
+            headers: {
+                "Accept": "application/json",
+            }
+        }).then(res => res.json()
+
+        ).then(response => {
+            console.log(response);
+            console.log(response.commentDtoList[0].user);
+            setTitle(response.title);
+            setContent(response.contents);
+            setImageData(response.images[0]);
+            setProfile(response.user.profile);
+            setUserName(response.user.nickname);
+            setPostDate(response.createdDate);
+            setCommentData(response.commentDtoList);
+            
+        }).catch((error) => {
+            //console.log(response);
+            console.log(error);
+        });
+
+    }
+    useEffect(getPost, [flag]);
+   
+
+    
+
+
+
+
 
     const commentData = [
         {
@@ -99,7 +140,7 @@ export default function PostDetail({route, navigation}) {
                 'X-AUTH-TOKEN': token
             },
             body: JSON.stringify(data)
-        })
+        }).then(res => JSON.stringify(res))
         .then(response => {
             console.log(response);
             navigation.goBack();
@@ -111,13 +152,10 @@ export default function PostDetail({route, navigation}) {
 
     async function commentPostButtonHandler(){
         var data = {
-            "title" : title,
-            "contents" : content,
-            "images" : [imageData],
-            "category" : boardType
+            "comment": commentContent
         }
         console.log(JSON.stringify(data));
-        await fetch('http://3.139.204.200:8080/post/save/1', {
+        await fetch(`http://3.139.204.200:8080/comment/save/${postId.postId}`, {
             method: 'POST',
             credentials: true,
             headers: {
@@ -129,7 +167,8 @@ export default function PostDetail({route, navigation}) {
         })
         .then(response => {
             console.log(response);
-            navigation.goBack();
+            setFlag(flag + 1);
+
         })
         .catch((error) => {
             console.log(error);
@@ -175,7 +214,7 @@ export default function PostDetail({route, navigation}) {
                         marginBottom: 20
                     }}>
                     <Image
-                        source={imageData}
+                        source={{ uri: `data:image/jpa;base64,${profile}` }}
                         style={{
                             width: 40,
                             height: 40,
@@ -189,14 +228,14 @@ export default function PostDetail({route, navigation}) {
                             style={{
                                 fontSize: 15,
                                 fontWeight: "bold",    
-                        }}>
-                            user name
+                            }}>
+                            {userName}
                         </Text>
                         <Text
                             style={{
                                 color: "#555555"    
-                        }}>
-                            post date
+                            }}>
+                            {postDate}
                         </Text>
                     </View>
                     <TouchableOpacity onPress={likeButtonHandler} style={styles.button}>
@@ -210,15 +249,15 @@ export default function PostDetail({route, navigation}) {
                 <Text
                     style={styles.title}
                 >
-                    post title
+                    {title}
                 </Text>
                 <Text
                     style={styles.content}
                 >
-                    post content
+                    {content}
                 </Text>
                 <Image
-                    source={imageData ? {uri: imageData} : null}
+                    source={imageData ? { uri: `data:image/jpa;base64,${imageData}` } : null}
                     style={imageData ? {width: 300, height: 200, marginLeft: "5%"} : {width: 0, height: 0} }
                 /> 
                 <View
@@ -277,7 +316,7 @@ export default function PostDetail({route, navigation}) {
                         onChangeText={text => setCommentContent(text)}
                         placeholder="comment"
                         defaultvalue={commentContent}
-                    />
+                    /> 
                     <View 
                         style={{
                             display: "flex",
@@ -293,7 +332,7 @@ export default function PostDetail({route, navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                {commentData.map(item => (<CommentForm userIcon={item.imageData} username={item.username} content={item.content} date={item.date} />))}
+                {commnetData.map(item => (<CommentForm userIcon={item.user.profile} username={item.user.nickname} content={item.comments} date={item.createdDate} />))}
             </ScrollView>
         </SafeAreaView>
     );
