@@ -89,8 +89,7 @@ export default function PostDetail({route, navigation}) {
         }).then(res => res.json()
 
         ).then(response => {
-            console.log(response);
-            console.log(response.commentDtoList[0].user);
+            console.log(response.user);
             setTitle(response.title);
             setContent(response.contents);
             setImageData(response.images[0]);
@@ -98,13 +97,13 @@ export default function PostDetail({route, navigation}) {
             setUserName(response.user.nickname);
             setPostDate(response.createdDate);
             setCommentData(response.commentDtoList);
-            
         }).catch((error) => {
             //console.log(response);
             console.log(error);
         });
 
     }
+
     useEffect(getPost, [flag]);
    
 
