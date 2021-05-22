@@ -82,7 +82,8 @@ export default function Home({navigation}) {
                         borderRadius: 8,
                         borderBottomColor: "rgba(5, 26, 26, 0.2)",
                         borderBottomWidth: 1,
-                        backgroundColor: "#FFFFFF"
+                        backgroundColor: "#FFFFFF",
+                        color: "#000000"
                     }}
                     onChangeText={text => setEmail(text)}
                     placeholder="E-mail"
@@ -96,7 +97,8 @@ export default function Home({navigation}) {
                         borderRadius: 8,
                         borderBottomColor: "rgba(5, 26, 26, 0.2)",
                         borderBottomWidth: 1,
-                        backgroundColor: "#FFFFFF"
+                        backgroundColor: "#FFFFFF",
+                        color: "#000000"
                     }}
                     onChangeText={text => setPassword(text)}
                     defaultvalue={password}

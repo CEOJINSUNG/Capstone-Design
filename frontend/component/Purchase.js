@@ -197,6 +197,7 @@ export default function Purchase({ navigation }) {
                             width: 200,
                             borderBottomColor: "rgba(0, 0, 0, 0.16)",
                             borderBottomWidth: 1,
+                            color: "#000000"
                         }}
                     />
                 </View>
@@ -222,6 +223,7 @@ export default function Purchase({ navigation }) {
                             width: 200,
                             borderBottomColor: "rgba(0, 0, 0, 0.16)",
                             borderBottomWidth: 1,
+                            color: "#000000"
                         }}
                     />
                 </View>

@@ -11,6 +11,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import QRCode from "react-native-qrcode-svg";
 import Entypo from "react-native-vector-icons/Entypo"
 import Ionicons from "react-native-vector-icons/Ionicons"
+import { useState } from "react/cjs/react.development";
 import { web3, buyAccount, sellAccount, privateKey } from "./config"
 import vip from "./icon/vip-card.png"
 
@@ -43,10 +44,12 @@ export default function Wallet({ navigation }) {
         });
     }
 
+    const [balance, setBalance] = useState()
     useEffect(() => {
         web3.eth.getBalance(buyAccount, function (err, wei) {
-            const balance = web3.utils.fromWei(wei, 'ether')
-            console.log(balance)
+            const a = web3.utils.fromWei(wei, 'ether')
+            console.log(a)
+            setBalance(a)
         })
     }, [])
     return (
@@ -159,44 +162,6 @@ export default function Wallet({ navigation }) {
                     alignItems: "center",
                     width: 250,
 
-                    marginTop: 12,
-                }}>
-                    <Text style={{
-                        fontSize: 14,
-                        color: "#000000",
-                        width: 100,
-                    }}>총 후원 금액</Text>
-                    <Text style={{
-                        fontSize: 14,
-                        fontWeight: "bold",
-                        color: "#000000"
-                    }}>0 ether</Text>
-                </View>
-                <View style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: 250,
-
-                    marginTop: 8,
-                }}>
-                    <Text style={{
-                        fontSize: 14,
-                        color: "#000000",
-                        width: 100,
-                    }}>사용한 금액</Text>
-                    <Text style={{
-                        fontSize: 14,
-                        fontWeight: "bold",
-                        color: "#000000"
-                    }}>0 ether</Text>
-                </View>
-                <View style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: 250,
-
                     marginTop: 8,
                 }}>
                     <Text style={{
@@ -208,7 +173,7 @@ export default function Wallet({ navigation }) {
                         fontSize: 14,
                         fontWeight: "bold",
                         color: "#000000"
-                    }}>0 ether</Text>
+                    }}>{balance} ether</Text>
                 </View>
                 <View style={{
                     display: "flex",
@@ -245,7 +210,7 @@ export default function Wallet({ navigation }) {
                         fontSize: 8,
                         color: "#000000",
                         marginLeft: 62,
-                    }}>* 멤버십 별 티어를 보시려면 홈페이지>멤버별 티어를 보시면 됩니다.</Text>
+                    }}>* 멤버십 별 티어를 보시려면 홈페이지 멤버별 티어를 보시면 됩니다.</Text>
                 </View>
             </View>
             <View style={{
