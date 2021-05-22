@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: "95%",
         marginTop: 10,
-        fontSize: 30,
+        fontSize: 25,
         borderBottomColor: '#BBBBBB',
         borderBottomWidth: 1,
     },

@@ -35,7 +35,7 @@ const CommentForm = ({ userIcon, username, content, date}) => {
                         width: 30,
                         height: 30,
                     }} 
-                    source={{ uri: `data:image/jpa;base64,${userIcon}` }} />
+                    source={require('../icon/default_profile.png')} />
                 <Text
                     style={{
                         fontWeight: "bold",
@@ -113,15 +113,6 @@ export default function PostDetail({route, navigation}) {
 
 
 
-
-    const commentData = [
-        {
-            username: "FanS",
-            content: "Comment sample content",
-            imageData: "",
-            date: "05/14 09:00"
-        }
-    ]
 
     async function likeButtonHandler(){
         var data = {
@@ -214,7 +205,7 @@ export default function PostDetail({route, navigation}) {
                         marginBottom: 20
                     }}>
                     <Image
-                        source={{ uri: `data:image/jpa;base64,${profile}` }}
+                        source={require('../icon/default_profile.png')}
                         style={{
                             width: 40,
                             height: 40,
@@ -222,7 +213,7 @@ export default function PostDetail({route, navigation}) {
                         }}
                     />
                     <View style={{
-                        width: "85%",
+                        width: "75%",
                     }}>
                         <Text
                             style={{
@@ -281,7 +272,7 @@ export default function PostDetail({route, navigation}) {
                             marginLeft: 5,
                             marginRight: 5
                      }}>
-                        post likes
+                        0
                     </Text>
                     <Image style={{
                             marginLeft: 7,
@@ -295,7 +286,7 @@ export default function PostDetail({route, navigation}) {
                         style={{
                             marginLeft: 5,
                     }}>
-                        post comments
+                        {commnetData.length}
                     </Text>
                 </View>
                 <View

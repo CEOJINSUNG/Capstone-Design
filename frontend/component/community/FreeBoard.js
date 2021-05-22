@@ -155,7 +155,7 @@ export default function FreeBoard({token, boardType, navigation}) {
                             source={require("../icon/search.png")}/>
                     </View>
                 </View>
-                {lists.map(item => (<PostForm navigation={navigation} token={token} title={item.title} content={item.simpleContent} encodedData={item.image} postId={item.id} />))}
+                {lists.map(item => (<PostForm navigation={navigation} token={token} title={item.title} content={item.simpleContent} boardType={boardType} encodedData={item.image} postId={item.id} />))}
 
             </ScrollView>
         </SafeAreaView>
