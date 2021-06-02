@@ -30,7 +30,7 @@ export default function SignUp({navigation}) {
         fetch('http://3.139.204.200:8080/auth/signup', {
             method: 'POST',
             headers: {
-                Accept: 'application/json',
+                "Accept": 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

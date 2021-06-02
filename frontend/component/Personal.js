@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
     View,
     Text,
@@ -6,7 +6,9 @@ import {
     StyleSheet,
     StatusBar,
     ScrollView,
-    useColorScheme
+    useColorScheme,
+    Linking,
+    Image
 } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Ionicons from "react-native-vector-icons/Ionicons"
@@ -50,42 +52,43 @@ const Status = ({ current, standard }) => {
 }
 
 //NFT 로고 디자인
-const NFTLogo = ({ name, follower }) => {
+const NFTLogo = ({ name, follower, image, url }) => {
     return (
-        <View style={{
-            width: 75,
-            paddingTop: 12,
-            paddingBottom: 8,
-            backgroundColor: "#ffffff",
-            elevation: 1.5,
-
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-        }}>
+        <TouchableOpacity onPress={() => Linking.canOpenURL(url)}>
             <View style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#000000",
-            }} />
-            <Text style={{
-                fontSize: 10,
-                color: "#000000",
-                fontWeight: "bold",
-                marginTop: 6,
-            }}>{name}</Text>
-            <Text style={{
-                fontSize: 8,
-                color: "#000000",
-                opacity: 0.6,
-                marginTop: 4,
-            }}>{follower} 팔로우</Text>
-        </View>
+                width: 75,
+                paddingTop: 12,
+                paddingBottom: 8,
+                backgroundColor: "#ffffff",
+                elevation: 1.5,
+
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}>
+                <Image source={{uri: image}} style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                }} />
+                <Text style={{
+                    fontSize: 10,
+                    color: "#000000",
+                    fontWeight: "bold",
+                    marginTop: 6,
+                }}>{name}</Text>
+                <Text style={{
+                    fontSize: 8,
+                    color: "#000000",
+                    opacity: 0.6,
+                    marginTop: 4,
+                }}>{follower} 팔로우</Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 
-export default function Personal({ navigation }) {
+export default function Personal({ navigation, token, img, url }) {
     const isDarkMode = useColorScheme() === 'dark';
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
@@ -133,7 +136,7 @@ export default function Personal({ navigation }) {
                     marginTop: 12,
                     borderRadius: 6,
                 }]}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Wallet")} style={[style.column, { alignItems: "center", width: 60 }]}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Wallet", {token: token})} style={[style.column, { alignItems: "center", width: 60 }]}>
                         <Ionicons name="ios-wallet-outline" size={30} />
                         <Text style={style.tenFont}>FanS Wallet</Text>
                     </TouchableOpacity>
@@ -165,7 +168,7 @@ export default function Personal({ navigation }) {
                     alignSelf: "center",
                     marginTop: 16,
                 }}>
-                    <NFTLogo name="Tottenham" follower="110K" />
+                    {img.length > 0 ? <NFTLogo name="Tottenham" follower="110K" image={img} url={url} /> : <></> }
                 </View>
                 <Text style={{
                     alignSelf: "center",

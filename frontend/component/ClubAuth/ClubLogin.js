@@ -42,7 +42,6 @@ export default function Home({navigation}) {
             navigation.navigate('Main', {token: response});
         })
         .catch((error) => {
-            console.log(error);
         });
     }
 

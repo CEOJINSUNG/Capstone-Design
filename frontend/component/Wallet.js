@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
     View,
     Text,
@@ -11,22 +11,31 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import QRCode from "react-native-qrcode-svg";
 import Entypo from "react-native-vector-icons/Entypo"
 import Ionicons from "react-native-vector-icons/Ionicons"
-import { useState } from "react/cjs/react.development";
-import { web3, buyAccount, sellAccount, privateKey } from "./config"
+import { web3, buyAccount, sellAccount, privateKey, myContract } from "./config"
 import vip from "./icon/vip-card.png"
 
-export default function Wallet({ navigation }) {
+export default function Wallet({ navigation, route }) {
     const isDarkMode = useColorScheme() === 'dark';
 
+    const { token } = route.params;
+    const [hash, setHash] = useState("")
+
     const Tx = require("ethereumjs-tx").Transaction
-    const sendmoney = () => {
-        web3.eth.getTransactionCount(buyAccount, (err, txCount) => {
+    const NFT = async () => {
+        let NFTDATA = myContract.methods.createCollectible({
+            "name": "토트넘",
+            "description": "축구 클럽",
+            "image": "https://image.fmkorea.com/files/attach/new/20200302/486616/790531407/2775745592/bbed94098d4bc272ff2cf7bfa4ed9ff4.png",
+            "attributes": []
+        })
+        await web3.eth.getTransactionCount(buyAccount, (err, txCount) => {
             const txObject = {
                 nonce: web3.utils.toHex(txCount),
                 to: sellAccount,
                 value: web3.utils.toHex(web3.utils.toWei('0.005', 'ether')),
                 gasLimit: web3.utils.toHex(100000),
                 gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
+                data: NFTDATA.encodeABI()
             }
             //여기서 web3가 2이상이면 아래의 {chain: 'ropsten}을 선언해줘야함
             const tx = new Tx(txObject, { chain: 'ropsten' });
@@ -36,10 +45,28 @@ export default function Wallet({ navigation }) {
             web3.eth.sendSignedTransaction(raw)
                 .once('transactionHash', (hash) => {
                     console.info('transactionHash', 'https://ropsten.etherscan.io/tx/' + hash);
-                    navigation.navigate("Main")
+                    setHash('https://ropsten.etherscan.io/tx/' + hash)
                 })
                 .once('receipt', (receipt) => {
                     console.info('receipt', receipt);
+                    fetch('http://3.139.204.200:8080/user/add/histories', {
+                        method: 'POST',
+                        credentials: true,
+                        headers: {
+                            "Accept": "application/json",
+                            'Content-Type': 'application/json',
+                            'X-AUTH-TOKEN': token
+                        },
+                        body: JSON.stringify([{
+                            imageUrl: "https://image.fmkorea.com/files/attach/new/20200302/486616/790531407/2775745592/bbed94098d4bc272ff2cf7bfa4ed9ff4.png",
+                            ehterUrl: hash
+                        }])
+                    })
+                        .then(res => res.json())
+                        .then(response => console.log(response))
+                        .catch((error) => {
+                            console.log(error);
+                        });
                 }).on('error', console.error);
         });
     }
@@ -52,6 +79,7 @@ export default function Wallet({ navigation }) {
             setBalance(a)
         })
     }, [])
+
     return (
         <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -227,7 +255,7 @@ export default function Wallet({ navigation }) {
                 justifyContent: "center",
                 alignSelf: "center",
             }}>
-                <TouchableOpacity onPress={sendmoney}>
+                <TouchableOpacity onPress={NFT}>
                     <Text style={{
                         fontSize: 16,
                         fontWeight: "bold",

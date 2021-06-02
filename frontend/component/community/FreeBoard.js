@@ -68,7 +68,7 @@ export default function FreeBoard({token, boardType, navigation}) {
     const [flag, setFlags] = React.useState(0);
 
     async function getPosts() {
-        fetch('http://3.139.204.200:8080/post/list/0/5', {
+        await fetch('http://3.139.204.200:8080/post/list/0/5', {
             method: 'GET',
             credentials: true,
             headers: {
@@ -78,12 +78,10 @@ export default function FreeBoard({token, boardType, navigation}) {
             res.json()
         ).then(response => {
             setLists(response);
-            console.log(response);
         }).catch((error) => {
             console.log(error);
         });
     }
-    console.log(lists);
 
     useEffect(getPosts, [flag]);
 

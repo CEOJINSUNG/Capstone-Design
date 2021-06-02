@@ -62,38 +62,6 @@ export default function Purchase({ navigation }) {
         }
     }
 
-    const NFT = () => {
-        let NFTDATA = myContract.methods.createCollectible({
-            "name": "토트넘",
-            "description": "축구 클럽",
-            "image" : "https://image.fmkorea.com/files/attach/new/20200302/486616/790531407/2775745592/bbed94098d4bc272ff2cf7bfa4ed9ff4.png",
-            "attributes": []
-        })
-        console.log(NFTDATA)
-        web3.eth.getTransactionCount(buyAccount, (err, txCount) => {
-            const txObject = {
-                nonce: web3.utils.toHex(txCount),
-                to: sellAccount,
-                value: 0x0,
-                gasLimit: web3.utils.toHex(100000),
-                gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
-                data: NFTDATA.encodeABI()
-            }
-            //여기서 web3가 2이상이면 아래의 {chain: 'ropsten}을 선언해줘야함
-            const tx = new Tx(txObject, { chain: 'ropsten' });
-            tx.sign(privateKey);
-            const serializedTx = tx.serialize();
-            const raw = '0x' + serializedTx.toString('hex');
-            web3.eth.sendSignedTransaction(raw)
-                .once('transactionHash', (hash) => {
-                    console.info('transactionHash', 'https://ropsten.etherscan.io/tx/' + hash);
-                })
-                .once('receipt', (receipt) => {
-                    console.info('receipt', receipt);
-                }).on('error', console.error);
-        });
-    }
-
     useEffect(() => {
         web3.eth.getBalance(buyAccount, function (err, wei) {
             const balance = web3.utils.fromWei(wei, 'ether')

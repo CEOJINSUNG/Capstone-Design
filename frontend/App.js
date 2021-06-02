@@ -12,6 +12,8 @@ import Splash from './component/Splash';
 import Posting from './component/Post/Posting';
 import PostDetail from './component/Post/PostDetail';
 import ClubLogin from './component/ClubAuth/ClubLogin';
+import Wallet from './component/Wallet';
+import Purchase from './component/Purchase';
 
 function App() {
   const Stack = createStackNavigator();
@@ -37,6 +39,12 @@ function App() {
           options={{headerShown: false}} />
         <Stack.Screen name="ClubLogin" component={ClubLogin}
          options={{headerShown: false}} />
+         <Stack.Screen name="Wallet" component={Wallet} options={{
+           headerShown: false
+         }} />
+         <Stack.Screen name="Purchase" component={Purchase} options={{
+           headerShown: false
+         }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

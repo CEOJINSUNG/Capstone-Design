@@ -75,9 +75,6 @@ export default function PostDetail({route, navigation}) {
     const [commentContent, setCommentContent] = React.useState("");
     const { token, postId, boardType } = route.params;
     const [flag, setFlag] = React.useState(0);
-
-
-    console.log(postId);
     
     function getPost() {
         fetch(`http://3.139.204.200:8080/post/find/${postId.postId}`, {
@@ -89,7 +86,6 @@ export default function PostDetail({route, navigation}) {
         }).then(res => res.json()
 
         ).then(response => {
-            console.log(response.user);
             setTitle(response.title);
             setContent(response.contents);
             setImageData(response.images[0]);
@@ -106,13 +102,6 @@ export default function PostDetail({route, navigation}) {
 
     useEffect(getPost, [flag]);
    
-
-    
-
-
-
-
-
     async function likeButtonHandler(){
         var data = {
             "title" : title,
@@ -132,7 +121,6 @@ export default function PostDetail({route, navigation}) {
             body: JSON.stringify(data)
         }).then(res => JSON.stringify(res))
         .then(response => {
-            console.log(response);
             navigation.goBack();
         })
         .catch((error) => {
@@ -156,7 +144,6 @@ export default function PostDetail({route, navigation}) {
             body: JSON.stringify(data)
         })
         .then(response => {
-            console.log(response);
             setFlag(flag + 1);
 
         })

@@ -58,8 +58,6 @@ export default function Posting({route, navigation}) {
             } else {
                 setImageUri(res.uri);
                 setImageData(res.base64);
-                console.log(imageUri);
-                console.log(imageData);
             }
         });
     }
@@ -83,12 +81,10 @@ export default function Posting({route, navigation}) {
             body: JSON.stringify(data)
         })
         .then(response => {
-            console.log(response);
             setFlags(flag+1);
             navigation.goBack();
         })
         .catch((error) => {
-            console.log(error);
         });
     }
 
